@@ -59,8 +59,7 @@ urlpatterns = [
     # API (futuro)
     # path('api/', include('api.urls')),
 
-
-      
+     
     # Marketing Pages - Usando vistas
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
@@ -73,5 +72,3 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-
