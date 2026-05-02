@@ -1,0 +1,40 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Reservar Sesión</h1>
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Tipo de Sesión</label>
+                    <select class="form-control" name="session_type">
+                        <option value="video_call">Videollamada</option>
+                        <option value="presential">Presencial</option>
+                        <option value="monthly_check">Chequeo Mensual</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fecha y Hora</label>
+                    <input type="datetime-local" class="form-control" name="scheduled_at" required>
+                </div>
+                <div class="form-group">
+                    <label>Notas</label>
+                    <textarea class="form-control" name="notes_client"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg">Reservar</button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Coach: {{ coach.user.full_name }}</h5>
+                    <p>Especialidad: {{ coach.get_specialty_display }}</p>
+                    <p>Precio: ${{ coach.session_price }}</p>
+                    <p>Duración: {{ coach.session_duration }} min</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

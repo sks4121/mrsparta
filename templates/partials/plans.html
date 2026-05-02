@@ -1,0 +1,90 @@
+{% load static %}
+<section class="plans-section" id="planes">
+
+  <p class="section-eyebrow reveal" style="position:relative;z-index:1">Elige tu Armadura</p>
+  <h2 class="section-title reveal" style="position:relative;z-index:1">Planes <span class="accent">Sin Excusas</span></h2>
+  <p class="section-sub reveal" style="position:relative;z-index:1">
+    Cada plan incluye el ciclo completo de transformación. La diferencia está en quién te guía.
+  </p>
+
+  <div class="plans-grid">
+
+    <!-- BASIC -->
+    <div class="plan-card reveal">
+      <div class="plan-tier">Recluta</div>
+      <div class="plan-name">Basic</div>
+      <div class="plan-price">
+        <span class="price-currency">$</span>
+        <span class="price-amount">29</span>
+        <span class="price-period">/mes</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats">
+        <li class="hi">Plan de entrenamiento con IA</li>
+        <li class="hi">Plan nutricional personalizado</li>
+        <li>Seguimiento de peso y progreso</li>
+        <li>Dashboard del atleta</li>
+        <li>Chat con Spartan AI</li>
+        <li>Ajustes automáticos del plan</li>
+      </ul>
+
+        <a href="{% url 'plans:basic' %}?plan=basic" class="plan-btn plan-btn-outline">Comenzar</a>
+  
+
+      </div>
+
+    <!-- PREMIUM -->
+    <div class="plan-card featured reveal" style="transition-delay:.15s">
+      <div class="plan-badge">Más Popular</div>
+      <div class="plan-tier">Guerrero</div>
+      <div class="plan-name">Premium</div>
+      <div class="plan-price">
+        <span class="price-currency">$</span>
+        <span class="price-amount">79</span>
+        <span class="price-period">/mes</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats">
+        <li class="hi">Todo lo del plan Basic</li>
+        <li class="hi">Coach humano asignado</li>
+        <li class="hi">Chequeo mensual en videollamada</li>
+        <li>Seguimiento semanal personalizado</li>
+        <li>Ajustes manuales del coach</li>
+        <li>Acceso a retos exclusivos</li>
+      </ul>
+       
+
+        <a href="{% url 'plans:premium' %}?plan=premium" class="plan-btn plan-btn-solid">Unirme Ahora</a>
+  
+      </div>
+
+    <!-- ELITE -->
+    <div class="plan-card reveal" style="transition-delay:.3s">
+      <div class="plan-tier">Espartano</div>
+      <div class="plan-name">Elite</div>
+      <div class="plan-price">
+        <span class="price-currency">$</span>
+        <span class="price-amount">149</span>
+        <span class="price-period">/mes</span>
+      </div>
+      <div class="plan-divider"></div>
+      <ul class="plan-feats">
+        <li class="hi">Todo lo del plan Premium</li>
+        <li class="hi">Sesiones ilimitadas con coach</li>
+        <li class="hi">Programas especiales 12 semanas</li>
+        <li>Análisis avanzado con IA</li>
+        <li>Acceso beta a nuevas funciones</li>
+        <li>Soporte prioritario 24/7</li>
+      </ul>
+
+        
+
+
+
+        <a href="{% url 'plans:elite' %}?plan=elite" class="plan-btn plan-btn-outline">Ser Elite</a>
+  
+
+      </div>
+
+  </div>
+</section>

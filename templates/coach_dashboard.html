@@ -1,0 +1,656 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coach OS — MR Sparta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/sparta.css' %}">
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR — COACH
+  ══════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sb-brand">
+      <div class="sb-logo-mark">MR</div>
+      <div class="sb-text">
+        <div class="sb-title">MR Sparta</div>
+        <div class="sb-sub">Coach OS</div>
+      </div>
+    </div>
+
+    <div class="sb-user">
+      <div class="sb-avatar">MC</div>
+      <div>
+        <div class="sb-user-name">Coach Marcos</div>
+        <div class="sb-user-role">⚔ Entrenador Principal</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section">Principal</div>
+
+      <button class="sb-item" data-page="dashboard">
+        <span class="sb-icon">⚔</span>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="sb-item" data-page="clients">
+        <span class="sb-icon">👥</span>
+        <span>Clientes</span>
+        <span class="sb-badge">24</span>
+      </button>
+
+      <button class="sb-item" data-page="progress">
+        <span class="sb-icon">📊</span>
+        <span>Progreso</span>
+      </button>
+
+      <button class="sb-item" data-page="plans">
+        <span class="sb-icon">📋</span>
+        <span>Planes</span>
+      </button>
+
+      <div class="sb-section">Comunicación</div>
+
+      <button class="sb-item" data-page="chat">
+        <span class="sb-icon">💬</span>
+        <span>Mensajes</span>
+        <span class="sb-badge">3</span>
+      </button>
+
+      <button class="sb-item" data-page="alerts">
+        <span class="sb-icon">🔔</span>
+        <span>Alertas</span>
+        <span class="sb-badge" style="background:var(--red)">5</span>
+      </button>
+
+      <div class="sb-section">Sistema</div>
+
+      <button class="sb-item" data-page="ai">
+        <span class="sb-icon">🤖</span>
+        <span>Spartan AI</span>
+      </button>
+
+      <button class="sb-item" data-page="billing">
+        <span class="sb-icon">💰</span>
+        <span>Facturación</span>
+      </button>
+    </nav>
+
+    <button class="sb-toggle" id="sb-toggle">
+      <span class="sb-toggle-icon sb-icon">‹</span>
+      <span>Colapsar</span>
+    </button>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN AREA
+  ══════════════════════════════════════ -->
+  <div class="main-area" id="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="topbar-icon-btn" id="mobile-sb-toggle" style="display:none">☰</button>
+      <span class="topbar-title">MR Sparta <strong id="bc-page">Dashboard</strong></span>
+      <div class="topbar-right">
+        <span class="topbar-clock" id="clock"></span>
+        <div class="topbar-search">
+          <span style="color:var(--txt3);font-size:11px">🔍</span>
+          <input type="text" id="client-search" placeholder="Buscar cliente...">
+        </div>
+        <button class="topbar-icon-btn">
+          🔔
+          <span class="topbar-notif-dot"></span>
+        </button>
+        <button class="topbar-icon-btn" style="clip-path:var(--clip-hex);background:linear-gradient(135deg,var(--gold-lo),var(--gold));color:var(--ink);font-family:var(--font-h);font-size:10px;font-weight:700;width:34px;height:34px">MC</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ══════════ PAGE: DASHBOARD ══════════ -->
+      <div class="page" id="page-dashboard">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-label">Panel de Control</div>
+            <h1>Dashboard <em>Espartano</em></h1>
+          </div>
+          <div class="ph-actions">
+            <button class="btn btn-gold" data-modal-open="modal-new-client">+ Nuevo Cliente</button>
+          </div>
+        </div>
+        <div class="gold-rule"></div>
+
+        <!-- KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi kpi-gold">
+            <div class="kpi-label">👥 Clientes Activos</div>
+            <div class="kpi-val" data-count="24" data-suffix="">0</div>
+            <div class="kpi-sub">+3 este mes</div>
+            <div class="kpi-trend up">▲ +14%</div>
+          </div>
+          <div class="kpi kpi-green">
+            <div class="kpi-label">📈 Cumplimiento Prom.</div>
+            <div class="kpi-val" data-count="78" data-suffix="%">0%</div>
+            <div class="kpi-sub">Meta: 80%</div>
+            <div class="kpi-trend up">▲ +3%</div>
+          </div>
+          <div class="kpi kpi-red">
+            <div class="kpi-label">⚠ Clientes en Riesgo</div>
+            <div class="kpi-val" data-count="5" data-suffix="">0</div>
+            <div class="kpi-sub">Requieren atención</div>
+            <div class="kpi-trend down">▼ urgente</div>
+          </div>
+          <div class="kpi kpi-gold">
+            <div class="kpi-label">💰 Ingreso Mensual</div>
+            <div class="kpi-val" style="font-size:26px">$1,892</div>
+            <div class="kpi-sub">24 suscripciones</div>
+            <div class="kpi-trend up">▲ +8%</div>
+          </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="grid-70-30" style="gap:16px">
+
+          <!-- Activity + Sparkline -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="panel">
+              <div class="panel-hd">
+                <span class="panel-title">⚔ Actividad Reciente</span>
+                <button class="panel-action">Ver todo →</button>
+              </div>
+              <div class="feed scroll-panel" style="max-height:260px">
+                <div class="feed-item"><div class="feed-dot dot-green"></div><div class="feed-text"><strong>Juan Martínez</strong> registró 84.2kg — bajó 0.8kg esta semana</div><div class="feed-time">12m</div></div>
+                <div class="feed-item"><div class="feed-dot dot-red"></div><div class="feed-text"><strong>Ana García</strong> cumplimiento 58% — alerta generada</div><div class="feed-time">1h</div></div>
+                <div class="feed-item"><div class="feed-dot dot-gold"></div><div class="feed-text"><strong>Carlos Ruiz</strong> plan ajustado por IA — +200 kcal</div><div class="feed-time">2h</div></div>
+                <div class="feed-item"><div class="feed-dot dot-green"></div><div class="feed-text"><strong>María López</strong> subió fotos de progreso — semana 8</div><div class="feed-time">3h</div></div>
+                <div class="feed-item"><div class="feed-dot dot-gray"></div><div class="feed-text"><strong>Pedro Soto</strong> completó entrenamiento de piernas</div><div class="feed-time">4h</div></div>
+                <div class="feed-item"><div class="feed-dot dot-red"></div><div class="feed-text"><strong>Luis Torres</strong> sin registro 5 días — recordatorio enviado</div><div class="feed-time">6h</div></div>
+                <div class="feed-item"><div class="feed-dot dot-gold"></div><div class="feed-text">Nueva suscripción <strong>Premium</strong> — Roberto Díaz</div><div class="feed-time">1d</div></div>
+                <div class="feed-item"><div class="feed-dot dot-green"></div><div class="feed-text"><strong>Sofía Herrera</strong> alcanzó meta de peso 🏆</div><div class="feed-time">1d</div></div>
+              </div>
+              <!-- Sparkline -->
+              <div style="padding-top:12px;border-top:1px solid var(--border);margin-top:12px">
+                <div class="panel-title" style="font-size:9px;margin-bottom:8px">Registros esta semana</div>
+                <div class="sparkline">
+                  <div class="spark-bar" style="height:40%"></div>
+                  <div class="spark-bar" style="height:65%"></div>
+                  <div class="spark-bar" style="height:55%"></div>
+                  <div class="spark-bar" style="height:80%"></div>
+                  <div class="spark-bar" style="height:45%"></div>
+                  <div class="spark-bar active" style="height:90%"></div>
+                  <div class="spark-bar" style="height:72%"></div>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--txt3)">
+                  <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column: Alerts + Top clients -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="panel">
+              <div class="panel-hd">
+                <span class="panel-title" style="color:var(--red)">⚠ Alertas Activas</span>
+                <span class="badge badge-red">5</span>
+              </div>
+              <div class="alert-list">
+                <div class="alert-card">
+                  <div class="alert-name">Ana García</div>
+                  <div class="alert-msg">Cumplimiento 58% — por debajo del umbral crítico</div>
+                  <div class="alert-actions">
+                    <button class="btn btn-gold btn-xs alert-apply">✓ Aplicar</button>
+                    <button class="btn btn-outline btn-xs">Ver perfil</button>
+                  </div>
+                </div>
+                <div class="alert-card">
+                  <div class="alert-name">Luis Torres</div>
+                  <div class="alert-msg">Sin registro de peso por 14 días</div>
+                </div>
+                <div class="alert-card warn">
+                  <div class="alert-name">Roberto Díaz</div>
+                  <div class="alert-msg">Peso estancado 2 semanas — IA sugiere +200 kcal</div>
+                  <div class="alert-actions">
+                    <button class="btn btn-gold btn-xs alert-apply">✓ Aplicar</button>
+                  </div>
+                </div>
+                <div class="alert-card warn">
+                  <div class="alert-name">Claudia Mora</div>
+                  <div class="alert-msg">Plan de nutrición vence en 3 días</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-hd">
+                <span class="panel-title">🏆 Top Progreso</span>
+              </div>
+              <div class="feed">
+                <div class="feed-item"><div class="c-avatar" style="width:26px;height:26px;font-size:8px">SH</div><div class="feed-text"><strong>Sofía Herrera</strong> — −8kg / 8 sem.</div><span class="badge badge-green">⭐ Meta</span></div>
+                <div class="feed-item"><div class="c-avatar" style="width:26px;height:26px;font-size:8px">JM</div><div class="feed-text"><strong>Juan Martínez</strong> — 96% cumpl.</div><span class="badge badge-gold">Elite</span></div>
+                <div class="feed-item"><div class="c-avatar" style="width:26px;height:26px;font-size:8px">ML</div><div class="feed-text"><strong>María López</strong> — +12kg músculo</div><span class="badge badge-gold">Top</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: CLIENTS ══════════ -->
+      <div class="page" id="page-clients">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-label">Gestión</div>
+            <h1>Mis <em>Clientes</em></h1>
+          </div>
+          <div class="ph-actions">
+            <button class="btn btn-outline">⬇ Exportar</button>
+            <button class="btn btn-gold" data-modal-open="modal-new-client">+ Agregar</button>
+          </div>
+        </div>
+        <div class="gold-rule"></div>
+
+        <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+          <div class="topbar-search" style="max-width:280px;flex:1">
+            <span style="color:var(--txt3);font-size:11px">🔍</span>
+            <input type="text" id="client-search" placeholder="Buscar por nombre...">
+          </div>
+          <select class="form-ctrl" style="padding:6px 12px;font-size:10px;font-family:var(--font-h);letter-spacing:1px;flex-shrink:0">
+            <option>Todos los estados</option>
+            <option>Activos</option>
+            <option>En alerta</option>
+          </select>
+          <select class="form-ctrl" style="padding:6px 12px;font-size:10px;font-family:var(--font-h);letter-spacing:1px;flex-shrink:0">
+            <option>Todos los planes</option>
+            <option>Basic</option>
+            <option>Premium</option>
+            <option>Elite</option>
+          </select>
+        </div>
+
+        <div class="panel" style="padding:0;overflow:hidden">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Plan</th>
+                <th>Peso</th>
+                <th>Objetivo</th>
+                <th>Cumplimiento</th>
+                <th>Estado</th>
+                <th>Semana</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="clients-tbody">
+              <tr>
+                <td><div class="c-avatar-cell"><div class="c-avatar">JM</div><div><span class="c-name">Juan Martínez</span><span class="c-email">juan@mail.com</span></div></div></td>
+                <td><span class="badge badge-green">Premium</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--gold)">84.2 kg</td>
+                <td>Ganar músculo</td>
+                <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill great" data-fill="96" style="width:0%"></div></div><span class="prog-pct">96%</span></div></td>
+                <td><span class="status-dot status-active">Activo</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--txt3)">#12</td>
+                <td><div class="row-acts"><button class="row-btn">Ver</button><button class="row-btn">Plan</button><button class="row-btn del">✕</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="c-avatar-cell"><div class="c-avatar" style="background:linear-gradient(135deg,var(--red-lo),var(--red))">AG</div><div><span class="c-name">Ana García</span><span class="c-email">ana@mail.com</span></div></div></td>
+                <td><span class="badge badge-gold">Basic</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--gold)">72.5 kg</td>
+                <td>Perder grasa</td>
+                <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill low" data-fill="58" style="width:0%"></div></div><span class="prog-pct">58%</span></div></td>
+                <td><span class="status-dot status-alert">Alerta</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--txt3)">#4</td>
+                <td><div class="row-acts"><button class="row-btn">Ver</button><button class="row-btn">Plan</button><button class="row-btn del">✕</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="c-avatar-cell"><div class="c-avatar">CR</div><div><span class="c-name">Carlos Ruiz</span><span class="c-email">carlos@mail.com</span></div></div></td>
+                <td><span class="badge badge-gold">Elite</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--gold)">91.0 kg</td>
+                <td>Recomposición</td>
+                <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill" data-fill="85" style="width:0%"></div></div><span class="prog-pct">85%</span></div></td>
+                <td><span class="status-dot status-active">Activo</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--txt3)">#8</td>
+                <td><div class="row-acts"><button class="row-btn">Ver</button><button class="row-btn">Plan</button><button class="row-btn del">✕</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="c-avatar-cell"><div class="c-avatar">ML</div><div><span class="c-name">María López</span><span class="c-email">maria@mail.com</span></div></div></td>
+                <td><span class="badge badge-green">Premium</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--gold)">68.3 kg</td>
+                <td>Ganar músculo</td>
+                <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill great" data-fill="88" style="width:0%"></div></div><span class="prog-pct">88%</span></div></td>
+                <td><span class="status-dot status-active">Activo</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--txt3)">#20</td>
+                <td><div class="row-acts"><button class="row-btn">Ver</button><button class="row-btn">Plan</button><button class="row-btn del">✕</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="c-avatar-cell"><div class="c-avatar">SH</div><div><span class="c-name">Sofía Herrera</span><span class="c-email">sofia@mail.com</span></div></div></td>
+                <td><span class="badge badge-gold">Elite</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--gold)">61.2 kg</td>
+                <td>Recomposición</td>
+                <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill great" data-fill="97" style="width:0%"></div></div><span class="prog-pct">97%</span></div></td>
+                <td><span class="status-dot status-active">Élite</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--txt3)">#24</td>
+                <td><div class="row-acts"><button class="row-btn">Ver</button><button class="row-btn">Plan</button><button class="row-btn del">✕</button></div></td>
+              </tr>
+              <tr>
+                <td><div class="c-avatar-cell"><div class="c-avatar" style="background:linear-gradient(135deg,#333,#555)">LT</div><div><span class="c-name">Luis Torres</span><span class="c-email">luis@mail.com</span></div></div></td>
+                <td><span class="badge badge-gold">Basic</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--txt3)">—</td>
+                <td>Rendimiento</td>
+                <td><div class="prog-wrap"><div class="prog-bar"><div class="prog-fill low" data-fill="0" style="width:0%"></div></div><span class="prog-pct">0%</span></div></td>
+                <td><span class="status-dot status-alert">Sin datos</span></td>
+                <td style="font-family:'Share Tech Mono',monospace;color:var(--txt3)">#3</td>
+                <td><div class="row-acts"><button class="row-btn">Ver</button><button class="row-btn del">✕</button></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: PROGRESS ══════════ -->
+      <div class="page" id="page-progress">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-label">Análisis</div>
+            <h1>Progreso <em>del Cliente</em></h1>
+          </div>
+        </div>
+        <div class="gold-rule"></div>
+
+        <div style="display:grid;grid-template-columns:240px 1fr;gap:16px;height:calc(100vh - 200px)">
+
+          <!-- Client list -->
+          <div class="panel scroll-panel" style="padding:0">
+            <div class="panel-hd" style="padding:14px 14px 10px;margin-bottom:0">
+              <span class="panel-title">Seleccionar</span>
+            </div>
+            <div>
+              <div class="client-sel-item sb-item" style="padding:12px 14px"
+                data-name="Juan Martínez" data-peso="84.2" data-cumpl="96" data-sem="12"
+                data-weights='[89,88.2,87.5,87,86.8,86.2,85.8,85.5,85.1,84.8,84.5,84.2]'>
+                <div class="c-avatar" style="width:28px;height:28px;font-size:9px;flex-shrink:0">JM</div>
+                <div><div style="font-size:12px;color:var(--txt);font-weight:600">Juan Martínez</div><div style="font-size:10px;color:var(--txt3)">Sem. 12 · Premium</div></div>
+              </div>
+              <div class="client-sel-item sb-item" style="padding:12px 14px"
+                data-name="Ana García" data-peso="72.5" data-cumpl="58" data-sem="4"
+                data-weights='[76,75.8,75.5,72.5]'>
+                <div class="c-avatar" style="width:28px;height:28px;font-size:9px;flex-shrink:0;background:linear-gradient(135deg,var(--red-lo),var(--red))">AG</div>
+                <div><div style="font-size:12px;color:var(--txt);font-weight:600">Ana García</div><div style="font-size:10px;color:var(--red)">⚠ Cumplimiento bajo</div></div>
+              </div>
+              <div class="client-sel-item sb-item" style="padding:12px 14px"
+                data-name="Sofía Herrera" data-peso="61.2" data-cumpl="97" data-sem="24"
+                data-weights='[69,68.5,68,67.4,66.8,65.9,64.8,63.5,62.7,62.1,61.6,61.2]'>
+                <div class="c-avatar" style="width:28px;height:28px;font-size:9px;flex-shrink:0">SH</div>
+                <div><div style="font-size:12px;color:var(--txt);font-weight:600">Sofía Herrera</div><div style="font-size:10px;color:var(--green)">⭐ Meta alcanzada</div></div>
+              </div>
+              <div class="client-sel-item sb-item" style="padding:12px 14px"
+                data-name="Carlos Ruiz" data-peso="91.0" data-cumpl="85" data-sem="8"
+                data-weights='[94,93,92.5,92,91.8,91.5,91.2,91]'>
+                <div class="c-avatar" style="width:28px;height:28px;font-size:9px;flex-shrink:0">CR</div>
+                <div><div style="font-size:12px;color:var(--txt);font-weight:600">Carlos Ruiz</div><div style="font-size:10px;color:var(--txt3)">Sem. 8 · Elite</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Detail -->
+          <div style="display:flex;flex-direction:column;gap:14px;overflow-y:auto">
+
+            <div class="panel">
+              <div class="panel-hd">
+                <span class="panel-title" id="prog-client-name">📊 Selecciona un cliente</span>
+                <div style="display:flex;gap:7px">
+                  <button class="btn btn-outline btn-sm">⬇ Exportar</button>
+                  <button class="btn btn-gold btn-sm">+ Registro</button>
+                </div>
+              </div>
+              <div class="w-chart-wrap">
+                <div class="w-chart-grid">
+                  <div class="w-grid-line"></div><div class="w-grid-line"></div>
+                  <div class="w-grid-line"></div><div class="w-grid-line"></div>
+                </div>
+                <div class="w-chart" id="weight-chart"></div>
+              </div>
+              <div class="w-axis" id="weight-axis"></div>
+            </div>
+
+            <!-- Stats row -->
+            <div style="display:grid;grid-template-columns:repeat(3,1fr) 120px;gap:12px">
+              <div class="kpi kpi-gold" style="padding:14px 16px">
+                <div class="kpi-label" style="font-size:7px">Peso Actual</div>
+                <div class="kpi-val" style="font-size:24px" id="s-peso">—</div>
+                <div class="kpi-sub">kg</div>
+              </div>
+              <div class="kpi kpi-green" style="padding:14px 16px">
+                <div class="kpi-label" style="font-size:7px">Cumplimiento</div>
+                <div class="kpi-val" style="font-size:24px" id="s-cumpl">—</div>
+              </div>
+              <div class="kpi kpi-gold" style="padding:14px 16px">
+                <div class="kpi-label" style="font-size:7px">Semana</div>
+                <div class="kpi-val" style="font-size:24px" id="s-sem">—</div>
+              </div>
+              <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--panel);border:1px solid var(--border);padding:10px">
+                <div class="ring-wrap" style="width:80px;height:80px">
+                  <svg class="ring-svg" viewBox="0 0 100 100" width="80" height="80" data-ring="0">
+                    <circle class="ring-bg" cx="50" cy="50" r="40"/>
+                    <circle class="ring-fill" id="prog-ring-fill" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="251"/>
+                  </svg>
+                  <span class="ring-label" style="font-size:13px" id="prog-ring-label">0%</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Plan -->
+            <div class="panel">
+              <div class="panel-hd">
+                <span class="panel-title">📋 Plan Actual</span>
+                <button class="btn btn-gold btn-sm">✦ Ajustar con IA</button>
+              </div>
+              <div class="plan-grid">
+                <div class="plan-block">
+                  <div class="plan-block-title">🏋 Entrenamiento</div>
+                  <div class="plan-row"><span class="plan-row-key">Lunes</span><span class="plan-row-val">Pecho + Tríceps</span><div class="plan-check done">✓</div></div>
+                  <div class="plan-row"><span class="plan-row-key">Martes</span><span class="plan-row-val">Espalda + Bíceps</span><div class="plan-check done">✓</div></div>
+                  <div class="plan-row"><span class="plan-row-key">Miércoles</span><span class="plan-row-val">Descanso activo</span><div class="plan-check done">✓</div></div>
+                  <div class="plan-row"><span class="plan-row-key">Jueves</span><span class="plan-row-val">Piernas</span><div class="plan-check done">✓</div></div>
+                  <div class="plan-row"><span class="plan-row-key">Viernes</span><span class="plan-row-val">Hombros + Core</span><div class="plan-check"></div></div>
+                </div>
+                <div class="plan-block">
+                  <div class="plan-block-title">🥗 Nutrición</div>
+                  <div class="plan-row"><span class="plan-row-key">Calorías</span><span class="plan-row-val gold">2,800 kcal</span></div>
+                  <div class="plan-row"><span class="plan-row-key">Proteína</span><span class="plan-row-val">180g / día</span></div>
+                  <div class="plan-row"><span class="plan-row-key">Carbos</span><span class="plan-row-val">310g / día</span></div>
+                  <div class="plan-row"><span class="plan-row-key">Grasas</span><span class="plan-row-val">80g / día</span></div>
+                  <div class="plan-row"><span class="plan-row-key">Agua</span><span class="plan-row-val">3.5L / día</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: PLANS ══════════ -->
+      <div class="page" id="page-plans">
+        <div class="ph">
+          <div class="ph-left"><div class="ph-label">Gestión</div><h1>Planes <em>y Rutinas</em></h1></div>
+          <div class="ph-actions">
+            <button class="btn btn-outline">📄 Plantillas</button>
+            <button class="btn btn-gold">🤖 Generar con IA</button>
+          </div>
+        </div>
+        <div class="gold-rule"></div>
+        <div class="grid-3">
+          <div class="panel"><div class="panel-hd"><span class="panel-title" style="color:var(--gold-hi)">📋 Volumen — Juan M.</span><span class="badge badge-gold">Activo</span></div>
+            <div class="plan-row"><span class="plan-row-key">Tipo</span><span class="badge badge-gold">Entrenamiento</span></div>
+            <div class="plan-row"><span class="plan-row-key">Semana</span><span class="plan-row-val">12 de 24</span></div>
+            <div class="plan-row"><span class="plan-row-key">Creado por</span><span class="plan-row-val">IA + Coach</span></div>
+            <div style="display:flex;gap:7px;margin-top:12px"><button class="btn btn-gold" style="flex:1;justify-content:center">Ver Plan</button><button class="btn btn-outline btn-sm">✏</button></div>
+          </div>
+          <div class="panel" style="border-color:rgba(204,34,34,.2)"><div class="panel-hd"><span class="panel-title" style="color:var(--red)">⚠ Déficit — Ana G.</span><span class="badge badge-red">Revisar</span></div>
+            <div class="plan-row"><span class="plan-row-key">Tipo</span><span class="badge badge-red">Nutrición</span></div>
+            <div class="plan-row"><span class="plan-row-key">Semana</span><span class="plan-row-val">4 de 12</span></div>
+            <div class="plan-row"><span class="plan-row-key">Estado</span><span style="color:var(--red);font-size:11px">Requiere revisión</span></div>
+            <div style="display:flex;gap:7px;margin-top:12px"><button class="btn btn-gold" style="flex:1;justify-content:center">Ver Plan</button><button class="btn btn-outline btn-sm">✏</button></div>
+          </div>
+          <div class="panel" style="border-color:rgba(61,187,119,.2)"><div class="panel-hd"><span class="panel-title" style="color:var(--green)">✅ Élite — Sofía H.</span><span class="badge badge-green">Excelente</span></div>
+            <div class="plan-row"><span class="plan-row-key">Tipo</span><span class="badge badge-green">Combinado</span></div>
+            <div class="plan-row"><span class="plan-row-key">Semana</span><span class="plan-row-val">20 de 24</span></div>
+            <div class="plan-row"><span class="plan-row-key">Progreso</span><span style="color:var(--green);font-size:11px">Óptimo</span></div>
+            <div style="display:flex;gap:7px;margin-top:12px"><button class="btn btn-gold" style="flex:1;justify-content:center">Ver Plan</button><button class="btn btn-outline btn-sm">✏</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: CHAT ══════════ -->
+      <div class="page" id="page-chat">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Comunicación</div><h1>Mensajes <em>con Clientes</em></h1></div></div>
+        <div class="gold-rule"></div>
+        <div class="chat-shell chat-wrap">
+          <div class="chat-contacts">
+            <div style="padding:10px;border-bottom:1px solid var(--border)">
+              <input type="text" class="chat-input" placeholder="Buscar..." style="width:100%;padding:7px 10px">
+            </div>
+            <div class="chat-contact active">
+              <div class="c-avatar" style="width:34px;height:34px;font-size:11px;flex-shrink:0">JM</div>
+              <div class="cc-info"><div class="cc-name">Juan Martínez</div><div class="cc-last">¿Puedo aumentar la carga?</div></div>
+              <div class="cc-meta"><div class="cc-time">10:42</div><div class="cc-unread">2</div></div>
+            </div>
+            <div class="chat-contact">
+              <div class="c-avatar" style="width:34px;height:34px;font-size:11px;flex-shrink:0;background:linear-gradient(135deg,var(--red-lo),var(--red))">AG</div>
+              <div class="cc-info"><div class="cc-name">Ana García</div><div class="cc-last">No pude completar...</div></div>
+              <div class="cc-meta"><div class="cc-time">09:15</div><div class="cc-unread">1</div></div>
+            </div>
+            <div class="chat-contact">
+              <div class="c-avatar" style="width:34px;height:34px;font-size:11px;flex-shrink:0">SH</div>
+              <div class="cc-info"><div class="cc-name">Sofía Herrera</div><div class="cc-last">¡Logré la meta! 🎯</div></div>
+              <div class="cc-meta"><div class="cc-time">Ayer</div></div>
+            </div>
+          </div>
+          <div class="chat-main">
+            <div class="chat-hd">
+              <div class="c-avatar" style="width:36px;height:36px;font-size:12px;flex-shrink:0">JM</div>
+              <div class="chat-hd-info"><h4>Juan Martínez</h4><div class="chat-hd-status">● En línea — Semana 12 · 84.2kg</div></div>
+              <button class="btn btn-outline btn-sm" style="margin-left:auto">Ver Perfil</button>
+            </div>
+            <div class="chat-messages scroll-panel">
+              <div class="msg"><div class="msg-av">JM</div><div><div class="msg-bubble">Hola coach, terminé el entrenamiento de piernas. Fue intenso pero completé todo.</div><div class="msg-ts">10:28</div></div></div>
+              <div class="msg out"><div class="msg-av">MC</div><div><div class="msg-bubble">Excelente Juan! Vi que registraste 94% de cumplimiento esta semana. 💪</div><div class="msg-ts">10:31</div></div></div>
+              <div class="msg"><div class="msg-av">JM</div><div><div class="msg-bubble">¿Puedo aumentar el peso en sentadillas? El actual se siente muy ligero.</div><div class="msg-ts">10:42</div></div></div>
+            </div>
+            <div class="chat-input-row chat-input-send">
+              <input type="text" class="chat-input" placeholder="Escribe un mensaje...">
+              <button class="btn btn-gold send-btn">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: ALERTS ══════════ -->
+      <div class="page" id="page-alerts">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Sistema</div><h1>Alertas <em>Activas</em></h1></div></div>
+        <div class="gold-rule"></div>
+        <div style="max-width:640px">
+          <div class="alert-list">
+            <div class="alert-card"><div class="alert-name">Ana García</div><div class="alert-msg">Cumplimiento 58% — por debajo del 70% durante 2 semanas consecutivas. IA recomienda reducir volumen y contactar al atleta.</div><span class="badge badge-red" style="margin-top:6px;display:inline-flex">Crítico</span></div>
+            <div class="alert-card"><div class="alert-name">Luis Torres</div><div class="alert-msg">Sin registro de peso en 14 días. Sistema envió recordatorio automático. Sin respuesta.</div><span class="badge badge-red" style="margin-top:6px;display:inline-flex">Sin datos</span></div>
+            <div class="alert-card warn"><div class="alert-name">Roberto Díaz</div><div class="alert-msg">Peso estancado 2 semanas. IA recomienda +200 kcal/día.</div><div class="alert-actions"><button class="btn btn-gold btn-xs alert-apply">✓ Aplicar +200 kcal</button><button class="btn btn-outline btn-xs">Ignorar</button></div></div>
+            <div class="alert-card warn"><div class="alert-name">Claudia Mora</div><div class="alert-msg">Plan de nutrición vence en 3 días. Renovación pendiente de aprobación.</div><span class="badge badge-gold" style="margin-top:6px;display:inline-flex">Renovar</span></div>
+            <div class="alert-card warn"><div class="alert-name">Pedro Soto</div><div class="alert-msg">No completó 3 sesiones esta semana.</div><span class="badge badge-gold" style="margin-top:6px;display:inline-flex">Ausencia</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: AI ══════════ -->
+      <div class="page" id="page-ai">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Inteligencia Artificial</div><h1>Spartan <em>AI Engine</em></h1></div><span style="color:var(--green);font-size:11px;font-family:var(--font-h);letter-spacing:1px">● Sistema activo</span></div>
+        <div class="gold-rule"></div>
+        <div class="grid-60-40" style="gap:16px">
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">🤖 Chat con Spartan AI</span></div>
+            <div class="ai-chat-area">
+              <div class="ai-messages scroll-panel">
+                <div class="msg" style="max-width:90%"><div class="msg-av" style="background:linear-gradient(135deg,var(--gold-lo),var(--gold));font-size:8px;border-radius:0">AI</div><div><div class="msg-bubble" style="background:rgba(201,168,76,.05);border-color:rgba(201,168,76,.18)">Sistema activo. Tengo acceso a datos de 24 clientes. Detecté 5 alertas activas. ¿Qué analizamos hoy?</div><div class="msg-ts">Sistema</div></div></div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <input type="text" class="ai-input chat-input" placeholder="Consulta al Spartan AI...">
+                <button class="btn btn-gold ai-send">Consultar</button>
+              </div>
+              <div class="ai-quick-btns">
+                <button class="btn btn-outline btn-xs ai-quick-btn">⚠ En riesgo</button>
+                <button class="btn btn-outline btn-xs ai-quick-btn">📊 Analizar Juan M.</button>
+                <button class="btn btn-outline btn-xs ai-quick-btn">🔄 Ajustes IA</button>
+                <button class="btn btn-outline btn-xs ai-quick-btn">📋 Resumen</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div class="panel">
+              <div class="panel-hd"><span class="panel-title" style="color:var(--gold-hi)">⚡ Acciones Automáticas</span></div>
+              <div class="alert-list">
+                <div class="alert-card warn"><div class="alert-name">Roberto Díaz</div><div class="alert-msg">Estancamiento 14 días → sugerido +200 kcal</div><div class="alert-actions"><button class="btn btn-gold btn-xs alert-apply">✓ Aplicar</button><button class="btn btn-outline btn-xs">Ver</button></div></div>
+                <div class="alert-card"><div class="alert-name">Ana García</div><div class="alert-msg">Cumplimiento bajo → sugerido −10% volumen</div><div class="alert-actions"><button class="btn btn-gold btn-xs alert-apply">✓ Aplicar</button><button class="btn btn-danger btn-xs">Ignorar</button></div></div>
+              </div>
+            </div>
+            <div class="panel">
+              <div class="panel-hd"><span class="panel-title">📊 Métricas IA</span></div>
+              <div class="plan-row"><span class="plan-row-key">Planes generados</span><span style="color:var(--gold-hi);font-family:var(--font-d);font-size:18px">142</span></div>
+              <div class="plan-row"><span class="plan-row-key">Ajustes automáticos</span><span style="color:var(--gold-hi);font-family:var(--font-d);font-size:18px">38</span></div>
+              <div class="plan-row"><span class="plan-row-key">Alertas detectadas</span><span style="color:var(--red);font-family:var(--font-d);font-size:18px">23</span></div>
+              <div class="plan-row"><span class="plan-row-key">Precisión modelo</span><span style="color:var(--green);font-family:var(--font-d);font-size:18px">94%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: BILLING ══════════ -->
+      <div class="page" id="page-billing">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Finanzas</div><h1>Facturación <em>y Pagos</em></h1></div></div>
+        <div class="gold-rule"></div>
+        <div class="kpi-grid kpi-grid-3">
+          <div class="kpi kpi-green"><div class="kpi-label">💰 Ingreso Mensual</div><div class="kpi-val">$1,892</div><div class="kpi-sub">24 suscripciones activas</div><div class="kpi-trend up">▲ +8%</div></div>
+          <div class="kpi kpi-gold"><div class="kpi-label">📈 Proyección Anual</div><div class="kpi-val">$22.7K</div><div class="kpi-sub">Estimado 2025</div></div>
+          <div class="kpi kpi-red"><div class="kpi-label">⚠ Pagos Pendientes</div><div class="kpi-val">2</div><div class="kpi-sub">$158 por cobrar</div></div>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<!-- ══ MODAL: New Client ══ -->
+<div class="modal-overlay" id="modal-new-client">
+  <div class="modal">
+    <div class="modal-title">Nuevo Guerrero</div>
+    <div class="modal-sub">Agrega un cliente a tu organización</div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Nombre</label><input class="form-ctrl" type="text" placeholder="Ej: Juan Martínez"></div>
+      <div class="form-group"><label class="form-label">Email</label><input class="form-ctrl" type="email" placeholder="email@ejemplo.com"></div>
+      <div class="form-group"><label class="form-label">Peso (kg)</label><input class="form-ctrl" type="number" placeholder="85.0"></div>
+      <div class="form-group"><label class="form-label">Altura (cm)</label><input class="form-ctrl" type="number" placeholder="178"></div>
+      <div class="form-group"><label class="form-label">Objetivo</label>
+        <select class="form-ctrl"><option>Ganar músculo</option><option>Perder grasa</option><option>Recomposición</option><option>Rendimiento</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Plan</label>
+        <select class="form-ctrl"><option>Basic</option><option>Premium</option><option>Elite</option></select>
+      </div>
+      <div class="form-group form-full"><label class="form-label">Notas iniciales</label><input class="form-ctrl" type="text" placeholder="Historial, lesiones, preferencias..."></div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-outline" data-modal-close="modal-new-client">Cancelar</button>
+      <button class="btn btn-gold">⚔ Agregar Cliente</button>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/sparta.js' %}"></script>
+</body>
+</html>

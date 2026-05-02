@@ -1,0 +1,549 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Atleta — MR Sparta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/sparta.css' %}">
+  
+</head>
+<body>
+
+<div class="app-shell">
+
+  <!-- ══════════════════════════════════════
+       SIDEBAR — ATHLETE
+  ══════════════════════════════════════ -->
+  <aside class="sidebar" id="sidebar">
+
+    <div class="sb-brand">
+      <div class="sb-logo-mark">MR</div>
+      <div class="sb-text">
+        <div class="sb-title">MR Sparta</div>
+        <div class="sb-sub">Atleta OS</div>
+      </div>
+    </div>
+
+    <div class="sb-user">
+      <div class="sb-avatar" style="background:linear-gradient(135deg,var(--red-lo),var(--red))">JM</div>
+      <div>
+        <div class="sb-user-name">Juan Martínez</div>
+        <div class="sb-user-role">🛡 Guerrero · Semana 12</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-section">Mi Portal</div>
+
+      <button class="sb-item" data-page="home">
+        <span class="sb-icon">🛡</span>
+        <span>Mi Inicio</span>
+      </button>
+
+      <button class="sb-item" data-page="plan">
+        <span class="sb-icon">📋</span>
+        <span>Mi Plan</span>
+      </button>
+
+      <button class="sb-item" data-page="tracking">
+        <span class="sb-icon">📊</span>
+        <span>Mi Progreso</span>
+      </button>
+
+      <button class="sb-item" data-page="nutrition">
+        <span class="sb-icon">🥗</span>
+        <span>Nutrición</span>
+      </button>
+
+      <button class="sb-item" data-page="photos">
+        <span class="sb-icon">📷</span>
+        <span>Mis Fotos</span>
+      </button>
+
+      <div class="sb-section">Comunicación</div>
+
+      <button class="sb-item" data-page="chat">
+        <span class="sb-icon">💬</span>
+        <span>Mi Coach</span>
+        <span class="sb-badge">1</span>
+      </button>
+
+      <button class="sb-item" data-page="ai-chat">
+        <span class="sb-icon">🤖</span>
+        <span>Spartan AI</span>
+      </button>
+    </nav>
+
+    <button class="sb-toggle" id="sb-toggle">
+      <span class="sb-toggle-icon sb-icon">‹</span>
+      <span>Colapsar</span>
+    </button>
+  </aside>
+
+  <!-- ══════════════════════════════════════
+       MAIN AREA
+  ══════════════════════════════════════ -->
+  <div class="main-area" id="main-area">
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+      <button class="topbar-icon-btn" id="mobile-sb-toggle">☰</button>
+      <span class="topbar-title">Portal <strong id="bc-page">Atleta</strong></span>
+      <div class="topbar-right">
+        <span class="topbar-clock" id="clock"></span>
+        <button class="topbar-icon-btn">
+          🔔
+          <span class="topbar-notif-dot"></span>
+        </button>
+        <button class="topbar-icon-btn" style="clip-path:var(--clip-hex);background:linear-gradient(135deg,var(--red-lo),var(--red));color:#fff;font-family:var(--font-h);font-size:10px;font-weight:700;width:34px;height:34px">JM</button>
+      </div>
+    </div>
+
+    <div class="page-content">
+
+      <!-- ══════════ PAGE: HOME ══════════ -->
+      <div class="page" id="page-home">
+        <div class="ph">
+          <div class="ph-left">
+            <div class="ph-label">Bienvenido de vuelta</div>
+            <h1>Hola, <em>Juan</em> ⚔</h1>
+          </div>
+          <div class="ph-actions">
+            <button class="btn btn-gold" data-modal-open="modal-log-weight">+ Registrar Peso</button>
+          </div>
+        </div>
+        <div class="gold-rule"></div>
+
+        <!-- Streak banner -->
+        <div class="streak-banner">
+          <div class="streak-flame">🔥</div>
+          <div class="streak-text">
+            <strong>¡Racha Espartana en marcha!</strong>
+            <span>Llevas registros consecutivos. No rompas la cadena.</span>
+          </div>
+          <div class="streak-count">
+            <div class="streak-num" data-count="12" data-suffix="">0</div>
+            <div class="streak-unit">días seguidos</div>
+          </div>
+        </div>
+
+        <!-- KPIs -->
+        <div class="kpi-grid">
+          <div class="kpi kpi-gold">
+            <div class="kpi-label">⚖ Peso Actual</div>
+            <div class="kpi-val">84.2</div>
+            <div class="kpi-sub">kg · −4.8kg desde inicio</div>
+            <div class="kpi-trend up">▼ −0.8 esta sem.</div>
+          </div>
+          <div class="kpi kpi-green">
+            <div class="kpi-label">✅ Cumplimiento</div>
+            <div class="kpi-val">96%</div>
+            <div class="kpi-sub">Esta semana</div>
+            <div class="kpi-trend up">▲ Excelente</div>
+          </div>
+          <div class="kpi kpi-gold">
+            <div class="kpi-label">📅 Semana Actual</div>
+            <div class="kpi-val">12</div>
+            <div class="kpi-sub">de 24 semanas</div>
+          </div>
+          <div class="kpi kpi-red">
+            <div class="kpi-label">🎯 Objetivo</div>
+            <div class="kpi-val" style="font-size:18px;color:var(--txt)">Ganar</div>
+            <div class="kpi-sub">Músculo + definición</div>
+          </div>
+        </div>
+
+        <!-- Main grid -->
+        <div class="grid-70-30" style="gap:16px;margin-top:0">
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+
+            <!-- Today's workout -->
+            <div class="panel">
+              <div class="panel-hd">
+                <span class="panel-title">🏋 Entrenamiento de Hoy — Viernes</span>
+                <span class="badge badge-gold">Hombros + Core</span>
+              </div>
+              <div>
+                <div class="workout-day">
+                  <div class="wd-check done">✓</div>
+                  <span class="wd-name">Press militar</span>
+                  <span class="wd-sets">4 × 10 reps</span>
+                  <span class="wd-badge">60kg</span>
+                </div>
+                <div class="workout-day">
+                  <div class="wd-check done">✓</div>
+                  <span class="wd-name">Elevaciones laterales</span>
+                  <span class="wd-sets">3 × 15 reps</span>
+                  <span class="wd-badge">12kg</span>
+                </div>
+                <div class="workout-day">
+                  <div class="wd-check done">✓</div>
+                  <span class="wd-name">Press Arnold</span>
+                  <span class="wd-sets">3 × 12 reps</span>
+                  <span class="wd-badge">20kg</span>
+                </div>
+                <div class="workout-day">
+                  <div class="wd-check"></div>
+                  <span class="wd-name">Plancha isométrica</span>
+                  <span class="wd-sets">3 × 60 seg</span>
+                  <span class="wd-badge">—</span>
+                </div>
+                <div class="workout-day">
+                  <div class="wd-check"></div>
+                  <span class="wd-name">Rueda abdominal</span>
+                  <span class="wd-sets">3 × 10 reps</span>
+                  <span class="wd-badge">—</span>
+                </div>
+              </div>
+              <div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border);display:flex;gap:8px">
+                <button class="btn btn-gold" style="flex:1;justify-content:center">✓ Marcar Completado</button>
+                <button class="btn btn-outline btn-sm">Ver plan completo</button>
+              </div>
+            </div>
+
+            <!-- Weight chart -->
+            <div class="panel">
+              <div class="panel-hd">
+                <span class="panel-title">📈 Evolución de Peso</span>
+                <span style="font-family:'Share Tech Mono',monospace;font-size:10px;color:var(--green)">−4.8kg total</span>
+              </div>
+              <div class="w-chart-wrap">
+                <div class="w-chart-grid">
+                  <div class="w-grid-line"></div><div class="w-grid-line"></div>
+                  <div class="w-grid-line"></div><div class="w-grid-line"></div>
+                </div>
+                <div class="w-chart" id="ath-weight-chart"></div>
+              </div>
+              <div class="w-axis" id="ath-weight-axis"></div>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div style="display:flex;flex-direction:column;gap:14px">
+
+            <!-- Weekly rings -->
+            <div class="panel">
+              <div class="panel-hd"><span class="panel-title">Esta Semana</span></div>
+              <div class="week-rings">
+                <div class="week-ring-item">
+                  <div class="ring-wrap" style="width:72px;height:72px">
+                    <svg class="ring-svg" viewBox="0 0 100 100" width="72" height="72" data-ring="96">
+                      <circle class="ring-bg" cx="50" cy="50" r="40"/>
+                      <circle class="ring-fill green" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="251"/>
+                    </svg>
+                    <span class="ring-label green" style="font-size:12px">96%</span>
+                  </div>
+                  <span class="week-ring-label">Entreno</span>
+                </div>
+                <div class="week-ring-item">
+                  <div class="ring-wrap" style="width:72px;height:72px">
+                    <svg class="ring-svg" viewBox="0 0 100 100" width="72" height="72" data-ring="88">
+                      <circle class="ring-bg" cx="50" cy="50" r="40"/>
+                      <circle class="ring-fill" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="251"/>
+                    </svg>
+                    <span class="ring-label" style="font-size:12px">88%</span>
+                  </div>
+                  <span class="week-ring-label">Nutrición</span>
+                </div>
+                <div class="week-ring-item">
+                  <div class="ring-wrap" style="width:72px;height:72px">
+                    <svg class="ring-svg" viewBox="0 0 100 100" width="72" height="72" data-ring="75">
+                      <circle class="ring-bg" cx="50" cy="50" r="40"/>
+                      <circle class="ring-fill" cx="50" cy="50" r="40" stroke-dasharray="251" stroke-dashoffset="251"/>
+                    </svg>
+                    <span class="ring-label" style="font-size:12px">75%</span>
+                  </div>
+                  <span class="week-ring-label">Hidra.</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- AI message -->
+            <div class="panel">
+              <div class="panel-hd"><span class="panel-title">🤖 Spartan AI</span></div>
+              <div class="spartan-ai-bubble">
+                <strong>ANÁLISIS DEL SISTEMA</strong><br>
+                Juan, bajaste 0.8kg esta semana. Vas exactamente en el ritmo correcto. Esta semana puedes aumentar 5kg en sentadillas y 2.5kg en press banca. Sigue ejecutando.
+              </div>
+              <button class="btn btn-outline btn-sm" style="width:100%;justify-content:center;margin-top:8px" data-page="ai-chat">Consultar más →</button>
+            </div>
+
+            <!-- Coach note -->
+            <div class="panel">
+              <div class="panel-hd"><span class="panel-title">👨‍🏫 Nota del Coach</span></div>
+              <div style="font-size:12px;color:var(--txt2);line-height:1.7;font-style:italic;">
+                "Juan, excelente semana. Vi tu registro de piernas — perfecto. Esta semana foco en la técnica del press militar antes de subir carga. Nos vemos en el chequeo mensual."
+              </div>
+              <div style="margin-top:10px;display:flex;align-items:center;gap:8px">
+                <div class="c-avatar" style="width:24px;height:24px;font-size:8px">MC</div>
+                <span style="font-family:var(--font-h);font-size:10px;color:var(--gold-lo)">Coach Marcos · Hace 2h</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: PLAN ══════════ -->
+      <div class="page" id="page-plan">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Mi Plan</div><h1>Rutina <em>Semanal</em></h1></div><div class="ph-actions"><button class="btn btn-outline">⬇ Descargar PDF</button></div></div>
+        <div class="gold-rule"></div>
+        <div class="grid-2" style="gap:16px">
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">🏋 Plan de Entrenamiento — Semana 12</span></div>
+            <div class="workout-day"><div class="wd-check done">✓</div><span class="wd-name">Lunes — Pecho + Tríceps</span><span class="wd-badge">Completado</span></div>
+            <div class="workout-day"><div class="wd-check done">✓</div><span class="wd-name">Martes — Espalda + Bíceps</span><span class="wd-badge">Completado</span></div>
+            <div class="workout-day"><div class="wd-check done">✓</div><span class="wd-name">Miércoles — Descanso activo</span><span class="wd-badge">OK</span></div>
+            <div class="workout-day"><div class="wd-check done">✓</div><span class="wd-name">Jueves — Piernas</span><span class="wd-badge">Completado</span></div>
+            <div class="workout-day"><div class="wd-check"></div><span class="wd-name">Viernes — Hombros + Core</span><span class="wd-sets" style="color:var(--gold)">Pendiente</span></div>
+            <div class="workout-day"><div class="wd-check"></div><span class="wd-name">Sábado — Cardio LISS</span><span class="wd-sets">30 min</span></div>
+            <div class="workout-day"><div class="wd-check"></div><span class="wd-name">Domingo — Descanso</span><span class="wd-sets">Recuperación</span></div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">🥗 Plan Nutricional — Semana 12</span></div>
+            <div class="plan-row"><span class="plan-row-key">Calorías diarias</span><span class="plan-row-val gold">2,800 kcal</span></div>
+            <div class="plan-row"><span class="plan-row-key">Proteína</span><span class="plan-row-val">180g · 2.2g/kg</span></div>
+            <div class="plan-row"><span class="plan-row-key">Carbohidratos</span><span class="plan-row-val">310g / día</span></div>
+            <div class="plan-row"><span class="plan-row-key">Grasas</span><span class="plan-row-val">80g / día</span></div>
+            <div class="plan-row"><span class="plan-row-key">Agua</span><span class="plan-row-val">3.5L / día</span></div>
+            <div style="margin-top:14px">
+              <div class="macro-row">
+                <div class="macro-label"><span class="macro-name">Proteína</span><span class="macro-val">180g</span></div>
+                <div class="macro-bar"><div class="macro-fill prot" style="width:64%"></div></div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-label"><span class="macro-name">Carbohidratos</span><span class="macro-val">310g</span></div>
+                <div class="macro-bar"><div class="macro-fill carb" style="width:44%"></div></div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-label"><span class="macro-name">Grasas</span><span class="macro-val">80g</span></div>
+                <div class="macro-bar"><div class="macro-fill fat" style="width:26%"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: TRACKING ══════════ -->
+      <div class="page" id="page-tracking">
+        <div class="ph">
+          <div class="ph-left"><div class="ph-label">Mi Progreso</div><h1>Evolución <em>Física</em></h1></div>
+          <div class="ph-actions"><button class="btn btn-gold" data-modal-open="modal-log-weight">+ Registrar Peso</button></div>
+        </div>
+        <div class="gold-rule"></div>
+
+        <div class="kpi-grid">
+          <div class="kpi kpi-gold"><div class="kpi-label">⚖ Peso Actual</div><div class="kpi-val">84.2 kg</div><div class="kpi-sub">Inicio: 89kg</div><div class="kpi-trend up">▼ −4.8kg</div></div>
+          <div class="kpi kpi-red"><div class="kpi-label">🎯 Meta</div><div class="kpi-val">80 kg</div><div class="kpi-sub">Faltan 4.2kg</div></div>
+          <div class="kpi kpi-green"><div class="kpi-label">📅 Progreso</div><div class="kpi-val">50%</div><div class="kpi-sub">Semana 12 de 24</div></div>
+          <div class="kpi kpi-gold"><div class="kpi-label">📉 Promedio semanal</div><div class="kpi-val">−0.6</div><div class="kpi-sub">kg / semana</div></div>
+        </div>
+
+        <div class="panel" style="margin-top:16px">
+          <div class="panel-hd">
+            <span class="panel-title">📈 Historial de Peso — 12 semanas</span>
+            <div style="display:flex;gap:8px;align-items:center">
+              <div style="width:8px;height:8px;background:var(--gold);border-radius:50%"></div>
+              <span style="font-size:10px;color:var(--txt3)">Registros semanales</span>
+            </div>
+          </div>
+          <div class="w-chart-wrap" style="height:180px">
+            <div class="w-chart-grid">
+              <div class="w-grid-line"></div><div class="w-grid-line"></div>
+              <div class="w-grid-line"></div><div class="w-grid-line"></div>
+            </div>
+            <div class="w-chart" id="ath-weight-chart"></div>
+          </div>
+          <div class="w-axis" id="ath-weight-axis"></div>
+        </div>
+
+        <div class="grid-2" style="gap:14px;margin-top:14px">
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">📊 Cumplimiento por Semana</span></div>
+            <div class="sparkline" style="height:60px;align-items:flex-end">
+              <div class="spark-bar" style="height:80%"></div>
+              <div class="spark-bar" style="height:90%"></div>
+              <div class="spark-bar" style="height:75%"></div>
+              <div class="spark-bar" style="height:95%"></div>
+              <div class="spark-bar" style="height:88%"></div>
+              <div class="spark-bar" style="height:82%"></div>
+              <div class="spark-bar" style="height:91%"></div>
+              <div class="spark-bar" style="height:78%"></div>
+              <div class="spark-bar" style="height:94%"></div>
+              <div class="spark-bar" style="height:86%"></div>
+              <div class="spark-bar" style="height:89%"></div>
+              <div class="spark-bar active" style="height:96%"></div>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-top:4px;font-family:'Share Tech Mono',monospace;font-size:8px;color:var(--txt3)">
+              <span>S1</span><span>S3</span><span>S5</span><span>S7</span><span>S9</span><span>S12</span>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">🏆 Logros Desbloqueados</span></div>
+            <div class="feed">
+              <div class="feed-item"><span style="font-size:18px">🔥</span><div class="feed-text"><strong>Racha de 12 días</strong> — Sin interrupciones</div><span class="badge badge-gold">Activo</span></div>
+              <div class="feed-item"><span style="font-size:18px">⚡</span><div class="feed-text"><strong>96% en una semana</strong> — Cumplimiento máximo</div><span class="badge badge-green">Logrado</span></div>
+              <div class="feed-item"><span style="font-size:18px">📉</span><div class="feed-text"><strong>−4kg alcanzado</strong> — Hito de progreso</div><span class="badge badge-green">Logrado</span></div>
+              <div class="feed-item" style="opacity:.4"><span style="font-size:18px">👑</span><div class="feed-text"><strong>Meta alcanzada</strong> — Llegar a 80kg</div><span class="badge badge-gray">Bloqueado</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: NUTRITION ══════════ -->
+      <div class="page" id="page-nutrition">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Mi Plan</div><h1>Nutrición <em>Diaria</em></h1></div></div>
+        <div class="gold-rule"></div>
+        <div class="grid-2" style="gap:16px">
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">🥗 Macros del Día</span></div>
+            <div style="margin-bottom:16px">
+              <div class="macro-row">
+                <div class="macro-label"><span class="macro-name">Proteína</span><span class="macro-val">162 / 180g</span></div>
+                <div class="macro-bar"><div class="macro-fill prot" style="width:90%"></div></div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-label"><span class="macro-name">Carbohidratos</span><span class="macro-val">280 / 310g</span></div>
+                <div class="macro-bar"><div class="macro-fill carb" style="width:90%"></div></div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-label"><span class="macro-name">Grasas</span><span class="macro-val">55 / 80g</span></div>
+                <div class="macro-bar"><div class="macro-fill fat" style="width:69%"></div></div>
+              </div>
+              <div class="macro-row">
+                <div class="macro-label"><span class="macro-name">💧 Agua</span><span class="macro-val">2.8 / 3.5L</span></div>
+                <div class="macro-bar"><div class="macro-fill" style="width:80%;background:linear-gradient(90deg,#1144AA,#3366CC)"></div></div>
+              </div>
+            </div>
+            <div style="text-align:center;padding:10px 0;border-top:1px solid var(--border)">
+              <div style="font-family:var(--font-d);font-size:28px;color:var(--gold-hi)">2,520</div>
+              <div style="font-family:var(--font-h);font-size:8px;letter-spacing:2px;color:var(--txt3)">kcal de 2,800</div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">🍽 Comidas del Día</span></div>
+            <div class="plan-row"><span class="plan-row-key">☀ Desayuno</span><span class="plan-row-val">Avena + proteína + frutas</span><div class="plan-check done">✓</div></div>
+            <div class="plan-row"><span class="plan-row-key">🌤 Media mañana</span><span class="plan-row-val">Batido proteico + banana</span><div class="plan-check done">✓</div></div>
+            <div class="plan-row"><span class="plan-row-key">☀ Almuerzo</span><span class="plan-row-val">Pollo + arroz + vegetales</span><div class="plan-check done">✓</div></div>
+            <div class="plan-row"><span class="plan-row-key">🌆 Pre-entreno</span><span class="plan-row-val">Tostada + mantequilla maní</span><div class="plan-check done">✓</div></div>
+            <div class="plan-row"><span class="plan-row-key">🌙 Cena</span><span class="plan-row-val">Salmón + batata + espinaca</span><div class="plan-check"></div></div>
+            <div class="plan-row"><span class="plan-row-key">🌙 Pre-sueño</span><span class="plan-row-val">Caseína + almendras</span><div class="plan-check"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: PHOTOS ══════════ -->
+      <div class="page" id="page-photos">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Seguimiento Visual</div><h1>Fotos de <em>Progreso</em></h1></div><div class="ph-actions"><button class="btn btn-gold">+ Subir Foto</button></div></div>
+        <div class="gold-rule"></div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px">
+          <div style="font-family:var(--font-h);font-size:9px;letter-spacing:2px;color:var(--txt3);text-align:center;padding:8px 0">Semana 1</div>
+          <div style="font-family:var(--font-h);font-size:9px;letter-spacing:2px;color:var(--txt3);text-align:center;padding:8px 0">Semana 4</div>
+          <div style="font-family:var(--font-h);font-size:9px;letter-spacing:2px;color:var(--txt3);text-align:center;padding:8px 0">Semana 8</div>
+          <div style="font-family:var(--font-h);font-size:9px;letter-spacing:2px;color:var(--txt3);text-align:center;padding:8px 0">Semana 12</div>
+        </div>
+        <div class="photos-grid" style="grid-template-columns:repeat(4,1fr)">
+          <div class="photo-slot"><div class="photo-slot-icon">🛡</div><div class="photo-slot-label">Frente</div></div>
+          <div class="photo-slot"><div class="photo-slot-icon">🛡</div><div class="photo-slot-label">Frente</div></div>
+          <div class="photo-slot"><div class="photo-slot-icon">🛡</div><div class="photo-slot-label">Frente</div></div>
+          <div class="photo-slot" style="border-color:var(--gold-lo);"><div class="photo-slot-icon" style="color:var(--gold)">📷</div><div class="photo-slot-label" style="color:var(--gold)">Subir foto</div></div>
+        </div>
+        <div class="photos-grid" style="grid-template-columns:repeat(4,1fr);margin-top:8px">
+          <div class="photo-slot"><div class="photo-slot-icon">🛡</div><div class="photo-slot-label">Espalda</div></div>
+          <div class="photo-slot"><div class="photo-slot-icon">🛡</div><div class="photo-slot-label">Espalda</div></div>
+          <div class="photo-slot"><div class="photo-slot-icon">🛡</div><div class="photo-slot-label">Espalda</div></div>
+          <div class="photo-slot" style="border-color:var(--gold-lo);"><div class="photo-slot-icon" style="color:var(--gold)">📷</div><div class="photo-slot-label" style="color:var(--gold)">Subir foto</div></div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: CHAT (Coach) ══════════ -->
+      <div class="page" id="page-chat">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Mi Coach</div><h1>Chat con <em>Coach Marcos</em></h1></div></div>
+        <div class="gold-rule"></div>
+        <div class="panel" style="padding:0;overflow:hidden">
+          <div style="display:flex;flex-direction:column;height:calc(100vh - 240px)">
+            <div class="chat-hd">
+              <div class="c-avatar" style="width:36px;height:36px;font-size:12px;flex-shrink:0">MC</div>
+              <div class="chat-hd-info"><h4>Coach Marcos</h4><div class="chat-hd-status">● Disponible · Responde en ~1h</div></div>
+            </div>
+            <div class="chat-messages scroll-panel">
+              <div class="msg"><div class="msg-av">MC</div><div><div class="msg-bubble">Juan, excelente semana. 94% de cumplimiento es excepcional. Sigue así. Esta semana aumenta 5kg en sentadillas.</div><div class="msg-ts">Lun 09:30</div></div></div>
+              <div class="msg out"><div class="msg-av">JM</div><div><div class="msg-bubble">Gracias coach! Ya lo anoté. Una pregunta sobre el press banca, ¿lo aumento también?</div><div class="msg-ts">Lun 10:15</div></div></div>
+              <div class="msg"><div class="msg-av">MC</div><div><div class="msg-bubble">En press banca espera 2 semanas más. Primero quiero que perfecciones la técnica con el peso actual.</div><div class="msg-ts">Lun 11:00</div></div></div>
+              <div class="msg out"><div class="msg-av">JM</div><div><div class="msg-bubble">Entendido. Hoy completé piernas al 100%. Fue duro pero lo logré.</div><div class="msg-ts">Jue 18:30</div></div></div>
+              <div class="msg"><div class="msg-av">MC</div><div><div class="msg-bubble">Perfecto. Eso es disciplina espartana. ⚔</div><div class="msg-ts">Jue 18:45</div></div></div>
+            </div>
+            <div class="chat-input-row chat-input-send">
+              <input type="text" class="chat-input" placeholder="Escribe a tu coach...">
+              <button class="btn btn-gold send-btn">Enviar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PAGE: AI CHAT ══════════ -->
+      <div class="page" id="page-ai-chat">
+        <div class="ph"><div class="ph-left"><div class="ph-label">Inteligencia Artificial</div><h1>Spartan <em>AI</em></h1></div><span style="color:var(--green);font-size:11px;font-family:var(--font-h);letter-spacing:1px">● Activo</span></div>
+        <div class="gold-rule"></div>
+        <div class="grid-60-40" style="gap:16px">
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">🤖 Spartan AI — Contexto Real</span></div>
+            <div class="ai-chat-area">
+              <div class="ai-messages scroll-panel">
+                <div class="msg" style="max-width:90%">
+                  <div class="msg-av" style="background:linear-gradient(135deg,var(--gold-lo),var(--gold));font-size:8px;border-radius:0">AI</div>
+                  <div><div class="msg-bubble" style="background:rgba(201,168,76,.05);border-color:rgba(201,168,76,.18)">Hola Juan. Veo que llevas 12 semanas de progreso constante. Esta semana bajaste 0.8kg — excelente ritmo. ¿En qué te puedo ayudar hoy?</div><div class="msg-ts">Spartan AI · Sistema</div></div>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px">
+                <input type="text" class="ai-input chat-input" placeholder="Pregunta al Spartan AI...">
+                <button class="btn btn-gold ai-send">Consultar</button>
+              </div>
+              <div class="ai-quick-btns">
+                <button class="btn btn-outline btn-xs ai-quick-btn">📊 Analizar mi progreso</button>
+                <button class="btn btn-outline btn-xs ai-quick-btn">🥗 Ajustar dieta</button>
+                <button class="btn btn-outline btn-xs ai-quick-btn">🏋 Aumentar carga</button>
+                <button class="btn btn-outline btn-xs ai-quick-btn">😴 Recuperación</button>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-hd"><span class="panel-title">📋 Mi Contexto</span></div>
+            <div class="plan-row"><span class="plan-row-key">Peso actual</span><span class="plan-row-val gold">84.2 kg</span></div>
+            <div class="plan-row"><span class="plan-row-key">Objetivo</span><span class="plan-row-val">80 kg</span></div>
+            <div class="plan-row"><span class="plan-row-key">Semana</span><span class="plan-row-val">12 de 24</span></div>
+            <div class="plan-row"><span class="plan-row-key">Cumplimiento</span><span style="color:var(--green)">96%</span></div>
+            <div class="plan-row"><span class="plan-row-key">Plan activo</span><span class="plan-row-val">Volumen S12</span></div>
+            <div class="plan-row"><span class="plan-row-key">Calorías</span><span class="plan-row-val gold">2,800 kcal</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /page-content -->
+  </div><!-- /main-area -->
+</div><!-- /app-shell -->
+
+<!-- ══ MODAL: Log Weight ══ -->
+<div class="modal-overlay" id="modal-log-weight">
+  <div class="modal">
+    <div class="modal-title">Registrar Peso</div>
+    <div class="modal-sub">Mantén tu ciclo de seguimiento activo</div>
+    <div class="form-grid">
+      <div class="form-group"><label class="form-label">Peso (kg)</label><input class="form-ctrl" type="number" step="0.1" placeholder="84.2" style="font-size:20px;padding:12px;text-align:center"></div>
+      <div class="form-group"><label class="form-label">Fecha</label><input class="form-ctrl" type="date"></div>
+      <div class="form-group form-full"><label class="form-label">Notas (opcional)</label><input class="form-ctrl" type="text" placeholder="¿Cómo te sientes hoy?"></div>
+    </div>
+    <div class="modal-acts">
+      <button class="btn btn-outline" data-modal-close="modal-log-weight">Cancelar</button>
+      <button class="btn btn-gold">⚔ Registrar</button>
+    </div>
+  </div>
+</div>
+
+<script src="{% static 'js/sparta.js' %}"></script>
+</body>
+</html>

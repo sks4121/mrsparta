@@ -1,0 +1,25 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ plan.name }}</h1>
+    <div class="alert alert-info">Semana {{ current_week }} de {{ plan.total_weeks }}</div>
+    <div class="row">
+        <div class="col-md-8">
+            <h3>Descripción</h3>
+            <p>{{ plan.description }}</p>
+            <h4>Nutrición</h4>
+            <p>{{ plan.daily_calories }} kcal | Proteína: {{ plan.protein_g }}g</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Información</h5>
+                    <p>Tipo: {{ plan.get_plan_type_display }}</p>
+                    <p>Estado: {{ plan.get_status_display }}</p>
+                    <a href="{% url 'plans:plan-week' plan.id %}" class="btn btn-primary">Ver Semana</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

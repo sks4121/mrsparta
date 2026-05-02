@@ -1,0 +1,25 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">Nuestros Planes</h1>
+    <div class="row">
+        {% for plan in plans %}
+        <div class="col-md-4 mb-3">
+            <div class="card {% if plan.tier == 'premium' %}border-primary{% endif %}">
+                <div class="card-body">
+                    <h3>{{ plan.name }}</h3>
+                    <h2 class="text-primary">${{ plan.price_monthly }}/mes</h2>
+                    <ul class="list-unstyled">
+                        <li>{% if plan.has_ai %}✓{% else %}✗{% endif %} IA Personalizada</li>
+                        <li>{% if plan.has_human_coach %}✓{% else %}✗{% endif %} Coach Humano</li>
+                        <li>{% if plan.has_video_call %}✓{% else %}✗{% endif %} Videollamadas</li>
+                        <li>{{ plan.max_clients }} clientes máximo</li>
+                    </ul>
+                    <a href="{% url 'checkout' %}?plan={{ plan.id }}" class="btn btn-primary btn-block mt-3">Seleccionar</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

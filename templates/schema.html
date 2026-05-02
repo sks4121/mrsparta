@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MR Sparta Coach OS — Esquema de Base de Datos</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0a;
+    color: #e8e0d0;
+    font-family: 'Segoe UI', sans-serif;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #111;
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .logo-hex {
+    width: 40px; height: 40px;
+    background: linear-gradient(135deg, #8B6914, #F0C040);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 13px; color: #0a0a0a;
+  }
+
+  .brand-text h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #F0C040;
+    letter-spacing: 2px;
+  }
+
+  .brand-text p {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #CC2222;
+    text-transform: uppercase;
+    margin-top: 1px;
+  }
+
+  .header-stats {
+    display: flex;
+    gap: 24px;
+  }
+
+  .stat-pill {
+    background: rgba(201,168,76,0.08);
+    border: 1px solid rgba(201,168,76,0.2);
+    padding: 6px 16px;
+    font-size: 12px;
+    color: #C9A84C;
+    letter-spacing: 1px;
+  }
+
+  .stat-pill span {
+    font-weight: 700;
+    color: #F0C040;
+    margin-right: 4px;
+  }
+
+  /* ── CONTROLS ── */
+  .controls {
+    background: #0e0e0e;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .ctrl-label {
+    font-size: 11px;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-right: 4px;
+  }
+
+  .btn {
+    padding: 7px 16px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #8B6914, #C9A84C);
+    color: #0a0a0a;
+    font-weight: 700;
+  }
+  .btn-gold:hover { background: linear-gradient(135deg, #C9A84C, #F0C040); }
+
+  .btn-outline {
+    background: transparent;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: #C9A84C;
+  }
+  .btn-outline:hover { background: rgba(201,168,76,0.08); border-color: #C9A84C; }
+
+  .btn-danger {
+    background: transparent;
+    border: 1px solid rgba(204,34,34,0.3);
+    color: #CC2222;
+  }
+  .btn-danger:hover { background: rgba(204,34,34,0.1); }
+
+  .zoom-display {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: #C9A84C;
+    background: rgba(201,168,76,0.06);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 6px 14px;
+    min-width: 60px;
+    text-align: center;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    background: #0e0e0e;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    padding: 10px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: #888;
+  }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* ── DIAGRAM AREA ── */
+  .diagram-wrapper {
+    overflow: auto;
+    cursor: grab;
+    user-select: none;
+    background:
+      radial-gradient(ellipse at 20% 20%, rgba(201,168,76,0.03) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 80%, rgba(139,26,26,0.04) 0%, transparent 60%),
+      #0a0a0a;
+    min-height: calc(100vh - 180px);
+    position: relative;
+  }
+
+  .diagram-wrapper:active { cursor: grabbing; }
+
+  .diagram-inner {
+    padding: 60px;
+    transform-origin: top left;
+    display: inline-block;
+    min-width: 100%;
+  }
+
+  /* ── MERMAID OVERRIDES ── */
+  #erd-container svg {
+    background: transparent !important;
+  }
+
+  /* Entity header rows */
+  .mermaid .er.entityBox {
+    fill: #161616 !important;
+    stroke: rgba(201,168,76,0.3) !important;
+  }
+
+  /* ── GROUPS KEY ── */
+  .groups-panel {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10,10,10,0.95);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 16px;
+    width: 180px;
+    z-index: 50;
+  }
+
+  .groups-title {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #8B6914;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+    padding-bottom: 8px;
+  }
+
+  .group-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 11px;
+    color: #888;
+  }
+
+  .group-color {
+    width: 8px; height: 8px;
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  /* ── INFO BAR ── */
+  .info-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(10,10,10,0.97);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding: 8px 32px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 11px;
+    color: #555;
+    z-index: 100;
+  }
+
+  .info-bar kbd {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    font-size: 10px;
+    color: #888;
+    border-radius: 3px;
+  }
+
+  .info-sep { color: #333; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-brand">
+    <div class="logo-hex">MR</div>
+    <div class="brand-text">
+      <h1>MR SPARTA COACH OS</h1>
+      <p>Esquema de Base de Datos</p>
+    </div>
+  </div>
+  <div class="header-stats">
+    <div class="stat-pill"><span>24</span> Modelos</div>
+    <div class="stat-pill"><span>9</span> Apps Django</div>
+    <div class="stat-pill"><span>PostgreSQL</span></div>
+  </div>
+</div>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <span class="ctrl-label">Zoom</span>
+  <button class="btn btn-outline" onclick="zoom(-0.15)">− Alejar</button>
+  <div class="zoom-display" id="zoom-label">100%</div>
+  <button class="btn btn-outline" onclick="zoom(0.15)">+ Acercar</button>
+  <button class="btn btn-gold" onclick="resetZoom()">↺ Reset</button>
+  <div style="flex:1"></div>
+  <button class="btn btn-outline" onclick="fitScreen()">⊡ Ajustar pantalla</button>
+  <button class="btn btn-danger" onclick="window.print()">🖨 Imprimir / PDF</button>
+</div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <span class="ctrl-label">Grupos</span>
+  <div class="legend-item"><div class="legend-dot" style="background:#3DBB77"></div>Identidad y roles</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#F0C040"></div>Planes fitness</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4A90D9"></div>Progreso y fotos</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#CC2222"></div>IA Engine</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#8B5CF6"></div>Coaching / Billing</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#F97316"></div>Comunicación</div>
+  <div style="margin-left:auto;font-size:11px;color:#555">
+    <b style="color:#888">||--o{</b> uno a muchos &nbsp;|&nbsp;
+    <b style="color:#888">||--||</b> uno a uno &nbsp;|&nbsp;
+    <b style="color:#888">||--o|</b> uno a 0..1
+  </div>
+</div>
+
+<!-- DIAGRAM -->
+<div class="diagram-wrapper" id="diagram-wrapper">
+  <div class="diagram-inner" id="diagram-inner">
+    <div class="mermaid" id="erd-container">
+erDiagram
+
+  %% ══════════════════════════════
+  %% GRUPO 1 — IDENTIDAD Y ROLES
+  %% ══════════════════════════════
+
+  USER {
+    int     id           PK
+    string  username
+    string  email
+    string  role         "admin|coach|athlete"
+    string  phone
+    bool    is_onboarded
+    datetime created_at
+  }
+
+  CLIENTPROFILE {
+    int     id           PK
+    int     user_id      FK
+    int     coach_id     FK
+    decimal weight_kg
+    int     height_cm
+    int     age
+    string  goal         "muscle_gain|fat_loss|recomp"
+    string  level        "beginner|intermediate|advanced"
+    decimal target_weight
+    int     tdee_kcal
+    int     bmr_kcal
+    decimal bmi
+    string  injuries
+    string  subscription_plan
+  }
+
+  COACHPROFILE {
+    int     id            PK
+    int     user_id       FK
+    string  specialty
+    int     years_experience
+    decimal session_price
+    int     session_duration
+    int     max_clients
+    decimal avg_compliance
+    bool    is_verified
+  }
+
+  ORGANIZATION {
+    int    id       PK
+    int    owner_id FK
+    string name
+    string slug
+    image  logo
+  }
+
+  %% ══════════════════════════════
+  %% GRUPO 2 — BILLING
+  %% ══════════════════════════════
+
+  BILLING_PLAN {
+    int     id             PK
+    string  name
+    string  tier           "basic|premium|elite"
+    decimal price_monthly
+    int     max_clients
+    bool    has_ai
+    bool    has_human_coach
+    string  stripe_price_id
+  }
+
+  SUBSCRIPTION {
+    int     id                  PK
+    int     coach_id            FK
+    int     billing_plan_id     FK
+    string  status              "active|past_due|canceled|trialing"
+    string  stripe_sub_id
+    string  stripe_customer_id
+    datetime current_period_end
+    int     active_clients
+  }
+
+  PAYMENT {
+    int      id               PK
+    int      subscription_id  FK
+    decimal  amount
+    string   currency
+    string   status           "succeeded|pending|failed"
+    string   stripe_payment_id
+    datetime paid_at
+  }
+
+  %% ══════════════════════════════
+  %% GRUPO 3 — PLANES FITNESS
+  %% ══════════════════════════════
+
+  PLAN {
+    int    id          PK
+    int    client_id   FK
+    int    coach_id    FK
+    string name
+    string plan_type   "training|nutrition|combined"
+    string status      "draft|active|paused|done"
+    string created_by  "coach|ai|both"
+    int    week_number
+    int    total_weeks
+    int    daily_calories
+    int    protein_g
+    int    carbs_g
+    int    fat_g
+    date   start_date
+    date   end_date
+  }
+
+  TRAININGDAY {
+    int    id          PK
+    int    plan_id     FK
+    string day_name    "monday..sunday"
+    string focus
+    bool   is_rest_day
+    int    order
+  }
+
+  EXERCISE {
+    int     id              PK
+    int     training_day_id FK
+    string  name
+    int     sets
+    string  reps
+    decimal weight_kg
+    int     rest_seconds
+    int     rpe
+    int     order
+    bool    is_completed
+  }
+
+  MEAL {
+    int    id          PK
+    int    plan_id     FK
+    string meal_type   "breakfast|lunch|dinner..."
+    string name
+    int    calories
+    int    protein_g
+    int    carbs_g
+    int    fat_g
+    int    order
+    bool   is_completed
+  }
+
+  %% ══════════════════════════════
+  %% GRUPO 4 — PROGRESO Y FOTOS
+  %% ══════════════════════════════
+
+  PROGRESSLOG {
+    int     id                    PK
+    int     client_id             FK
+    int     plan_id               FK
+    date    date
+    int     week_number
+    decimal weight_kg
+    decimal body_fat_pct
+    decimal muscle_mass_kg
+    int     training_compliance
+    int     nutrition_compliance
+    int     hydration_compliance
+    int     energy_level
+    decimal sleep_hours
+    bool    is_stagnant
+    bool    ai_analyzed
+    bool    ai_alert_sent
+  }
+
+  WORKOUTSESSION {
+    int    id              PK
+    int    client_id       FK
+    int    training_day_id FK
+    date   date
+    string status          "completed|partial|skipped"
+    int    duration_min
+    int    rpe_avg
+  }
+
+  PROGRESSPHOTO {
+    int    id              PK
+    int    client_id       FK
+    int    progress_log_id FK
+    string image_url
+    string angle           "front|back|side_l|side_r"
+    int    week_number
+    bool   visible_to_coach
+    bool   is_comparison
+    datetime uploaded_at
+  }
+
+  %% ══════════════════════════════
+  %% GRUPO 5 — AI ENGINE
+  %% ══════════════════════════════
+
+  AIANALYSIS {
+    int    id                   PK
+    int    client_id            FK
+    int    progress_log_id      FK
+    string status               "pending|done|failed"
+    bool   stagnation_detected
+    bool   low_compliance
+    string alert_level          "none|warn|critical"
+    text   summary
+    json   context_data
+    datetime analyzed_at
+  }
+
+  AISUGGESTION {
+    int    id               PK
+    int    analysis_id      FK
+    int    client_id        FK
+    int    coach_id         FK
+    string suggestion_type  "increase_calories|decrease_volume..."
+    text   description
+    json   value_change
+    string approval_status  "pending|approved|rejected|applied"
+    datetime applied_at
+  }
+
+  AIRULE {
+    int    id        PK
+    string name
+    json   condition
+    json   action
+    int    priority
+    bool   is_active
+  }
+
+  AIINSIGHT {
+    int    id           PK
+    int    user_id      FK
+    string insight_type "chat|weekly|alert|milestone"
+    string title
+    text   content
+    bool   is_read
+    datetime created_at
+  }
+
+  AICHATMESSAGE {
+    int    id          PK
+    int    user_id     FK
+    string role        "user|assistant|system"
+    text   content
+    json   context_snapshot
+    int    tokens_used
+    datetime created_at
+  }
+
+  %% ══════════════════════════════
+  %% GRUPO 6 — COACHING SESSIONS
+  %% ══════════════════════════════
+
+  COACHSESSION {
+    int      id              PK
+    int      coach_id        FK
+    int      client_id       FK
+    string   session_type    "video_call|monthly_check|initial"
+    string   status          "scheduled|completed|cancelled"
+    datetime scheduled_at
+    int      duration_min
+    string   meeting_url
+    decimal  price
+    text     notes_coach
+    datetime completed_at
+  }
+
+  %% ══════════════════════════════
+  %% GRUPO 7 — COMUNICACIÓN
+  %% ══════════════════════════════
+
+  CONVERSATION {
+    int      id               PK
+    int      coach_id         FK
+    int      client_id        FK
+    datetime last_message_at
+    int      unread_by_coach
+    int      unread_by_client
+  }
+
+  MESSAGE {
+    int      id              PK
+    int      conversation_id FK
+    int      sender_id       FK
+    text     content
+    string   message_type    "text|image|file"
+    bool     is_read
+    datetime read_at
+    datetime created_at
+  }
+
+  NOTIFICATION {
+    int      id          PK
+    int      recipient_id FK
+    string   notif_type  "client_stagnant|low_compliance|plan_updated..."
+    string   priority    "low|normal|high|critical"
+    string   title
+    text     body
+    bool     is_read
+    bool     is_sent
+    datetime created_at
+  }
+
+  NOTIFICATIONPREFERENCE {
+    int  id              PK
+    int  user_id         FK
+    bool email_enabled
+    bool push_enabled
+    bool daily_reminder
+    time reminder_time
+    bool weekly_report
+  }
+
+  %% ══════════════════════════════
+  %% RELACIONES
+  %% ══════════════════════════════
+
+  USER ||--o| CLIENTPROFILE       : "perfil atleta"
+  USER ||--o| COACHPROFILE        : "perfil coach"
+  USER ||--o| ORGANIZATION        : "administra"
+  USER ||--o| SUBSCRIPTION        : "suscripción"
+  USER ||--o| NOTIFICATIONPREFERENCE : "preferencias"
+
+  USER ||--o{ PLAN                : "cliente del plan"
+  USER ||--o{ PROGRESSLOG         : "registra"
+  USER ||--o{ WORKOUTSESSION      : "completa"
+  USER ||--o{ PROGRESSPHOTO       : "sube fotos"
+  USER ||--o{ AIANALYSIS          : "es analizado"
+  USER ||--o{ AISUGGESTION        : "recibe sugerencias"
+  USER ||--o{ AIINSIGHT           : "recibe insights"
+  USER ||--o{ AICHATMESSAGE       : "chatea con IA"
+  USER ||--o{ NOTIFICATION        : "recibe notifs"
+  USER ||--o{ COACHSESSION        : "como coach"
+  USER ||--o{ CONVERSATION        : "como coach"
+
+  CLIENTPROFILE }o--|| USER       : "coach asignado"
+
+  BILLING_PLAN ||--o{ SUBSCRIPTION : "usa plan"
+  SUBSCRIPTION ||--o{ PAYMENT      : "genera pagos"
+
+  PLAN ||--o{ TRAININGDAY         : "días de entreno"
+  PLAN ||--o{ MEAL                : "comidas del plan"
+  PLAN ||--o{ PROGRESSLOG         : "seguimiento"
+
+  TRAININGDAY ||--o{ EXERCISE     : "ejercicios"
+  TRAININGDAY ||--o{ WORKOUTSESSION : "sesiones"
+
+  PROGRESSLOG ||--o{ PROGRESSPHOTO : "fotos del registro"
+  PROGRESSLOG ||--o| AIANALYSIS   : "análisis IA"
+
+  AIANALYSIS ||--o{ AISUGGESTION  : "genera sugerencias"
+
+  CONVERSATION ||--o{ MESSAGE     : "mensajes"
+    </div>
+  </div>
+</div>
+
+<!-- INFO BAR -->
+<div class="info-bar">
+  <span><kbd>Scroll</kbd> para hacer zoom</span>
+  <span class="info-sep">|</span>
+  <span><kbd>Click + arrastrar</kbd> para mover</span>
+  <span class="info-sep">|</span>
+  <span><kbd>Ctrl + P</kbd> para exportar a PDF</span>
+  <span class="info-sep">|</span>
+  <span style="margin-left:auto;color:#444">MR Sparta Coach OS — PostgreSQL Schema v1.0</span>
+</div>
+
+<script>
+  let scale = 1.0;
+  const inner = document.getElementById('diagram-inner');
+  const wrapper = document.getElementById('diagram-wrapper');
+  const label = document.getElementById('zoom-label');
+
+  function applyScale() {
+    inner.style.transform = `scale(${scale})`;
+    label.textContent = Math.round(scale * 100) + '%';
+  }
+
+  function zoom(delta) {
+    scale = Math.max(0.3, Math.min(3.0, scale + delta));
+    applyScale();
+  }
+
+  function resetZoom() {
+    scale = 1.0;
+    applyScale();
+    wrapper.scrollTo(0, 0);
+  }
+
+  function fitScreen() {
+    const ww = wrapper.clientWidth;
+    const wh = wrapper.clientHeight;
+    const svg = document.querySelector('#erd-container svg');
+    if (!svg) return;
+    const sw = svg.scrollWidth;
+    const sh = svg.scrollHeight;
+    const scaleX = (ww - 80) / sw;
+    const scaleY = (wh - 80) / sh;
+    scale = Math.min(scaleX, scaleY, 1.0);
+    applyScale();
+    wrapper.scrollTo(0, 0);
+  }
+
+  /* Scroll to zoom */
+  wrapper.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.08 : 0.08;
+    zoom(delta);
+  }, { passive: false });
+
+  /* Drag to pan */
+  let isDragging = false, startX, startY, scrollLeft, scrollTop;
+  wrapper.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    startX = e.pageX - wrapper.offsetLeft;
+    startY = e.pageY - wrapper.offsetTop;
+    scrollLeft = wrapper.scrollLeft;
+    scrollTop = wrapper.scrollTop;
+    wrapper.style.cursor = 'grabbing';
+  });
+  wrapper.addEventListener('mouseleave', () => { isDragging = false; wrapper.style.cursor = 'grab'; });
+  wrapper.addEventListener('mouseup',    () => { isDragging = false; wrapper.style.cursor = 'grab'; });
+  wrapper.addEventListener('mousemove',  (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - wrapper.offsetLeft;
+    const y = e.pageY - wrapper.offsetTop;
+    wrapper.scrollLeft = scrollLeft - (x - startX);
+    wrapper.scrollTop  = scrollTop  - (y - startY);
+  });
+
+  /* Init Mermaid */
+  mermaid.initialize({
+    startOnLoad: true,
+    theme: 'dark',
+    themeVariables: {
+      darkMode: true,
+      background: '#0a0a0a',
+      primaryColor: '#1a1a1a',
+      primaryBorderColor: '#C9A84C',
+      primaryTextColor: '#e8e0d0',
+      lineColor: '#555',
+      fontSize: '14px',
+      fontFamily: "'Segoe UI', sans-serif",
+      edgeLabelBackground: '#111',
+      tertiaryColor: '#0e0e0e',
+      attributeBackgroundColorEven: '#141414',
+      attributeBackgroundColorOdd: '#111111',
+    },
+    er: {
+      layoutDirection: 'TB',
+      minEntityWidth: 220,
+      minEntityHeight: 40,
+      entityPadding: 15,
+      useMaxWidth: false,
+      diagramPadding: 40,
+    }
+  });
+</script>
+</body>
+</html>

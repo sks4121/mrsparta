@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}MR Sparta Coach — Construye Músculo. Domina tu Disciplina.{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+
+  <!-- ══ HERO ══ -->
+  {% include 'partials/hero.html' %}
+
+  <!-- ══ GOLD DIVIDER ══ -->
+  <div class="gold-divider"></div>
+
+  <!-- ══ STATS BAR ══ -->
+  {% include 'partials/stats.html' %}
+
+  <!-- ══ PORTALS SECTION ══ -->
+  {% include 'partials/portals.html' %}
+
+  <!-- ══ FEATURES STRIP ══ -->
+  {% include 'partials/features.html' %}
+
+  <!-- ══ HOW IT WORKS ══ -->
+  {% include 'partials/how_it_works.html' %}
+
+  <!-- ══ PLANS ══ -->
+  {% include 'partials/plans.html' %}
+
+  <!-- ══ TESTIMONIALS ══ -->
+  {% include 'partials/testimonials.html' %}
+
+  <!-- ══ CTA FINAL ══ -->
+  {% include 'partials/cta.html' %}
+
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/index.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% load static %}
+<section class="portals-section" id="portals">
+
+  <p class="section-eyebrow reveal">Elige tu camino</p>
+  <h2 class="section-title reveal">Dos portales. <span class="accent">Un sistema.</span></h2>
+  <p class="section-sub reveal">
+    MR Sparta Coach OS es una plataforma dual: potente para el coach,
+    simple para el atleta. Diseñada para que el progreso sea inevitable.
+  </p>
+
+  <div class="portals-grid">
+
+    <!-- COACH -->
+
+
+
+    <a href="{% url 'coach_dashboard:coach_dashboard' %}" class="portal-card coach-portal reveal">
+
+        <div class="portal-tag">
+        <span class="tag-line"></span>
+        Portal del Entrenador
+        <span class="tag-line"></span>
+      </div>
+      <div class="portal-icon">⚔</div>
+      <h3 class="portal-title">Panel del Coach</h3>
+      <p class="portal-desc">
+        Administra cientos de clientes desde un panel inteligente.
+        La IA detecta estancamientos antes de que ocurran y tú tomas
+        decisiones basadas en datos reales.
+      </p>
+      <ul class="portal-feats">
+        <li><strong>Dashboard central</strong> — métricas de todos tus clientes</li>
+        <li><strong>Generación de planes con IA</strong> — entrenamiento + nutrición</li>
+        <li><strong>Alertas automáticas</strong> — cumplimiento bajo, peso estancado</li>
+        <li><strong>Chat integrado</strong> — comunicación directa con cada atleta</li>
+        <li><strong>Facturación</strong> — suscripciones y pagos centralizados</li>
+        <li><strong>Multi-cliente</strong> — escala tu negocio sin fricción</li>
+      </ul>
+      <span class="portal-btn">⚔ Acceder al Panel</span>
+    </a>
+
+    <!-- ATHLETE -->
+
+
+
+        <a href="{% url 'athlete_dashboard:athlete_dashboard' %}" class="portal-card athlete-portal reveal" style="transition-delay:.15s">
+  
+
+
+        <div class="portal-tag">
+        <span class="tag-line"></span>
+        Portal del Atleta 
+        <span class="tag-line"></span>
+      </div>
+      <div class="portal-icon">🛡</div>
+      <h3 class="portal-title">Portal Atleta</h3>
+      <p class="portal-desc">
+        Tu plan, tu progreso, tu coach — todo en un solo lugar.
+        Registra tu evolución, sube tus fotos y observa cómo el sistema
+        se adapta a tus resultados.
+      </p>
+      <ul class="portal-feats">
+        <li><strong>Plan personalizado</strong> — rutina y dieta a tu medida</li>
+        <li><strong>Registro de peso</strong> — historial visual de evolución</li>
+        <li><strong>Fotos de progreso</strong> — semana a semana</li>
+        <li><strong>Spartan AI</strong> — chat inteligente con contexto real</li>
+        <li><strong>Cumplimiento</strong> — tracking de sesiones completadas</li>
+        <li><strong>Coach asignado</strong> — guía y ajustes mensuales</li>
+      </ul>
+      <span class="portal-btn">🛡 Comenzar Ahora</span>
+    </a>
+
+  </div>
+</section>

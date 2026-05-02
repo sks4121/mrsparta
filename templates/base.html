@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="MR Sparta Coach OS — Plataforma SaaS de transformación física con IA + mentor real.">
+  <title>{% block title %}MR Sparta Coach — Forja tu Legado{% endblock %}</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="{% static 'css/variables.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+  <!-- Page-specific CSS -->
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- Ember particle layer (shared across pages) -->
+  <div class="ember-layer" id="embers"></div>
+
+  <!-- ── NAVBAR (partial) ── -->
+  {% include 'partials/navbar.html' %}
+
+  <!-- ── MOBILE MENU (partial) ── -->
+  {% include 'partials/mobile_menu.html' %}
+
+  <!-- ── PAGE CONTENT ── -->
+  {% block content %}{% endblock %}
+
+  <!-- ── FOOTER (partial) ── -->
+  {% include 'partials/footer.html' %}
+
+  <!-- Global JS -->
+  <script src="{% static 'js/embers.js' %}"></script>
+  <script src="{% static 'js/navbar.js' %}"></script>
+  <script src="{% static 'js/reveal.js' %}"></script>
+  <script src="{% static 'js/smooth_scroll.js' %}"></script>
+
+  <!-- Page-specific JS -->
+  {% block extra_js %}{% endblock %}
+
+</body>
+</html>

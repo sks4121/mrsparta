@@ -1,0 +1,65 @@
+{% extends "plans/_base.html" %}
+{% load static %}
+
+{% block title %}Plan Recluta — MR SPARTA{% endblock %}
+{% block tier_class %}basic{% endblock %}
+
+{% block content %}
+<section class="pf-hero">
+    <div class="pf-container">
+        <span class="pf-badge pf-badge--basic">Recluta</span>
+        <h1 class="pf-hero-title">Empieza tu <span class="pf-accent">transformación sin pagar</span></h1>
+        <p class="pf-hero-sub">
+            Tu primer plan generado por IA. Ideal para quienes dan sus primeros pasos en el mundo
+            del fitness. Sin compromisos, solo disciplina.
+        </p>
+        <div class="pf-price">
+            <span class="pf-price-symbol">$</span>
+            <span class="pf-price-amount">0</span>
+            <span class="pf-price-period">/mes</span>
+        </div>
+        <button class="pf-btn pf-btn--primary" data-action="generate-plan">
+            ⚡ Generar Plan Ahora
+        </button>
+    </div>
+</section>
+
+<section class="pf-section">
+    <div class="pf-container">
+        <h2 class="pf-section-title"><small>Recluta</small>Plan Básico</h2>
+        <p class="pf-section-sub">Comienza tu camino espartano sin inversión inicial</p>
+        <ul class="pf-features">
+            {% for feature in features %}
+                <li class="pf-feature">
+                    <span class="pf-feature-icon">✓</span>
+                    <span>{{ feature }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</section>
+
+{% if current_plan %}
+<section class="pf-section pf-section--alt">
+    <div class="pf-container">
+        <h2 class="pf-section-title"><small>Tu Plan Activo</small>{{ current_plan.name }}</h2>
+        <article class="pf-plan-card">
+            <header class="pf-plan-card-head">
+                <h3>{{ current_plan.name }}</h3>
+                <span class="pf-tag">Sem {{ current_plan.week_number }}/{{ current_plan.total_weeks }}</span>
+            </header>
+            <p>{{ current_plan.description|default:"Plan automático adaptado a tu objetivo." }}</p>
+            <a href="{% url 'plans:detail' current_plan.id %}" class="pf-btn pf-btn--primary">Ver Completo →</a>
+        </article>
+    </div>
+</section>
+{% endif %}
+
+<section class="pf-section pf-section--upgrade">
+    <div class="pf-container pf-upgrade-box">
+        <h2>¿Listo para conquistar?</h2>
+        <p>Planes ilimitados, macros personalizados, videos demostrativos y tracking avanzado.</p>
+        <a href="{% url 'plans:premium' %}" class="pf-btn pf-btn--gold">Descubrir Guerrero →</a>
+    </div>
+</section>
+{% endblock %}

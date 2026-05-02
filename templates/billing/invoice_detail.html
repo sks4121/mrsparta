@@ -1,0 +1,38 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-body">
+            <h1>Factura #{{ payment.id }}</h1>
+            <hr>
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Fecha:</strong> {{ payment.created_at|date:"d/m/Y H:i" }}</p>
+                    <p><strong>Cliente:</strong> {{ payment.subscription.coach.full_name }}</p>
+                    <p><strong>Email:</strong> {{ payment.subscription.coach.email }}</p>
+                </div>
+                <div class="col-md-6 text-right">
+                    <h3>{{ payment.subscription.plan.name }}</h3>
+                </div>
+            </div>
+            <hr>
+            <table class="table">
+                <tr>
+                    <td><strong>Concepto:</strong></td>
+                    <td>{{ payment.subscription.plan.name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Monto:</strong></td>
+                    <td>${{ payment.amount }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Estado:</strong></td>
+                    <td><span class="badge badge-{{ payment.status|lower }}">{{ payment.get_status_display }}</span></td>
+                </tr>
+            </table>
+            <button onclick="window.print()" class="btn btn-primary">Imprimir</button>
+            <a href="#" class="btn btn-secondary">Descargar PDF</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

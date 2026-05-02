@@ -1,0 +1,30 @@
+{% extends "plans/_base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                {% if coach.user.profile.avatar %}
+                <img src="{{ coach.user.profile.avatar.url }}" class="card-img-top" alt="{{ coach.user.full_name }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h3>{{ coach.user.full_name }}</h3>
+                    <p><span class="badge badge-primary">{{ coach.get_specialty_display }}</span></p>
+                    <p>⭐ {{ coach.rating }}/5</p>
+                    <p>${{ coach.session_price }}/sesión</p>
+                    {% if coach.is_available %}<button class="btn btn-success btn-block">Disponible</button>{% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <h2>Acerca de</h2>
+            <p>{{ coach.bio }}</p>
+            <h4>Certificaciones</h4>
+            <p>{{ coach.certifications }}</p>
+            <h4>Experiencia</h4>
+            <p>{{ coach.years_experience }} años</p>
+            <a href="{% url 'coach_sessions:session-booking' coach.pk %}" class="btn btn-primary btn-lg">Reservar Sesión</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

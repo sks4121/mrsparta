@@ -1,0 +1,17 @@
+{% load static %}
+<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+
+  <a href="#inicio">Inicio</a>
+  <a href="#portals">Portales</a>
+  <a href="#sistema">Sistema</a>
+  <a href="#planes">Planes</a>
+  <a href="#testimonios">Testimonios</a>
+
+
+   <div class="mobile-btns">
+     <a href="{% url 'coach_dashboard:coach_dashboard' %}" class="nav-btn nav-btn-coach">⚔ Portal Coach</a>
+     <a href="{% url 'athlete_dashboard:athlete_dashboard' %}"  class="nav-btn nav-btn-athlete">🛡 Portal Atleta</a>
+   </div>
+ 
+
+</nav>

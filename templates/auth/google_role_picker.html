@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elige tu rol — MR Sparta</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/auth/auth_base.css' %}">
+  <style>
+    .picker-shell {
+      position: relative; z-index: 10;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 20px;
+    }
+    .picker-card {
+      width: 100%; max-width: 680px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 44px 40px;
+      animation: fadeUp .7s var(--ease) both;
+      position: relative;
+      clip-path: polygon(
+        0 0,
+        calc(100% - 18px) 0,
+        100% 18px,
+        100% 100%,
+        18px 100%,
+        0 calc(100% - 18px)
+      );
+    }
+    .picker-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .picker-header {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .welcome-user {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .user-avatar {
+      width: 44px; height: 44px;
+      clip-path: var(--clip-hex);
+      background: linear-gradient(135deg, var(--gold-lo), var(--gold-hi));
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-d); font-size: 14px;
+      color: var(--ink); font-weight: 900;
+    }
+    .user-name {
+      text-align: left;
+    }
+    .user-name strong {
+      display: block;
+      color: var(--gold-hi);
+      font-family: var(--font-h);
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+    .user-name span {
+      font-size: 11px;
+      color: var(--txt3);
+    }
+
+    .picker-title {
+      font-family: var(--font-d);
+      font-size: 26px;
+      color: var(--txt);
+      margin-bottom: 8px;
+    }
+    .picker-title em { color: var(--gold-hi); font-style: normal; }
+
+    .picker-sub {
+      font-size: 13px;
+      color: var(--txt2);
+      max-width: 400px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    .role-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .role-option {
+      background: var(--ink3);
+      border: 1px solid var(--border);
+      padding: 24px 20px;
+      cursor: pointer;
+      transition: all .25s;
+      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; gap: 10px;
+      position: relative;
+    }
+    .role-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .role-option:hover {
+      border-color: var(--border2);
+      background: rgba(255, 255, 255, .02);
+      transform: translateY(-2px);
+    }
+    .role-option.selected-athlete {
+      border-color: rgba(204, 34, 34, .5);
+      background: rgba(204, 34, 34, .06);
+    }
+    .role-option.selected-athlete::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--red-lo), var(--red-hi));
+    }
+    .role-option.selected-coach {
+      border-color: var(--border3);
+      background: var(--gold-a08);
+    }
+    .role-option.selected-coach::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--gold-lo), var(--gold-hi));
+    }
+
+    .role-opt-icon {
+      width: 56px; height: 56px;
+      clip-path: var(--clip-hex);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      transition: transform .3s var(--ease-back);
+    }
+    .role-athlete .role-opt-icon {
+      background: linear-gradient(135deg, var(--red-lo), var(--red));
+    }
+    .role-coach .role-opt-icon {
+      background: linear-gradient(135deg, var(--gold-lo), var(--gold-hi));
+    }
+    .role-option:hover .role-opt-icon {
+      transform: scale(1.08);
+    }
+
+    .role-opt-title {
+      font-family: var(--font-d);
+      font-size: 18px;
+      color: var(--txt);
+    }
+    .role-opt-sub {
+      font-family: var(--font-h);
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+    .role-athlete .role-opt-sub { color: var(--red); }
+    .role-coach   .role-opt-sub { color: var(--gold); }
+
+    .role-opt-desc {
+      font-size: 12px;
+      color: var(--txt2);
+      line-height: 1.5;
+    }
+
+    .check-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1px solid var(--border2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      color: transparent;
+      transition: all .25s;
+    }
+    .role-option.selected-athlete .check-badge {
+      background: var(--red);
+      border-color: var(--red);
+      color: #fff;
+    }
+    .role-option.selected-coach .check-badge {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: var(--ink);
+    }
+
+    @media (max-width: 600px) {
+      .role-options { grid-template-columns: 1fr; }
+      .picker-card { padding: 32px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="scan-line"></div>
+  <div class="ember-layer" id="embers"></div>
+
+  <div class="picker-shell">
+    <div class="picker-card">
+
+      {% if messages %}
+        <div class="django-messages">
+          {% for message in messages %}
+            <div class="msg-item {% if message.tags == 'error' %}error{% endif %}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="picker-header">
+        <div class="welcome-user">
+          <div class="user-avatar">
+            {{ user.first_name.0|default:'?' }}{{ user.last_name.0|default:'' }}
+          </div>
+          <div class="user-name">
+            <strong>{{ user.full_name }}</strong>
+            <span>{{ user.email }}</span>
+          </div>
+        </div>
+
+        <h1 class="picker-title">Un último <em>paso</em></h1>
+        <p class="picker-sub">
+          Para personalizar tu experiencia espartana, dinos quién eres en el sistema.
+        </p>
+      </div>
+
+      <form method="POST" action="{% url 'users:google_role_picker' %}">
+        {% csrf_token %}
+
+        <div class="role-options">
+
+          <label class="role-option role-athlete" id="opt-athlete">
+            <input type="radio" name="role" value="athlete" id="role_athlete">
+            <div class="check-badge">✓</div>
+            <div class="role-opt-icon">🛡</div>
+            <div class="role-opt-title">Atleta</div>
+            <div class="role-opt-sub">Quiero transformarme</div>
+            <div class="role-opt-desc">Plan personalizado + IA + coach</div>
+          </label>
+
+          <label class="role-option role-coach" id="opt-coach">
+            <input type="radio" name="role" value="coach" id="role_coach">
+            <div class="check-badge">✓</div>
+            <div class="role-opt-icon">⚔</div>
+            <div class="role-opt-title">Coach</div>
+            <div class="role-opt-sub">Gestiono atletas</div>
+            <div class="role-opt-desc">Panel central + IA + facturación</div>
+          </label>
+
+        </div>
+
+        <button type="submit" class="btn-submit" id="picker-submit" disabled>
+          ⚔ Confirmar y continuar
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <script src="{% static 'js/auth/auth_base.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AuthBase.initEmbers(15);
+
+      const optAthlete = document.getElementById('opt-athlete');
+      const optCoach   = document.getElementById('opt-coach');
+      const radioA     = document.getElementById('role_athlete');
+      const radioC     = document.getElementById('role_coach');
+      const submitBtn  = document.getElementById('picker-submit');
+
+      function selectRole(role) {
+        optAthlete.classList.remove('selected-athlete');
+        optCoach.classList.remove('selected-coach');
+        if (role === 'athlete') {
+          optAthlete.classList.add('selected-athlete');
+          radioA.checked = true;
+        } else {
+          optCoach.classList.add('selected-coach');
+          radioC.checked = true;
+        }
+        submitBtn.disabled = false;
+      }
+
+      optAthlete.addEventListener('click', () => selectRole('athlete'));
+      optCoach.addEventListener('click', () => selectRole('coach'));
+    });
+  </script>
+</body>
+</html>

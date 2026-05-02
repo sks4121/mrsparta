@@ -1,0 +1,30 @@
+{% load static %}
+<header class="navbar" id="navbar">
+
+  <a href="{% url 'home' %}" class="logo">
+    <span class="logo-main">MR Sparta</span>
+    <span class="logo-sub">Coach</span>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#inicio">Inicio</a></li>
+    <li><a href="#portals">Portales</a></li>
+    <li><a href="#sistema">Sistema</a></li>
+    <li><a href="#planes">Planes</a></li>
+    <li><a href="#testimonios">Testimonios</a></li>
+  </ul>
+
+
+  <div class="nav-ctas">
+      <a href="{% url 'users_login:login' %}" class="nav-btn nav-btn-coach">🛡 Iniciar sesión</a>
+</div>
+
+
+
+  <button class="hamburger" id="hamburger" aria-label="Menú" aria-expanded="false">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+</header>

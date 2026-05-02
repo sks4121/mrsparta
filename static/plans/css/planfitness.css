@@ -1,0 +1,892 @@
+/* ═══════════════════════════════════════════════════════════════
+   FITNESS PRO — MAIN STYLES
+   planfitness.css  |  Imports base · Componentes específicos · Variantes
+═══════════════════════════════════════════════════════════════ */
+
+@import 'base.css';
+@import 'plan-variants.css';
+
+/* ═══════════════════════════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════════════════════════ */
+
+.pf-hero {
+    padding: 100px 0 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--accent-soft);
+}
+
+.pf-hero::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--accent-soft) 0%, transparent 70%);
+    animation: glowPulse 6s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.pf-hero .pf-container {
+    position: relative;
+    z-index: 2;
+}
+
+.pf-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 6vw, 66px);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 24px 0 20px;
+    max-width: 920px;
+    margin-left: auto;
+    margin-right: auto;
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.8);
+}
+
+.pf-hero-sub {
+    color: var(--text-dim);
+    font-size: 17px;
+    max-width: 740px;
+    margin: 0 auto 40px;
+    letter-spacing: 0.5px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PRICE & CTA
+═══════════════════════════════════════════════════════════════ */
+
+.pf-price {
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 2px;
+}
+
+.pf-price-symbol {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-right: 4px;
+}
+
+.pf-price-amount {
+    font-size: 64px;
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    text-shadow: 0 0 24px var(--accent-soft);
+}
+
+.pf-price-period {
+    color: var(--text-dim);
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════════════════════════ */
+
+.pf-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border: 0;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    transition: var(--trans-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.pf-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: left 0.3s ease;
+}
+
+.pf-btn:hover::before {
+    left: 100%;
+}
+
+.pf-btn:hover {
+    transform: translateY(-2px);
+}
+
+.pf-btn:active {
+    transform: translateY(0);
+}
+
+.pf-btn--primary {
+    color: var(--dark);
+    border: 2px solid var(--accent);
+}
+
+.pf-btn--ghost {
+    background: transparent;
+    color: var(--text);
+    border: 2px solid var(--border);
+}
+
+.pf-btn--ghost:hover {
+    background: var(--dark3);
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
+.pf-btn--gold {
+    color: var(--dark);
+    border: 2px solid var(--premium);
+}
+
+.pf-btn--elite {
+    color: #fff;
+    border: 2px solid var(--elite);
+}
+
+.pf-cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BADGES
+═══════════════════════════════════════════════════════════════ */
+
+.pf-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN & SECTIONS
+═══════════════════════════════════════════════════════════════ */
+
+.pf-main {
+    padding: 48px 0;
+}
+
+.pf-section {
+    padding: 72px 0;
+    border-top: 1px solid var(--border);
+}
+
+.pf-section:first-of-type {
+    border-top: none;
+}
+
+.pf-section--alt {
+    background: linear-gradient(135deg, rgba(26, 20, 16, 0.6) 0%, rgba(10, 8, 4, 0.4) 100%);
+}
+
+.pf-section-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    margin-bottom: 42px;
+    letter-spacing: -0.02em;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.pf-section-title small {
+    display: block;
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   FEATURES
+═══════════════════════════════════════════════════════════════ */
+
+.pf-features {
+    list-style: none;
+    display: grid;
+    gap: 14px;
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.pf-feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: rgba(26, 20, 16, 0.4);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    transition: var(--trans-base);
+}
+
+.pf-feature:hover {
+    border-color: var(--accent);
+    background: rgba(26, 20, 16, 0.8);
+}
+
+.pf-feature-icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 16px;
+    flex-shrink: 0;
+}
+
+.pf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+}
+
+.pf-feature-card {
+    padding: 28px;
+    background: linear-gradient(135deg, rgba(26, 20, 16, 0.4) 0%, rgba(35, 32, 21, 0.2) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    transition: var(--trans-base);
+}
+
+.pf-feature-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+    background: linear-gradient(135deg, rgba(26, 20, 16, 0.6) 0%, rgba(35, 32, 21, 0.4) 100%);
+    box-shadow: 0 8px 24px var(--accent-soft);
+}
+
+.pf-feature-card--elite {
+    background: linear-gradient(135deg, rgba(199, 62, 29, 0.05) 0%, rgba(58, 52, 40, 0.3) 100%);
+}
+
+.pf-feature-card p {
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   STATS
+═══════════════════════════════════════════════════════════════ */
+
+.pf-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+}
+
+.pf-stat {
+    text-align: center;
+    padding: 28px 18px;
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    border-top: 3px solid var(--accent);
+}
+
+.pf-stat-value {
+    display: block;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+}
+
+.pf-stat-label {
+    display: block;
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PLAN CARDS
+═══════════════════════════════════════════════════════════════ */
+
+.pf-plan-card {
+    padding: 32px;
+    background: linear-gradient(135deg, var(--dark3) 0%, rgba(58, 52, 40, 0.5) 100%);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+    position: relative;
+    transition: var(--trans-base);
+}
+
+.pf-plan-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+}
+
+.pf-plan-card:hover {
+    border-color: var(--accent);
+    box-shadow: 0 12px 48px var(--accent-soft);
+    transform: translateY(-4px);
+}
+
+.pf-plan-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.pf-plan-card-head h3 {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+}
+
+.pf-plan-card p {
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    line-height: 1.7;
+}
+
+.pf-macros {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.pf-macros > div {
+    text-align: center;
+    padding: 14px 8px;
+    background: var(--dark2);
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+}
+
+.pf-macros strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+}
+
+.pf-macros small {
+    color: var(--text-dim);
+    font-size: 12px;
+}
+
+.pf-tag {
+    padding: 6px 14px;
+    border-radius: 0;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    border: 1px solid;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COACH CARD (ELITE)
+═══════════════════════════════════════════════════════════════ */
+
+.pf-coach-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    padding: 28px;
+    background: var(--dark3);
+    border-radius: var(--radius);
+    margin-bottom: 24px;
+    border: 2px solid var(--border);
+}
+
+.pf-coach-avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 28px;
+    font-weight: 800;
+    box-shadow: 0 6px 20px var(--accent-soft);
+}
+
+.pf-coach-info h3 {
+    margin-bottom: 8px;
+}
+
+.pf-coach-info p {
+    color: var(--text-dim);
+    margin-bottom: 14px;
+}
+
+.pf-coach-perks {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.pf-coach-perks li {
+    color: var(--text);
+    font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   UPGRADE BOX
+═══════════════════════════════════════════════════════════════ */
+
+.pf-section--upgrade {
+    padding: 48px 0;
+}
+
+.pf-upgrade-box {
+    text-align: center;
+    padding: 48px 32px;
+    background: linear-gradient(135deg, var(--dark3) 0%, var(--dark2) 100%);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius);
+}
+
+.pf-upgrade-box h2 {
+    margin-bottom: 12px;
+    font-size: 26px;
+}
+
+.pf-upgrade-box p {
+    color: var(--text-dim);
+    margin-bottom: 24px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   QUOTE / TESTIMONIAL
+═══════════════════════════════════════════════════════════════ */
+
+.pf-section--testimonial {
+    padding: 48px 0 96px;
+}
+
+.pf-quote {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 32px;
+    border-left: 4px solid var(--accent);
+    background: var(--dark3);
+    border-radius: var(--radius);
+}
+
+.pf-quote p {
+    font-size: 20px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.pf-quote footer {
+    margin-top: 16px;
+    color: var(--text-dim);
+    font-size: 14px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOAST NOTIFICATIONS
+═══════════════════════════════════════════════════════════════ */
+
+.pf-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    padding: 14px 22px;
+    background: var(--dark3);
+    color: var(--text);
+    border: 2px solid var(--accent);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    z-index: 100;
+    max-width: 90%;
+}
+
+.pf-toast.is-visible {
+    transform: translateX(-50%) translateY(0);
+}
+
+.pf-toast--error {
+    border-color: #ef4444;
+}
+
+.pf-toast--ok {
+    border-color: var(--accent);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PLANES COMPARATIVOS
+═══════════════════════════════════════════════════════════════ */
+
+.pf-plans-hero {
+    padding: 100px 0;
+    text-align: center;
+}
+
+.pf-plans-grid {
+    padding: 80px 0;
+}
+
+.pf-plans-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.pf-plan-option {
+    position: relative;
+    padding: 32px 24px;
+    background: linear-gradient(135deg, var(--dark3) 0%, rgba(58, 52, 40, 0.5) 100%);
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: var(--trans-slow);
+}
+
+.pf-plan-option::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, var(--accent) 50%, transparent 100%);
+}
+
+.pf-plan-option:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px var(--accent-soft);
+}
+
+/* Premium Destacado */
+.pf-plan-option--featured {
+    grid-column: 1 / -1;
+    max-width: 450px;
+    margin: 0 auto;
+    border: 3px solid var(--accent);
+    padding: 40px 32px;
+    transform: scale(1.05);
+    box-shadow: 0 20px 60px var(--accent-soft);
+}
+
+.pf-plan-option--featured:hover {
+    transform: scale(1.08) translateY(-6px);
+    box-shadow: 0 24px 72px var(--accent-soft);
+}
+
+.pf-plan-featured-badge {
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, var(--accent) 0%, var(--gold-bright) 100%);
+    color: var(--dark);
+    padding: 8px 24px;
+    font-weight: 800;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px var(--accent-soft);
+}
+
+.pf-plan-tier-badge {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+}
+
+.pf-plan-option--basic .pf-plan-tier-badge { color: var(--gold); }
+.pf-plan-option--premium .pf-plan-tier-badge { color: var(--premium); }
+.pf-plan-option--elite .pf-plan-tier-badge { color: var(--elite); }
+
+.pf-plan-title {
+    font-family: var(--font-display);
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+.pf-plan-price {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    gap: 4px;
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+}
+
+.pf-plan-symbol {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+.pf-plan-amount {
+    font-size: 48px;
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    color: var(--text);
+}
+
+.pf-plan-period {
+    font-size: 14px;
+    color: var(--text-dim);
+    font-weight: 600;
+}
+
+.pf-plan-features {
+    list-style: none;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.pf-plan-features li {
+    font-size: 14px;
+    color: var(--text-dim);
+    padding-left: 24px;
+    position: relative;
+    line-height: 1.5;
+}
+
+.pf-plan-features li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 700;
+}
+
+.pf-plan-cta {
+    padding: 14px 24px;
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-align: center;
+    transition: var(--trans-base);
+    cursor: pointer;
+    display: block;
+}
+
+.pf-plan-option--basic .pf-plan-cta {
+    border-color: var(--gold);
+    color: var(--gold);
+}
+
+.pf-plan-option--basic .pf-plan-cta:hover {
+    background: var(--gold);
+    color: var(--dark);
+}
+
+.pf-plan-option--premium .pf-plan-cta {
+    border-color: var(--premium);
+    color: var(--premium);
+}
+
+.pf-plan-option--premium .pf-plan-cta:hover {
+    background: var(--premium);
+    color: var(--dark);
+}
+
+.pf-plan-option--elite .pf-plan-cta {
+    border-color: var(--elite);
+    color: var(--elite);
+}
+
+.pf-plan-option--elite .pf-plan-cta:hover {
+    background: var(--elite);
+    color: #fff;
+}
+
+.pf-plan-cta--featured {
+    background: linear-gradient(135deg, var(--accent) 0%, var(--gold-bright) 100%);
+    border: none;
+    color: var(--dark);
+    font-weight: 800;
+    box-shadow: 0 6px 20px var(--accent-soft);
+}
+
+.pf-plan-cta--featured:hover {
+    background: linear-gradient(135deg, var(--gold-bright) 0%, var(--accent) 100%);
+    box-shadow: 0 12px 40px var(--accent-soft);
+    transform: translateY(-2px);
+}
+
+/* Comparison Table */
+.pf-comparison-table {
+    overflow-x: auto;
+    margin-top: 40px;
+}
+
+.pf-comparison-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.pf-comparison-table th,
+.pf-comparison-table td {
+    padding: 18px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+.pf-comparison-table th {
+    background: var(--dark3);
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+
+.pf-comparison-table td:first-child,
+.pf-comparison-table th:first-child {
+    text-align: left;
+}
+
+.pf-comparison-table tbody tr:hover {
+    background: rgba(212, 175, 55, 0.04);
+}
+
+.pf-comparison-table td {
+    color: var(--text-dim);
+}
+
+.pf-comparison-table td:first-child {
+    font-weight: 600;
+    color: var(--text);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+    .pf-header {
+        height: 60px;
+    }
+
+    .pf-nav-link {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+
+    .pf-coach-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .pf-coach-avatar {
+        margin: 0 auto;
+    }
+
+    .pf-coach-perks {
+        justify-content: center;
+    }
+
+    .pf-macros {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pf-price-amount {
+        font-size: 48px;
+    }
+
+    .pf-hero {
+        padding: 80px 0 60px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pf-hero {
+        padding: 60px 0 40px;
+    }
+
+    .pf-section {
+        padding: 48px 0;
+    }
+
+    .pf-btn {
+        padding: 12px 24px;
+        font-size: 13px;
+    }
+
+    .pf-cta-row {
+        gap: 10px;
+    }
+
+    .pf-feature-card {
+        padding: 20px;
+    }
+
+    .pf-plan-card {
+        padding: 24px;
+    }
+
+    .pf-section-title {
+        font-size: clamp(24px, 5vw, 36px);
+    }
+}

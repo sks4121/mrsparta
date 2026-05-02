@@ -1,0 +1,63 @@
+/* ═══════════════════════════════════════════════════════════
+   COACH — Role Variant
+   coach.css  |  Inherits base gold theme - subtle additions only
+═══════════════════════════════════════════════════════════ */
+
+/* Coach uses the base gold theme as-is.
+   Only minor additions for the strategist identity. */
+
+.coach-shell {
+  --role-primary:    var(--gold);
+  --role-primary-hi: var(--gold-hi);
+  --role-primary-lo: var(--gold-lo);
+}
+
+/* Stronger gold glow on logo */
+.coach-shell .role-logo-hex {
+  background: linear-gradient(135deg, var(--gold-lo), var(--gold-hi));
+  box-shadow: 0 0 35px rgba(240, 192, 64, .4);
+}
+
+/* Logo brand with stronger glow */
+.coach-shell .role-logo-text .brand {
+  text-shadow: 0 0 26px rgba(240, 192, 64, .5);
+}
+
+/* Tagline with gold accent (already gold by default) */
+.coach-shell .role-tagline .accent {
+  color: var(--gold-hi);
+  text-shadow: 0 0 45px rgba(240, 192, 64, .45);
+}
+
+/* Stats bar specific to coach */
+.coach-shell .role-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 28px;
+}
+.coach-shell .stat-val {
+  font-family: var(--font-d);
+  font-size: 26px;
+  color: var(--gold-hi);
+  line-height: 1;
+  text-shadow: 0 0 18px rgba(240, 192, 64, .35);
+}
+.coach-shell .stat-label {
+  font-family: var(--font-h);
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--txt3);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Bio textarea adjustments for coach */
+.coach-shell .form-textarea {
+  padding: 11px 14px;
+  resize: vertical;
+  min-height: 64px;
+}

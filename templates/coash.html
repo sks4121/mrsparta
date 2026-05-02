@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MR Sparta Coach OS — Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@300;400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C9A84C;
+  --gold-bright: #F0C040;
+  --gold-dim: #8B6914;
+  --gold-glow: rgba(240,192,64,0.15);
+  --red: #8B1A1A;
+  --red-bright: #CC2222;
+  --red-glow: rgba(204,34,34,0.12);
+  --green: #2A6644;
+  --green-bright: #3DBB77;
+  --dark: #080808;
+  --dark2: #0E0E0E;
+  --dark3: #141414;
+  --panel: #111111;
+  --panel2: #171717;
+  --border: rgba(201,168,76,0.1);
+  --border-bright: rgba(201,168,76,0.3);
+  --text: #E8E0D0;
+  --text-dim: #887E6E;
+  --text-muted: #4A4440;
+  --sidebar-w: 240px;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:14px; }
+body {
+  background: var(--dark);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar { width:4px; height:4px; }
+::-webkit-scrollbar-track { background: var(--dark); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius:2px; }
+
+/* ═══ SIDEBAR ═══ */
+.sidebar {
+  width: var(--sidebar-w);
+  min-height: 100vh;
+  background: var(--panel);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top:0; left:0; bottom:0;
+  z-index: 100;
+  transition: transform 0.3s;
+}
+
+.sidebar-logo {
+  padding: 28px 24px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-logo .brand {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 15px;
+  color: var(--gold-bright);
+  letter-spacing: 2px;
+  text-shadow: 0 0 20px rgba(240,192,64,0.4);
+  display: block;
+}
+
+.sidebar-logo .sub {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 5px;
+  color: var(--red-bright);
+  text-transform: uppercase;
+  margin-top: 2px;
+  display: block;
+}
+
+.sidebar-logo .coach-info {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.coach-avatar {
+  width: 36px; height: 36px;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 12px; color: var(--dark); font-weight: 900;
+  flex-shrink: 0;
+}
+
+.coach-name {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--text);
+  letter-spacing: 1px;
+}
+
+.coach-role {
+  font-size: 10px;
+  color: var(--gold-dim);
+  letter-spacing: 1px;
+}
+
+.sidebar-nav {
+  flex: 1;
+  padding: 20px 0;
+  overflow-y: auto;
+}
+
+.nav-section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  padding: 8px 24px 4px;
+  margin-top: 8px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.nav-item:hover { background: rgba(201,168,76,0.04); color: var(--text); }
+
+.nav-item.active {
+  color: var(--gold-bright);
+  background: rgba(201,168,76,0.06);
+}
+
+.nav-item.active::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 4px; bottom: 4px;
+  width: 2px;
+  background: var(--gold);
+  box-shadow: 0 0 8px var(--gold);
+}
+
+.nav-icon {
+  width: 18px; height: 18px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+}
+
+.nav-badge {
+  margin-left: auto;
+  background: var(--red-bright);
+  color: #fff;
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+}
+
+.sidebar-bottom {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border);
+}
+
+.sidebar-bottom .nav-item { padding: 8px 0; }
+
+/* ═══ MAIN CONTENT ═══ */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* TOPBAR */
+.topbar {
+  height: 60px;
+  background: rgba(10,10,10,0.95);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  gap: 20px;
+  position: sticky; top:0; z-index:50;
+  backdrop-filter: blur(10px);
+}
+
+.topbar-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 3px;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+.topbar-title span { color: var(--gold-bright); }
+
+.topbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.topbar-date {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.notif-btn {
+  width: 34px; height: 34px;
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  position: relative;
+  transition: all 0.2s;
+}
+.notif-btn:hover { border-color: var(--gold-dim); }
+.notif-dot {
+  position: absolute;
+  top: 6px; right: 6px;
+  width: 6px; height: 6px;
+  background: var(--red-bright);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--red-bright);
+}
+
+/* ═══ CONTENT ═══ */
+.content {
+  padding: 28px 32px;
+  flex: 1;
+}
+
+/* PAGES */
+.page { display: none; animation: fadeIn 0.3s ease; }
+.page.active { display: block; }
+
+@keyframes fadeIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+/* PAGE HEADER */
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.page-header-left .page-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.page-header-left h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 22px;
+  color: var(--text);
+  font-weight: 700;
+}
+
+.page-header-left h1 span { color: var(--gold-bright); }
+
+/* GOLD LINE */
+.gold-line {
+  height: 1px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold), transparent);
+  margin-bottom: 28px;
+  opacity: 0.4;
+}
+
+/* BTN */
+.btn {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 10px 24px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  color: var(--dark);
+  font-weight: 700;
+}
+.btn-gold:hover { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); box-shadow: 0 4px 16px rgba(201,168,76,0.3); }
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid var(--border-bright);
+  color: var(--gold);
+}
+.btn-outline:hover { background: var(--gold-glow); }
+
+/* ═══ DASHBOARD PAGE ═══ */
+
+/* KPI GRID */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.kpi-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 20px 22px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+.kpi-card:hover { border-color: var(--border-bright); transform: translateY(-2px); }
+
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.kpi-card:hover::before { opacity: 1; }
+
+.kpi-card.alert-card { border-color: rgba(204,34,34,0.3); }
+.kpi-card.alert-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--red-glow);
+  pointer-events: none;
+}
+
+.kpi-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.kpi-icon { font-size: 12px; }
+
+.kpi-value {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 36px;
+  font-weight: 900;
+  color: var(--gold-bright);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(240,192,64,0.25);
+  margin-bottom: 6px;
+}
+
+.kpi-card.alert-card .kpi-value { color: var(--red-bright); text-shadow: 0 0 20px rgba(204,34,34,0.3); }
+.kpi-card.green-card .kpi-value { color: var(--green-bright); text-shadow: 0 0 20px rgba(61,187,119,0.25); }
+
+.kpi-sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+}
+
+.kpi-trend {
+  position: absolute;
+  top: 16px; right: 16px;
+  font-size: 11px;
+  font-family: 'Share Tech Mono', monospace;
+  color: var(--green-bright);
+  letter-spacing: 1px;
+}
+.kpi-trend.down { color: var(--red-bright); }
+
+/* DASHBOARD GRID */
+.dash-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+}
+
+/* PANEL */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 20px;
+  position: relative;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.panel-action {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s;
+  background: none; border: none;
+}
+.panel-action:hover { color: var(--gold); }
+
+/* ACTIVITY FEED */
+.activity-list { display: flex; flex-direction: column; gap: 2px; }
+
+.activity-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  transition: background 0.2s;
+  cursor: default;
+}
+.activity-item:hover { background: rgba(255,255,255,0.02); }
+
+.activity-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.dot-gold { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+.dot-red { background: var(--red-bright); box-shadow: 0 0 6px var(--red-bright); }
+.dot-green { background: var(--green-bright); box-shadow: 0 0 6px var(--green-bright); }
+.dot-gray { background: var(--text-muted); }
+
+.activity-text { flex:1; font-size: 13px; color: var(--text-dim); line-height: 1.4; }
+.activity-text strong { color: var(--text); font-weight: 600; }
+.activity-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+/* ALERTS PANEL */
+.alert-list { display: flex; flex-direction: column; gap: 8px; }
+
+.alert-item {
+  background: rgba(204,34,34,0.06);
+  border: 1px solid rgba(204,34,34,0.2);
+  border-left: 3px solid var(--red-bright);
+  padding: 12px 14px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+.alert-item:hover { background: rgba(204,34,34,0.1); }
+.alert-item.warn {
+  background: rgba(201,168,76,0.05);
+  border-color: rgba(201,168,76,0.2);
+  border-left-color: var(--gold);
+}
+
+.alert-name {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  color: var(--text);
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+
+.alert-msg { font-size: 11px; color: var(--text-dim); line-height: 1.4; }
+
+.alert-badge {
+  display: inline-block;
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 1px;
+  padding: 2px 7px;
+  margin-top: 6px;
+  text-transform: uppercase;
+}
+.badge-red { background: rgba(204,34,34,0.2); color: var(--red-bright); border: 1px solid rgba(204,34,34,0.3); }
+.badge-gold { background: rgba(201,168,76,0.1); color: var(--gold); border: 1px solid rgba(201,168,76,0.3); }
+.badge-green { background: rgba(61,187,119,0.1); color: var(--green-bright); border: 1px solid rgba(61,187,119,0.3); }
+
+/* PROGRESS CHART */
+.mini-chart {
+  height: 60px;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 4px 0;
+}
+.bar-wrap { flex: 1; display: flex; align-items: flex-end; }
+.bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--gold), var(--gold-dim));
+  border-radius: 1px 1px 0 0;
+  min-height: 4px;
+  transition: all 0.3s;
+  position: relative;
+}
+.bar:hover { background: linear-gradient(180deg, var(--gold-bright), var(--gold)); }
+.bar.highlight { background: linear-gradient(180deg, #F0C040, #C9A84C); box-shadow: 0 0 8px rgba(240,192,64,0.4); }
+
+/* ═══ CLIENTS PAGE ═══ */
+.clients-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 320px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  padding: 8px 14px 8px 36px;
+  letter-spacing: 0.5px;
+  transition: border-color 0.2s;
+  outline: none;
+  position: relative;
+}
+.search-input:focus { border-color: var(--gold-dim); }
+.search-wrap { position: relative; flex: 1; max-width: 320px; }
+.search-wrap::before {
+  content: '🔍';
+  position: absolute;
+  left: 10px; top: 50%;
+  transform: translateY(-50%);
+  font-size: 11px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.filter-select {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-family: 'Cinzel', sans-serif;
+  font-size: 10px;
+  letter-spacing: 1px;
+  padding: 8px 14px;
+  cursor: pointer;
+  outline: none;
+}
+
+/* CLIENTS TABLE */
+.clients-table { width: 100%; border-collapse: collapse; }
+
+.clients-table th {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+}
+
+.clients-table td {
+  padding: 12px 14px;
+  border-bottom: 1px solid rgba(201,168,76,0.04);
+  font-size: 13px;
+  color: var(--text-dim);
+  vertical-align: middle;
+}
+
+.clients-table tr { transition: background 0.2s; cursor: pointer; }
+.clients-table tr:hover td { background: rgba(255,255,255,0.02); color: var(--text); }
+
+.client-name-cell {
+  display: flex; align-items: center; gap: 10px;
+}
+
+.client-avatar {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif;
+  font-size: 10px; color: var(--dark); font-weight: 700;
+  flex-shrink: 0;
+}
+
+.client-name { color: var(--text); font-weight: 600; display: block; }
+.client-email { color: var(--text-muted); font-size: 11px; }
+
+/* COMPLIANCE BAR */
+.compliance-wrap { display: flex; align-items: center; gap: 8px; }
+.compliance-bar-bg {
+  flex: 1; height: 4px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+  min-width: 60px;
+}
+.compliance-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+}
+.compliance-fill.low { background: linear-gradient(90deg, var(--red), var(--red-bright)); }
+.compliance-fill.mid { background: linear-gradient(90deg, #886622, var(--gold-dim)); }
+.compliance-pct { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-dim); min-width: 32px; }
+
+/* STATUS DOTS */
+.status-dot { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+.status-dot::before { content:''; width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+.status-active::before { background: var(--green-bright); box-shadow: 0 0 6px var(--green-bright); }
+.status-alert::before { background: var(--red-bright); box-shadow: 0 0 6px var(--red-bright); animation: pulse-red 1.5s ease-in-out infinite; }
+.status-pending::before { background: var(--gold); box-shadow: 0 0 6px var(--gold); }
+@keyframes pulse-red { 0%,100%{ opacity:1; } 50%{ opacity:0.4; } }
+
+/* ROW ACTIONS */
+.row-actions { display: flex; gap: 6px; opacity: 0; transition: opacity 0.2s; }
+.clients-table tr:hover .row-actions { opacity: 1; }
+.row-btn {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 1px;
+  padding: 4px 10px;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.row-btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+.row-btn.danger:hover { border-color: var(--red-bright); color: var(--red-bright); }
+
+/* ═══ PROGRESS PAGE ═══ */
+.progress-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 20px;
+  height: calc(100vh - 180px);
+}
+
+.client-selector { overflow-y: auto; }
+
+.client-selector-list { display: flex; flex-direction: column; gap: 2px; }
+
+.selector-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s;
+  border-left: 2px solid transparent;
+}
+.selector-item:hover { background: rgba(255,255,255,0.03); }
+.selector-item.active {
+  background: rgba(201,168,76,0.06);
+  border-left-color: var(--gold);
+}
+
+.selector-info { flex: 1; min-width: 0; }
+.selector-name { font-size: 13px; color: var(--text); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.selector-meta { font-size: 11px; color: var(--text-muted); }
+.selector-alert { font-size: 11px; color: var(--red-bright); margin-top: 2px; }
+
+.progress-detail { overflow-y: auto; display: flex; flex-direction: column; gap: 16px; }
+
+/* WEIGHT CHART */
+.weight-chart-wrap { position: relative; height: 160px; padding: 8px 0; }
+.weight-chart {
+  width: 100%; height: 100%;
+  display: flex; align-items: flex-end; gap: 3px;
+  position: relative;
+}
+
+.chart-grid {
+  position: absolute;
+  inset: 0;
+  display: flex; flex-direction: column; justify-content: space-between;
+  pointer-events: none;
+}
+.chart-grid-line {
+  width: 100%; height: 1px;
+  background: rgba(255,255,255,0.04);
+}
+
+.wbar-wrap { flex:1; display: flex; align-items: flex-end; position: relative; }
+.wbar {
+  width: 100%;
+  background: linear-gradient(180deg, rgba(201,168,76,0.8), rgba(201,168,76,0.2));
+  border-radius: 2px 2px 0 0;
+  transition: all 0.3s;
+}
+.wbar:hover { background: linear-gradient(180deg, var(--gold-bright), var(--gold)); }
+
+.weight-axis {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+/* STATS ROW */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+
+.stat-mini {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  padding: 14px;
+  text-align: center;
+}
+
+.stat-mini-val {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 22px;
+  color: var(--gold-bright);
+  margin-bottom: 4px;
+}
+
+.stat-mini-lbl {
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+/* PLAN DISPLAY */
+.plan-display { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.plan-block {
+  background: var(--panel2);
+  border: 1px solid var(--border);
+  padding: 16px;
+}
+
+.plan-block-title {
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+
+.plan-day {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  font-size: 12px;
+}
+.plan-day:last-child { border-bottom: none; }
+.plan-day-name { color: var(--text); font-weight: 500; }
+.plan-day-detail { color: var(--text-muted); font-size: 11px; }
+.plan-day-check {
+  width: 16px; height: 16px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 9px;
+  color: var(--green-bright);
+}
+.plan-day-check.done { background: rgba(61,187,119,0.1); border-color: var(--green-bright); }
+
+/* ═══ ADD CLIENT MODAL ═══ */
+.modal-overlay {
+  position: fixed; inset:0;
+  background: rgba(0,0,0,0.85);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--panel);
+  border: 1px solid var(--border-bright);
+  padding: 32px;
+  width: 480px;
+  max-width: 90vw;
+  animation: slideUp 0.3s ease;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+}
+
+@keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+.modal-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 18px;
+  color: var(--gold-bright);
+  margin-bottom: 4px;
+}
+.modal-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+}
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+.form-group { display: flex; flex-direction: column; gap: 5px; }
+.form-group.full { grid-column: 1 / -1; }
+
+.form-label {
+  font-family: 'Cinzel', serif;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.form-input, .form-select {
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  padding: 9px 12px;
+  letter-spacing: 0.5px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-select:focus { border-color: var(--gold-dim); }
+
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+/* ═══ CHAT PAGE ═══ */
+.chat-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  height: calc(100vh - 160px);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.chat-list-panel {
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  background: var(--panel);
+}
+
+.chat-search { padding: 12px; border-bottom: 1px solid var(--border); }
+.chat-search input {
+  width: 100%;
+  background: var(--dark3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 12px;
+  padding: 7px 10px;
+  outline: none;
+}
+
+.chat-contact {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  transition: background 0.2s;
+}
+.chat-contact:hover { background: rgba(255,255,255,0.03); }
+.chat-contact.active { background: rgba(201,168,76,0.06); }
+
+.chat-contact-info { flex: 1; min-width: 0; }
+.chat-contact-name { font-size: 13px; color: var(--text); font-weight: 600; }
+.chat-contact-last { font-size: 11px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-contact-time { font-family: 'Share Tech Mono', monospace; font-size: 9px; color: var(--text-muted); }
+.unread-badge {
+  background: var(--gold);
+  color: var(--dark);
+  font-family: 'Cinzel', serif;
+  font-size: 8px;
+  padding: 2px 6px;
+  border-radius: 10px;
+  font-weight: 700;
+}
+
+.chat-main {
+  display: flex; flex-direction: column;
+  background: var(--dark2);
+}
+
+.chat-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 12px;
+  background: var(--panel);
+}
+.chat-header-info { flex:1; }
+.chat-header-name { font-family: 'Cinzel', serif; font-size: 13px; color: var(--text); letter-spacing: 1px; }
+.chat-header-status { font-size: 11px; color: var(--green-bright); }
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+
+.msg {
+  display: flex;
+  gap: 10px;
+  max-width: 70%;
+}
+.msg.sent { align-self: flex-end; flex-direction: row-reverse; }
+
+.msg-avatar {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gold-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cinzel', serif; font-size: 9px; color: var(--dark);
+  flex-shrink: 0; font-weight: 700; margin-top: 2px;
+}
+.msg.sent .msg-avatar { background: linear-gradient(135deg, var(--gold-dim), var(--gold)); }
+
+.msg-bubble {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+  max-width: 100%;
+}
+.msg.sent .msg-bubble {
+  background: rgba(201,168,76,0.08);
+  border-color: rgba(201,168,76,0.2);
+  color: var(--text);
+}
+
+.msg-time {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 9px;
+  color: var(--text-muted);
+  padding: 2px 0 0 2px;
+}
+
+.chat-input-area {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  display: flex; gap: 10px; align-items: center;
+}
+.chat-input {
+  flex: 1;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 13px;
+  padding: 10px 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  letter-spacing: 0.3px;
+}
+.chat-input:focus { border-color: var(--gold-dim); }
+.send-btn {
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  border: none;
+  color: var(--dark);
+  padding: 10px 20px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 700;
+  transition: all 0.2s;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+}
+.send-btn:hover { background: linear-gradient(135deg, var(--gold), var(--gold-bright)); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 1100px) {
+  :root { --sidebar-w: 200px; }
+  .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  .dash-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .progress-layout, .chat-layout { grid-template-columns: 1fr; }
+  .plan-display { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <span class="brand">MR Sparta</span>
+    <span class="sub">Coach OS</span>
+    <div class="coach-info">
+      <div class="coach-avatar">MR</div>
+      <div>
+        <div class="coach-name">Coach Marcos</div>
+        <div class="coach-role">⚔ Entrenador Principal</div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Principal</div>
+    <a class="nav-item active" onclick="showPage('dashboard',this)">
+      <span class="nav-icon">⚔</span> Dashboard
+    </a>
+    <a class="nav-item" onclick="showPage('clients',this)">
+      <span class="nav-icon">👥</span> Clientes
+      <span class="nav-badge">24</span>
+    </a>
+    <a class="nav-item" onclick="showPage('progress',this)">
+      <span class="nav-icon">📊</span> Progreso
+    </a>
+    <a class="nav-item" onclick="showPage('plans',this)">
+      <span class="nav-icon">📋</span> Planes
+    </a>
+
+    <div class="nav-section-label">Comunicación</div>
+    <a class="nav-item" onclick="showPage('chat',this)">
+      <span class="nav-icon">💬</span> Mensajes
+      <span class="nav-badge">3</span>
+    </a>
+    <a class="nav-item" onclick="showPage('alerts',this)">
+      <span class="nav-icon">🔔</span> Alertas
+      <span class="nav-badge" style="background:var(--red-bright)">5</span>
+    </a>
+
+    <div class="nav-section-label">Sistema</div>
+    <a class="nav-item" onclick="showPage('billing',this)">
+      <span class="nav-icon">💰</span> Facturación
+    </a>
+    <a class="nav-item" onclick="showPage('ai',this)">
+      <span class="nav-icon">🤖</span> Spartan AI
+    </a>
+  </nav>
+
+  <div class="sidebar-bottom">
+    <a class="nav-item" onclick="showPage('settings',this)">
+      <span class="nav-icon">⚙</span> Configuración
+    </a>
+    <a class="nav-item" style="color:var(--red-bright)">
+      <span class="nav-icon">🚪</span> Cerrar Sesión
+    </a>
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span class="topbar-title">MR Sparta <span>Coach OS</span></span>
+    <div class="topbar-right">
+      <span class="topbar-date" id="clock">Cargando...</span>
+      <div class="notif-btn" title="Notificaciones">🔔<span class="notif-dot"></span></div>
+      <div class="coach-avatar" style="width:32px;height:32px;font-size:10px;cursor:pointer">MR</div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- ═══ DASHBOARD PAGE ═══ -->
+    <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-label">Panel de Control</div>
+          <h1>Dashboard <span>Espartano</span></h1>
+        </div>
+        <button class="btn btn-gold" onclick="openModal()">+ Nuevo Cliente</button>
+      </div>
+      <div class="gold-line"></div>
+
+      <!-- KPIs -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label"><span class="kpi-icon">👥</span> Clientes Activos</div>
+          <div class="kpi-value">24</div>
+          <div class="kpi-sub">+3 este mes</div>
+          <div class="kpi-trend">▲ +14%</div>
+        </div>
+        <div class="kpi-card green-card">
+          <div class="kpi-label"><span class="kpi-icon">📈</span> Cumplimiento Prom.</div>
+          <div class="kpi-value">78%</div>
+          <div class="kpi-sub">Meta: 80%</div>
+          <div class="kpi-trend">▲ +3%</div>
+        </div>
+        <div class="kpi-card alert-card">
+          <div class="kpi-label"><span class="kpi-icon">⚠</span> En Riesgo</div>
+          <div class="kpi-value">5</div>
+          <div class="kpi-sub">Requieren atención</div>
+          <div class="kpi-trend down">▼ ver</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label"><span class="kpi-icon">💰</span> Ingreso Mensual</div>
+          <div class="kpi-value">$1,892</div>
+          <div class="kpi-sub">24 suscripciones</div>
+          <div class="kpi-trend">▲ +8%</div>
+        </div>
+      </div>
+
+      <!-- DASH GRID -->
+      <div class="dash-grid">
+
+        <!-- Activity Feed -->
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">⚔ Actividad Reciente</span>
+            <button class="panel-action">Ver todo →</button>
+          </div>
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-dot dot-green"></div>
+              <div class="activity-text"><strong>Juan Martínez</strong> registró 84.2kg — bajó 0.8kg esta semana</div>
+              <div class="activity-time">hace 12m</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot dot-red"></div>
+              <div class="activity-text"><strong>Ana García</strong> cumplimiento 58% — IA generó alerta automática</div>
+              <div class="activity-time">hace 1h</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot dot-gold"></div>
+              <div class="activity-text"><strong>Carlos Ruiz</strong> plan ajustado por IA — +200 kcal aplicadas</div>
+              <div class="activity-time">hace 2h</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot dot-green"></div>
+              <div class="activity-text"><strong>María López</strong> subió fotos de progreso — semana 8</div>
+              <div class="activity-time">hace 3h</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot dot-gray"></div>
+              <div class="activity-text"><strong>Pedro Soto</strong> completó sesión de entrenamiento</div>
+              <div class="activity-time">hace 4h</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot dot-red"></div>
+              <div class="activity-text"><strong>Luis Torres</strong> sin registro en 5 días — recordatorio enviado</div>
+              <div class="activity-time">hace 6h</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot dot-gold"></div>
+              <div class="activity-text">Nueva suscripción <strong>Premium</strong> — Roberto Díaz</div>
+              <div class="activity-time">hace 1d</div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-dot dot-green"></div>
+              <div class="activity-text"><strong>Sofia Herrera</strong> alcanzó meta de peso — hito registrado 🏆</div>
+              <div class="activity-time">hace 1d</div>
+            </div>
+          </div>
+          <!-- Mini chart -->
+          <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border)">
+            <div class="panel-title" style="margin-bottom:10px; font-size:10px">📊 Registros esta semana</div>
+            <div class="mini-chart">
+              <div class="bar-wrap"><div class="bar" style="height:40%"></div></div>
+              <div class="bar-wrap"><div class="bar" style="height:65%"></div></div>
+              <div class="bar-wrap"><div class="bar" style="height:55%"></div></div>
+              <div class="bar-wrap"><div class="bar" style="height:80%"></div></div>
+              <div class="bar-wrap"><div class="bar" style="height:45%"></div></div>
+              <div class="bar-wrap"><div class="bar highlight" style="height:90%"></div></div>
+              <div class="bar-wrap"><div class="bar" style="height:72%"></div></div>
+            </div>
+            <div class="weight-axis">
+              <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alerts Panel -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title" style="color:var(--red-bright)">⚠ Alertas Activas</span>
+              <button class="panel-action">5 total</button>
+            </div>
+            <div class="alert-list">
+              <div class="alert-item">
+                <div class="alert-name">Ana García</div>
+                <div class="alert-msg">Cumplimiento 58% — por debajo del umbral crítico</div>
+                <span class="alert-badge badge-red">Crítico</span>
+              </div>
+              <div class="alert-item">
+                <div class="alert-name">Luis Torres</div>
+                <div class="alert-msg">Sin registro de peso por 14 días</div>
+                <span class="alert-badge badge-red">Sin datos</span>
+              </div>
+              <div class="alert-item warn">
+                <div class="alert-name">Roberto Díaz</div>
+                <div class="alert-msg">Peso estancado 2 semanas — IA sugiere +200 kcal</div>
+                <span class="alert-badge badge-gold">Estancado</span>
+              </div>
+              <div class="alert-item warn">
+                <div class="alert-name">Claudia Mora</div>
+                <div class="alert-msg">Plan de nutrición vence en 3 días</div>
+                <span class="alert-badge badge-gold">Renovar</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Top clients -->
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">🏆 Top Progreso</span>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item" style="padding:8px 8px">
+                <div class="client-avatar" style="width:28px;height:28px;font-size:9px">SM</div>
+                <div class="activity-text"><strong>Sofía Herrera</strong> — −8kg en 8 semanas</div>
+                <span class="alert-badge badge-green">⭐ Meta</span>
+              </div>
+              <div class="activity-item" style="padding:8px 8px">
+                <div class="client-avatar" style="width:28px;height:28px;font-size:9px">JM</div>
+                <div class="activity-text"><strong>Juan Martínez</strong> — 96% cumplimiento</div>
+                <span class="alert-badge badge-green">Elite</span>
+              </div>
+              <div class="activity-item" style="padding:8px 8px">
+                <div class="client-avatar" style="width:28px;height:28px;font-size:9px">ML</div>
+                <div class="activity-text"><strong>María López</strong> — +12kg músculo</div>
+                <span class="alert-badge badge-gold">Avance</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CLIENTS PAGE ═══ -->
+    <div class="page" id="page-clients">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-label">Gestión</div>
+          <h1>Mis <span>Clientes</span></h1>
+        </div>
+        <button class="btn btn-gold" onclick="openModal()">+ Agregar Cliente</button>
+      </div>
+      <div class="gold-line"></div>
+
+      <div class="clients-toolbar">
+        <div class="search-wrap">
+          <input class="search-input" type="text" placeholder="Buscar cliente...">
+        </div>
+        <select class="filter-select">
+          <option>Todos los estados</option>
+          <option>Activos</option>
+          <option>En alerta</option>
+          <option>Sin registros</option>
+        </select>
+        <select class="filter-select">
+          <option>Todos los planes</option>
+          <option>Basic</option>
+          <option>Premium</option>
+          <option>Elite</option>
+        </select>
+      </div>
+
+      <div class="panel" style="padding:0;overflow:hidden">
+        <table class="clients-table">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Plan</th>
+              <th>Peso Actual</th>
+              <th>Objetivo</th>
+              <th>Cumplimiento</th>
+              <th>Estado</th>
+              <th>Semana</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="clientsBody">
+            <!-- Populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ═══ PROGRESS PAGE ═══ -->
+    <div class="page" id="page-progress">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-label">Análisis</div>
+          <h1>Progreso <span>del Cliente</span></h1>
+        </div>
+      </div>
+      <div class="gold-line"></div>
+
+      <div class="progress-layout">
+        <div class="panel client-selector">
+          <div class="panel-header">
+            <span class="panel-title">👥 Seleccionar</span>
+          </div>
+          <div class="client-selector-list">
+            <div class="selector-item active" onclick="selectClient(this, 'Juan Martínez', 84.2, 78, 96)">
+              <div class="client-avatar" style="width:30px;height:30px;font-size:10px">JM</div>
+              <div class="selector-info">
+                <div class="selector-name">Juan Martínez</div>
+                <div class="selector-meta">Semana 12 • Premium</div>
+              </div>
+            </div>
+            <div class="selector-item" onclick="selectClient(this, 'Ana García', 72.5, 58, 4)">
+              <div class="client-avatar" style="width:30px;height:30px;font-size:10px;background:linear-gradient(135deg,var(--red),var(--red-bright))">AG</div>
+              <div class="selector-info">
+                <div class="selector-name">Ana García</div>
+                <div class="selector-meta">Semana 4 • Basic</div>
+                <div class="selector-alert">⚠ Cumplimiento bajo</div>
+              </div>
+            </div>
+            <div class="selector-item" onclick="selectClient(this, 'Carlos Ruiz', 91.0, 72, 8)">
+              <div class="client-avatar" style="width:30px;height:30px;font-size:10px">CR</div>
+              <div class="selector-info">
+                <div class="selector-name">Carlos Ruiz</div>
+                <div class="selector-meta">Semana 8 • Elite</div>
+              </div>
+            </div>
+            <div class="selector-item" onclick="selectClient(this, 'María López', 68.3, 88, 20)">
+              <div class="client-avatar" style="width:30px;height:30px;font-size:10px">ML</div>
+              <div class="selector-info">
+                <div class="selector-name">María López</div>
+                <div class="selector-meta">Semana 20 • Premium</div>
+              </div>
+            </div>
+            <div class="selector-item" onclick="selectClient(this, 'Pedro Soto', 88.1, 75, 6)">
+              <div class="client-avatar" style="width:30px;height:30px;font-size:10px">PS</div>
+              <div class="selector-info">
+                <div class="selector-name">Pedro Soto</div>
+                <div class="selector-meta">Semana 6 • Basic</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="progress-detail">
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title" id="progressClientName">📊 Juan Martínez — Evolución de Peso</span>
+              <div style="display:flex;gap:8px">
+                <button class="btn btn-outline" style="padding:6px 14px;font-size:9px">Exportar</button>
+                <button class="btn btn-gold" style="padding:6px 14px;font-size:9px">+ Registro</button>
+              </div>
+            </div>
+            <div class="weight-chart-wrap">
+              <div class="chart-grid">
+                <div class="chart-grid-line"></div>
+                <div class="chart-grid-line"></div>
+                <div class="chart-grid-line"></div>
+                <div class="chart-grid-line"></div>
+              </div>
+              <div class="weight-chart" id="weightChart"></div>
+            </div>
+            <div class="weight-axis" id="weightAxis"></div>
+          </div>
+
+          <div class="stats-row">
+            <div class="stat-mini">
+              <div class="stat-mini-val" id="statPeso">84.2</div>
+              <div class="stat-mini-lbl">Peso Actual (kg)</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-val" id="statCumpl">96%</div>
+              <div class="stat-mini-lbl">Cumplimiento</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-val" id="statSem">12</div>
+              <div class="stat-mini-lbl">Semanas</div>
+            </div>
+            <div class="stat-mini">
+              <div class="stat-mini-val" style="color:var(--green-bright)">−4.8</div>
+              <div class="stat-mini-lbl">Delta (kg)</div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <span class="panel-title">📋 Plan Actual</span>
+              <button class="btn btn-gold" style="padding:6px 14px;font-size:9px">✦ Ajustar con IA</button>
+            </div>
+            <div class="plan-display">
+              <div class="plan-block">
+                <div class="plan-block-title">🏋 Entrenamiento</div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Lunes</span>
+                  <span class="plan-day-detail">Pecho + Tríceps</span>
+                  <div class="plan-day-check done">✓</div>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Martes</span>
+                  <span class="plan-day-detail">Espalda + Bíceps</span>
+                  <div class="plan-day-check done">✓</div>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Miércoles</span>
+                  <span class="plan-day-detail">Descanso activo</span>
+                  <div class="plan-day-check done">✓</div>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Jueves</span>
+                  <span class="plan-day-detail">Piernas</span>
+                  <div class="plan-day-check done">✓</div>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Viernes</span>
+                  <span class="plan-day-detail">Hombros + Core</span>
+                  <div class="plan-day-check"></div>
+                </div>
+              </div>
+              <div class="plan-block">
+                <div class="plan-block-title">🥗 Nutrición</div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Calorías</span>
+                  <span class="plan-day-detail" style="color:var(--gold)">2,800 kcal</span>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Proteína</span>
+                  <span class="plan-day-detail">180g / día</span>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Carbos</span>
+                  <span class="plan-day-detail">310g / día</span>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Grasas</span>
+                  <span class="plan-day-detail">80g / día</span>
+                </div>
+                <div class="plan-day">
+                  <span class="plan-day-name">Agua</span>
+                  <span class="plan-day-detail">3.5L / día</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ PLANS PAGE ═══ -->
+    <div class="page" id="page-plans">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-label">Gestión</div>
+          <h1>Planes <span>y Rutinas</span></h1>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-outline">📄 Plantillas</button>
+          <button class="btn btn-gold">🤖 Generar con IA</button>
+        </div>
+      </div>
+      <div class="gold-line"></div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+        <div class="plan-block" style="border:1px solid var(--border)">
+          <div class="plan-block-title" style="font-size:12px;color:var(--gold-bright)">📋 Plan Volumen — Juan Martínez</div>
+          <div class="plan-day"><span class="plan-day-name">Tipo</span><span class="alert-badge badge-gold">Entrenamiento</span></div>
+          <div class="plan-day"><span class="plan-day-name">Semana</span><span class="plan-day-detail">12 de 24</span></div>
+          <div class="plan-day"><span class="plan-day-name">Creado</span><span class="plan-day-detail">IA + Coach</span></div>
+          <div style="display:flex;gap:6px;margin-top:12px">
+            <button class="btn btn-gold" style="flex:1;padding:8px">Ver Plan</button>
+            <button class="btn btn-outline" style="padding:8px 12px">✏</button>
+          </div>
+        </div>
+        <div class="plan-block" style="border:1px solid rgba(204,34,34,0.3)">
+          <div class="plan-block-title" style="font-size:12px;color:var(--red-bright)">⚠ Plan Déficit — Ana García</div>
+          <div class="plan-day"><span class="plan-day-name">Tipo</span><span class="alert-badge badge-red">Nutrición</span></div>
+          <div class="plan-day"><span class="plan-day-name">Semana</span><span class="plan-day-detail">4 de 12</span></div>
+          <div class="plan-day"><span class="plan-day-name">Estado</span><span style="color:var(--red-bright);font-size:11px">Requiere revisión</span></div>
+          <div style="display:flex;gap:6px;margin-top:12px">
+            <button class="btn btn-gold" style="flex:1;padding:8px">Ver Plan</button>
+            <button class="btn btn-outline" style="padding:8px 12px">✏</button>
+          </div>
+        </div>
+        <div class="plan-block" style="border:1px solid var(--border)">
+          <div class="plan-block-title" style="font-size:12px;color:var(--green-bright)">✅ Plan Élite — María López</div>
+          <div class="plan-day"><span class="plan-day-name">Tipo</span><span class="alert-badge badge-green">Combinado</span></div>
+          <div class="plan-day"><span class="plan-day-name">Semana</span><span class="plan-day-detail">20 de 24</span></div>
+          <div class="plan-day"><span class="plan-day-name">Progreso</span><span style="color:var(--green-bright);font-size:11px">Excelente</span></div>
+          <div style="display:flex;gap:6px;margin-top:12px">
+            <button class="btn btn-gold" style="flex:1;padding:8px">Ver Plan</button>
+            <button class="btn btn-outline" style="padding:8px 12px">✏</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ CHAT PAGE ═══ -->
+    <div class="page" id="page-chat">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-label">Comunicación</div>
+          <h1>Mensajes <span>con Clientes</span></h1>
+        </div>
+      </div>
+      <div class="gold-line"></div>
+
+      <div class="chat-layout">
+        <div class="chat-list-panel">
+          <div class="chat-search">
+            <input type="text" placeholder="Buscar conversación...">
+          </div>
+          <div class="chat-contact active">
+            <div class="client-avatar" style="width:36px;height:36px;font-size:12px">JM</div>
+            <div class="chat-contact-info">
+              <div class="chat-contact-name">Juan Martínez</div>
+              <div class="chat-contact-last">¿Puedo aumentar la carga?</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+              <div class="chat-contact-time">10:42</div>
+              <div class="unread-badge">2</div>
+            </div>
+          </div>
+          <div class="chat-contact">
+            <div class="client-avatar" style="width:36px;height:36px;font-size:12px;background:linear-gradient(135deg,var(--red),var(--red-bright))">AG</div>
+            <div class="chat-contact-info">
+              <div class="chat-contact-name">Ana García</div>
+              <div class="chat-contact-last">No pude completar el entrenamiento</div>
+            </div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+              <div class="chat-contact-time">09:15</div>
+              <div class="unread-badge">1</div>
+            </div>
+          </div>
+          <div class="chat-contact">
+            <div class="client-avatar" style="width:36px;height:36px;font-size:12px">ML</div>
+            <div class="chat-contact-info">
+              <div class="chat-contact-name">María López</div>
+              <div class="chat-contact-last">Logré la meta! 🎯</div>
+            </div>
+            <div class="chat-contact-time">Ayer</div>
+          </div>
+          <div class="chat-contact">
+            <div class="client-avatar" style="width:36px;height:36px;font-size:12px">CR</div>
+            <div class="chat-contact-info">
+              <div class="chat-contact-name">Carlos Ruiz</div>
+              <div class="chat-contact-last">OK gracias coach</div>
+            </div>
+            <div class="chat-contact-time">Lun</div>
+          </div>
+        </div>
+
+        <div class="chat-main">
+          <div class="chat-header">
+            <div class="client-avatar" style="width:38px;height:38px;font-size:13px">JM</div>
+            <div class="chat-header-info">
+              <div class="chat-header-name">Juan Martínez</div>
+              <div class="chat-header-status">● En línea — Semana 12 • 84.2kg</div>
+            </div>
+            <button class="btn btn-outline" style="padding:6px 14px;font-size:9px">Ver Perfil</button>
+          </div>
+
+          <div class="chat-messages">
+            <div class="msg">
+              <div class="msg-avatar">JM</div>
+              <div>
+                <div class="msg-bubble">Hola coach, ya terminé el entrenamiento de piernas. Fue bastante intenso pero lo completé todo.</div>
+                <div class="msg-time">10:28</div>
+              </div>
+            </div>
+            <div class="msg sent">
+              <div class="msg-avatar" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold))">MR</div>
+              <div>
+                <div class="msg-bubble">Excelente Juan! Vi en el sistema que registraste 94% de cumplimiento esta semana. Sigue así 💪</div>
+                <div class="msg-time">10:31</div>
+              </div>
+            </div>
+            <div class="msg">
+              <div class="msg-avatar">JM</div>
+              <div>
+                <div class="msg-bubble">Gracias! Una pregunta, ¿puedo aumentar el peso en sentadillas? El actual se siente muy ligero ya.</div>
+                <div class="msg-time">10:42</div>
+              </div>
+            </div>
+            <div class="msg">
+              <div class="msg-avatar">JM</div>
+              <div>
+                <div class="msg-bubble">También quería preguntarte sobre las calorías, ¿podemos ajustar?</div>
+                <div class="msg-time">10:42</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="chat-input-area">
+            <input class="chat-input" type="text" placeholder="Escribe un mensaje..." id="chatInput">
+            <button class="send-btn" onclick="sendMsg()">Enviar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ AI PAGE ═══ -->
+    <div class="page" id="page-ai">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-label">Inteligencia Artificial</div>
+          <h1>Spartan <span>AI Engine</span></h1>
+        </div>
+      </div>
+      <div class="gold-line"></div>
+      <div style="display:grid;grid-template-columns:1fr 380px;gap:20px">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="panel-title">🤖 Chat con Spartan AI</span>
+            <span style="font-size:10px;color:var(--green-bright)">● Sistema activo</span>
+          </div>
+          <div style="height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;margin-bottom:16px" id="aiMessages">
+            <div class="msg" style="max-width:90%">
+              <div class="msg-avatar" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold));font-size:8px;border-radius:0">AI</div>
+              <div>
+                <div class="msg-bubble" style="background:rgba(201,168,76,0.05);border-color:rgba(201,168,76,0.2)">
+                  Sistema activo. Tengo acceso a los datos de 24 clientes. Detecté 5 alertas activas. ¿Qué analizamos hoy?
+                </div>
+                <div class="msg-time">Sistema</div>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px">
+            <input class="chat-input" type="text" id="aiInput" placeholder="Pregunta al Spartan AI sobre tus clientes...">
+            <button class="send-btn" onclick="sendAI()">Consultar</button>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px">
+            <button class="row-btn" onclick="askAI('¿Quiénes están en riesgo esta semana?')">⚠ En riesgo</button>
+            <button class="row-btn" onclick="askAI('Analiza el progreso de Juan Martínez')">📊 Analizar cliente</button>
+            <button class="row-btn" onclick="askAI('Genera ajustes para clientes estancados')">🔄 Ajustes IA</button>
+            <button class="row-btn" onclick="askAI('Resumen semanal de todos los clientes')">📋 Resumen</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">⚡ Acciones Automáticas</span></div>
+            <div class="alert-list">
+              <div class="alert-item warn">
+                <div class="alert-name">Roberto Díaz</div>
+                <div class="alert-msg">IA detectó estancamiento 14 días</div>
+                <div style="display:flex;gap:6px;margin-top:8px">
+                  <button class="btn btn-gold" style="padding:5px 12px;font-size:8px">✓ Aplicar +200 kcal</button>
+                  <button class="btn btn-outline" style="padding:5px 12px;font-size:8px">Revisar</button>
+                </div>
+              </div>
+              <div class="alert-item">
+                <div class="alert-name">Ana García</div>
+                <div class="alert-msg">IA sugiere reducir volumen −10%</div>
+                <div style="display:flex;gap:6px;margin-top:8px">
+                  <button class="btn btn-gold" style="padding:5px 12px;font-size:8px">✓ Aplicar</button>
+                  <button class="btn btn-outline" style="padding:5px 12px;font-size:8px">Ignorar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header"><span class="panel-title">📊 Métricas IA</span></div>
+            <div class="plan-day"><span class="plan-day-name">Planes generados</span><span style="color:var(--gold-bright);font-family:'Cinzel Decorative',serif">142</span></div>
+            <div class="plan-day"><span class="plan-day-name">Ajustes automáticos</span><span style="color:var(--gold-bright);font-family:'Cinzel Decorative',serif">38</span></div>
+            <div class="plan-day"><span class="plan-day-name">Alertas detectadas</span><span style="color:var(--red-bright);font-family:'Cinzel Decorative',serif">23</span></div>
+            <div class="plan-day"><span class="plan-day-name">Precisión modelo</span><span style="color:var(--green-bright);font-family:'Cinzel Decorative',serif">94%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- OTHER PAGES PLACEHOLDER -->
+    <div class="page" id="page-alerts">
+      <div class="page-header"><div class="page-header-left"><div class="page-label">Sistema</div><h1>Alertas <span>Activas</span></h1></div></div>
+      <div class="gold-line"></div>
+      <div class="alert-list" style="max-width:600px">
+        <div class="alert-item"><div class="alert-name">Ana García</div><div class="alert-msg">Cumplimiento 58% — por debajo del 70% durante 2 semanas consecutivas</div><span class="alert-badge badge-red">Crítico</span></div>
+        <div class="alert-item"><div class="alert-name">Luis Torres</div><div class="alert-msg">Sin registro de peso en 14 días. Sistema envió recordatorio automático sin respuesta.</div><span class="alert-badge badge-red">Sin datos</span></div>
+        <div class="alert-item warn"><div class="alert-name">Roberto Díaz</div><div class="alert-msg">Peso estancado 2 semanas consecutivas. IA recomienda aumentar 200 kcal/día.</div><span class="alert-badge badge-gold">Estancado</span></div>
+        <div class="alert-item warn"><div class="alert-name">Claudia Mora</div><div class="alert-msg">Plan de nutrición vence en 3 días. Renovación pendiente de aprobación.</div><span class="alert-badge badge-gold">Renovar</span></div>
+        <div class="alert-item warn"><div class="alert-name">Pedro Soto</div><div class="alert-msg">No completó 3 sesiones de entrenamiento esta semana.</div><span class="alert-badge badge-gold">Ausencia</span></div>
+      </div>
+    </div>
+
+    <div class="page" id="page-billing">
+      <div class="page-header"><div class="page-header-left"><div class="page-label">Finanzas</div><h1>Facturación <span>y Pagos</span></h1></div></div>
+      <div class="gold-line"></div>
+      <div class="kpi-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="kpi-card green-card"><div class="kpi-label">💰 Ingreso Mensual</div><div class="kpi-value">$1,892</div><div class="kpi-sub">24 suscripciones activas</div></div>
+        <div class="kpi-card"><div class="kpi-label">📊 Ingreso Anual</div><div class="kpi-value">$18.4K</div><div class="kpi-sub">Proyección 2025</div></div>
+        <div class="kpi-card alert-card"><div class="kpi-label">⚠ Pagos Pendientes</div><div class="kpi-value">2</div><div class="kpi-sub">$158 por cobrar</div></div>
+      </div>
+    </div>
+
+    <div class="page" id="page-settings">
+      <div class="page-header"><div class="page-header-left"><div class="page-label">Sistema</div><h1>Configuración <span>del Coach</span></h1></div></div>
+      <div class="gold-line"></div>
+      <div style="color:var(--text-dim);font-size:14px;line-height:2">⚔ Perfil del Coach | 🔔 Notificaciones | 💳 Suscripción | 🤖 IA Config | 🔒 Seguridad</div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ADD CLIENT MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <div class="modal-title">Nuevo Guerrero</div>
+    <div class="modal-sub">Agrega un cliente a tu organización</div>
+    <div class="form-grid">
+      <div class="form-group">
+        <label class="form-label">Nombre</label>
+        <input class="form-input" type="text" placeholder="Ej: Juan Martínez">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="juan@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Peso (kg)</label>
+        <input class="form-input" type="number" placeholder="85.0">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Altura (cm)</label>
+        <input class="form-input" type="number" placeholder="178">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Objetivo</label>
+        <select class="form-select">
+          <option>Ganar músculo</option>
+          <option>Perder grasa</option>
+          <option>Recomposición</option>
+          <option>Rendimiento</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Plan</label>
+        <select class="form-select">
+          <option>Basic</option>
+          <option>Premium</option>
+          <option>Elite</option>
+        </select>
+      </div>
+      <div class="form-group full">
+        <label class="form-label">Notas iniciales</label>
+        <input class="form-input" type="text" placeholder="Historial, lesiones, preferencias...">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Cancelar</button>
+      <button class="btn btn-gold" onclick="addClient()">⚔ Agregar Cliente</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══ CLOCK ═══
+function updateClock() {
+  const now = new Date();
+  const days = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+  const d = days[now.getDay()];
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('clock').textContent = `${d} ${h}:${m}:${s}`;
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+// ═══ NAV ═══
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const page = document.getElementById('page-' + id);
+  if(page) page.classList.add('active');
+  if(el) el.classList.add('active');
+  const topTitles = {dashboard:'Dashboard ⚔', clients:'Clientes', progress:'Progreso', plans:'Planes', chat:'Mensajes', alerts:'Alertas', billing:'Facturación', ai:'Spartan AI', settings:'Configuración'};
+  document.querySelector('.topbar-title').innerHTML = `MR Sparta <span>${topTitles[id]||id}</span>`;
+}
+
+// ═══ CLIENTS TABLE ═══
+const clients = [
+  {initials:'JM', name:'Juan Martínez', email:'juan@mail.com', plan:'Premium', peso:'84.2 kg', objetivo:'Ganar músculo', cumpl:96, status:'active', statusTxt:'Activo', semana:12},
+  {initials:'AG', name:'Ana García', email:'ana@mail.com', plan:'Basic', peso:'72.5 kg', objetivo:'Perder grasa', cumpl:58, status:'alert', statusTxt:'Alerta', semana:4},
+  {initials:'CR', name:'Carlos Ruiz', email:'carlos@mail.com', plan:'Elite', peso:'91.0 kg', objetivo:'Recomposición', cumpl:85, status:'active', statusTxt:'Activo', semana:8},
+  {initials:'ML', name:'María López', email:'maria@mail.com', plan:'Premium', peso:'68.3 kg', objetivo:'Ganar músculo', cumpl:88, status:'active', statusTxt:'Activo', semana:20},
+  {initials:'PS', name:'Pedro Soto', email:'pedro@mail.com', plan:'Basic', peso:'88.1 kg', objetivo:'Perder grasa', cumpl:75, status:'active', statusTxt:'Activo', semana:6},
+  {initials:'LT', name:'Luis Torres', email:'luis@mail.com', plan:'Basic', peso:'—', objetivo:'Rendimiento', cumpl:0, status:'alert', statusTxt:'Sin datos', semana:3},
+  {initials:'RD', name:'Roberto Díaz', email:'roberto@mail.com', plan:'Premium', peso:'78.0 kg', objetivo:'Ganar músculo', cumpl:72, status:'pending', statusTxt:'Estancado', semana:10},
+  {initials:'SH', name:'Sofía Herrera', email:'sofia@mail.com', plan:'Elite', peso:'61.2 kg', objetivo:'Recomposición', cumpl:97, status:'active', statusTxt:'Élite', semana:24},
+];
+
+function renderClients() {
+  const tbody = document.getElementById('clientsBody');
+  tbody.innerHTML = clients.map(c => {
+    const fillClass = c.cumpl < 65 ? 'low' : c.cumpl < 80 ? 'mid' : '';
+    return `<tr>
+      <td><div class="client-name-cell">
+        <div class="client-avatar">${c.initials}</div>
+        <div><span class="client-name">${c.name}</span><span class="client-email">${c.email}</span></div>
+      </div></td>
+      <td><span class="alert-badge ${c.plan==='Elite'?'badge-gold':c.plan==='Premium'?'badge-green':'badge-gold'}">${c.plan}</span></td>
+      <td style="font-family:'Share Tech Mono',monospace;font-size:13px;color:var(--gold)">${c.peso}</td>
+      <td>${c.objetivo}</td>
+      <td><div class="compliance-wrap">
+        <div class="compliance-bar-bg"><div class="compliance-fill ${fillClass}" style="width:${c.cumpl}%"></div></div>
+        <span class="compliance-pct">${c.cumpl}%</span>
+      </div></td>
+      <td><span class="status-dot status-${c.status}">${c.statusTxt}</span></td>
+      <td style="font-family:'Share Tech Mono',monospace;font-size:12px;color:var(--text-muted)">#${c.semana}</td>
+      <td><div class="row-actions">
+        <button class="row-btn" onclick="event.stopPropagation()">Ver</button>
+        <button class="row-btn" onclick="event.stopPropagation()">Plan</button>
+        <button class="row-btn danger" onclick="event.stopPropagation()">✕</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+renderClients();
+
+// ═══ MODAL ═══
+function openModal() {
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(e) {
+  if(!e || e.target===document.getElementById('modalOverlay'))
+    document.getElementById('modalOverlay').classList.remove('open');
+}
+function addClient() {
+  document.getElementById('modalOverlay').classList.remove('open');
+}
+
+// ═══ PROGRESS ═══
+const weightData = {
+  'Juan Martínez': { weights:[89,88.2,87.5,87,86.8,86.2,85.8,85.5,85.1,84.8,84.5,84.2], weeks:12, compliance:96 },
+  'Ana García': { weights:[76,75.8,75.5,72.5], weeks:4, compliance:58 },
+  'Carlos Ruiz': { weights:[94,93,92.5,92,91.8,91.5,91.2,91], weeks:8, compliance:85 },
+  'María López': { weights:[76,74,72,70,68.8,68.5,68.3], weeks:20, compliance:88 },
+  'Pedro Soto': { weights:[90,89.5,89,88.5,88.2,88.1], weeks:6, compliance:75 },
+};
+
+function selectClient(el, name, peso, compliance, semana) {
+  document.querySelectorAll('.selector-item').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  const data = weightData[name];
+  if(!data) return;
+  document.getElementById('progressClientName').textContent = `📊 ${name} — Evolución de Peso`;
+  document.getElementById('statPeso').textContent = peso;
+  document.getElementById('statCumpl').textContent = compliance + '%';
+  document.getElementById('statSem').textContent = semana;
+  renderWeightChart(data.weights);
+}
+
+function renderWeightChart(weights) {
+  const chart = document.getElementById('weightChart');
+  const axis = document.getElementById('weightAxis');
+  const min = Math.min(...weights) - 1;
+  const max = Math.max(...weights) + 1;
+  const range = max - min;
+  chart.innerHTML = weights.map((w,i) => {
+    const pct = ((w - min) / range) * 100;
+    const isLast = i === weights.length - 1;
+    return `<div class="wbar-wrap"><div class="wbar${isLast?' highlight':''}" style="height:${pct}%" title="${w}kg"></div></div>`;
+  }).join('');
+  axis.innerHTML = weights.map((w,i) => `<span>${w}</span>`).join('');
+}
+
+renderWeightChart(weightData['Juan Martínez'].weights);
+
+// ═══ CHAT ═══
+function sendMsg() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if(!text) return;
+  const msgs = document.querySelector('.chat-messages');
+  const div = document.createElement('div');
+  div.className = 'msg sent';
+  div.innerHTML = `<div class="msg-avatar" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold))">MR</div>
+    <div><div class="msg-bubble">${text}</div><div class="msg-time">Ahora</div></div>`;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  input.value = '';
+}
+
+document.getElementById('chatInput').addEventListener('keydown', e => { if(e.key==='Enter') sendMsg(); });
+
+// ═══ AI CHAT ═══
+const aiResponses = {
+  '¿Quiénes están en riesgo esta semana?': 'Detecté 5 clientes en riesgo: Ana García (cumplimiento 58% ↓), Luis Torres (sin datos 14 días), Roberto Díaz (peso estancado), Claudia Mora (plan vence pronto), Pedro Soto (3 sesiones incompletas). Recomiendo contactar a Ana y Luis hoy.',
+  'Analiza el progreso de Juan Martínez': 'Juan Martínez — Semana 12: bajó 4.8kg desde inicio (89kg → 84.2kg). Cumplimiento 96% — excepcional. Tendencia positiva constante. Sugerencia: aumentar carga de sentadillas +5kg y mantener calorías actuales. Sin señales de estancamiento.',
+  'Genera ajustes para clientes estancados': 'Ajustes automáticos sugeridos: Roberto Díaz → +200kcal/día (estancado 14 días). Claudia Mora → Renovar plan de nutrición. Pedro Soto → Reducir días de entrenamiento de 5 a 4 para mejorar recuperación. ¿Aplico estos cambios?',
+  'Resumen semanal de todos los clientes': 'Resumen semana actual: 24 clientes activos. Cumplimiento promedio: 78% (+3% vs semana pasada). 5 alertas activas. Mejor rendimiento: Sofía Herrera 97%. Mayor riesgo: Ana García 58%. 3 planes ajustados automáticamente esta semana.',
+};
+
+function sendAI() {
+  const input = document.getElementById('aiInput');
+  const text = input.value.trim();
+  if(!text) return;
+  askAI(text);
+  input.value = '';
+}
+
+function askAI(query) {
+  const msgs = document.getElementById('aiMessages');
+  const userDiv = document.createElement('div');
+  userDiv.className = 'msg sent';
+  userDiv.style.maxWidth = '90%';
+  userDiv.innerHTML = `<div class="msg-avatar" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold))">MR</div>
+    <div><div class="msg-bubble">${query}</div></div>`;
+  msgs.appendChild(userDiv);
+
+  setTimeout(() => {
+    const response = aiResponses[query] || `Analizando: "${query}"... Con base en los datos actuales de tus 24 clientes, el sistema está procesando tu consulta. Los resultados consideram historial de peso, cumplimiento y objetivos individuales.`;
+    const aiDiv = document.createElement('div');
+    aiDiv.className = 'msg';
+    aiDiv.style.maxWidth = '90%';
+    aiDiv.innerHTML = `<div class="msg-avatar" style="background:linear-gradient(135deg,var(--gold-dim),var(--gold));font-size:8px;border-radius:0">AI</div>
+      <div><div class="msg-bubble" style="background:rgba(201,168,76,0.05);border-color:rgba(201,168,76,0.2)">${response}</div><div class="msg-time">Spartan AI</div></div>`;
+    msgs.appendChild(aiDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 800);
+
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+document.getElementById('aiInput').addEventListener('keydown', e => { if(e.key==='Enter') sendAI(); });
+</script>
+</body>
+</html>

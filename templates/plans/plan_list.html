@@ -1,0 +1,134 @@
+{% extends "plans/_base.html" %}
+{% load static %}
+
+{% block title %}Planes — MR SPARTA{% endblock %}
+{% block tier_class %}plans{% endblock %}
+
+{% block content %}
+<section class="pf-section pf-plans-hero">
+    <div class="pf-container">
+        <div class="section-eyebrow">Elige Tu Armadura</div>
+        <h1 class="pf-section-title">Planes <span class="pf-accent">Sin Excusas</span></h1>
+        <p class="pf-section-sub">
+            Cada plan incluye el ciclo completo de transformación. La diferencia está en quién te guía.
+        </p>
+    </div>
+</section>
+
+<section class="pf-section pf-plans-grid">
+    <div class="pf-container">
+        <div class="pf-plans-wrapper">
+            <!-- BASIC -->
+            <article class="pf-plan-option pf-plan-option--basic">
+                <div class="pf-plan-tier-badge">Recluta</div>
+                <h2 class="pf-plan-title">BASIC</h2>
+                <div class="pf-plan-price">
+                    <span class="pf-plan-symbol">$</span>
+                    <span class="pf-plan-amount">29</span>
+                    <span class="pf-plan-period">/mes</span>
+                </div>
+                <ul class="pf-plan-features">
+                    <li>Plan de entrenamiento con IA</li>
+                    <li>Plan nutricional personalizado</li>
+                    <li>Seguimiento de peso y progreso</li>
+                    <li>Dashboard del atleta</li>
+                    <li>Chat con Spartan AI</li>
+                    <li>Ajustes automáticos del plan</li>
+                </ul>
+                <a href="{% url 'plans:basic' %}" class="pf-plan-cta">COMENZAR</a>
+            </article>
+
+            <!-- PREMIUM (DESTACADO) -->
+            <article class="pf-plan-option pf-plan-option--premium pf-plan-option--featured">
+                <div class="pf-plan-featured-badge">DESTACADO</div>
+                <div class="pf-plan-tier-badge">Guerrero</div>
+                <h2 class="pf-plan-title">PREMIUM</h2>
+                <div class="pf-plan-price">
+                    <span class="pf-plan-symbol">$</span>
+                    <span class="pf-plan-amount">79</span>
+                    <span class="pf-plan-period">/mes</span>
+                </div>
+                <ul class="pf-plan-features">
+                    <li>Todo lo del plan Basic</li>
+                    <li>Coach humano asignado</li>
+                    <li>Chequeo mensual en videollamada</li>
+                    <li>Seguimiento semanal personalizado</li>
+                    <li>Ajustes manuales del coach</li>
+                    <li>Acceso a retos exclusivos</li>
+                </ul>
+                <a href="{% url 'plans:premium' %}" class="pf-plan-cta pf-plan-cta--featured">UNIRME AHORA</a>
+            </article>
+
+            <!-- ELITE -->
+            <article class="pf-plan-option pf-plan-option--elite">
+                <div class="pf-plan-tier-badge">Espartano</div>
+                <h2 class="pf-plan-title">ELITE</h2>
+                <div class="pf-plan-price">
+                    <span class="pf-plan-symbol">$</span>
+                    <span class="pf-plan-amount">149</span>
+                    <span class="pf-plan-period">/mes</span>
+                </div>
+                <ul class="pf-plan-features">
+                    <li>Todo lo del plan Premium</li>
+                    <li>Sesiones ilimitadas con coach</li>
+                    <li>Programas especiales 12 semanas</li>
+                    <li>Análisis avanzado con IA</li>
+                    <li>Acceso beta a nuevas funciones</li>
+                    <li>Soporte prioritario 24/7</li>
+                </ul>
+                <a href="{% url 'plans:elite' %}" class="pf-plan-cta">SER ELITE</a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section class="pf-section pf-section--alt">
+    <div class="pf-container">
+        <h2 class="pf-section-title">Comparativa de Características</h2>
+        <div class="pf-comparison-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Característica</th>
+                        <th>Basic</th>
+                        <th>Premium</th>
+                        <th>Elite</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Plan IA</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Coach Humano</td>
+                        <td>—</td>
+                        <td>✓</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Sesiones Ilimitadas</td>
+                        <td>—</td>
+                        <td>1/mes</td>
+                        <td>✓</td>
+                    </tr>
+                    <tr>
+                        <td>Soporte 24/7</td>
+                        <td>Email</td>
+                        <td>Email</td>
+                        <td>✓ Prioritario</td>
+                    </tr>
+                    <tr>
+                        <td>Análisis Avanzado</td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>✓</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

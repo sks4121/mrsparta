@@ -1,0 +1,31 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ session.get_session_type_display }}</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5>Coach: {{ session.coach.full_name }}</h5>
+                    <h5>Cliente: {{ session.client.full_name }}</h5>
+                    <p>Fecha: {{ session.scheduled_at }}</p>
+                    <p>Duración: {{ session.duration_min }} minutos</p>
+                    <p>Precio: ${{ session.price }}</p>
+                    <span class="badge">{{ session.get_status_display }}</span>
+                </div>
+            </div>
+            {% if session.meeting_url and session.is_upcoming %}
+            <a href="{{ session.meeting_url }}" class="btn btn-primary btn-lg" target="_blank">Entrar a Sesión</a>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Notas del Coach</h5>
+                    <p>{{ session.notes_coach }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

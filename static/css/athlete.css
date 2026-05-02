@@ -1,0 +1,118 @@
+/* ═══════════════════════════════════════════════════════════
+   ATHLETE — Role Variant
+   athlete.css  |  Imports auth_base.css and overrides for red theme
+═══════════════════════════════════════════════════════════ */
+
+/* Override tokens for athlete identity */
+.athlete-shell {
+  --role-primary:    #CC2222;
+  --role-primary-hi: #FF3838;
+  --role-primary-lo: #8B1A1A;
+  --role-accent:     #C9A84C;
+  --role-glow:       rgba(204, 34, 34, .25);
+}
+
+/* Background tint shifts to red */
+.athlete-shell ~ .bg-layer::after {
+  background:
+    radial-gradient(ellipse at 10% 30%, rgba(204, 34, 34, .12) 0%, transparent 55%),
+    radial-gradient(ellipse at 90% 70%, rgba(201, 168, 76, .04) 0%, transparent 55%) !important;
+}
+
+/* Logo hex in red */
+.athlete-shell .role-logo-hex {
+  background: linear-gradient(135deg, var(--red-lo), var(--red));
+  color: #fff;
+  box-shadow: 0 0 30px rgba(204, 34, 34, .35);
+}
+
+/* Logo brand keeps gold accent */
+.athlete-shell .role-logo-text .brand {
+  color: var(--gold-hi);
+}
+
+/* Badge with red theme */
+.athlete-shell .role-badge {
+  color: var(--red);
+  background: rgba(204, 34, 34, .08);
+  border-color: rgba(204, 34, 34, .28);
+}
+
+/* Tagline accent in red */
+.athlete-shell .role-tagline .accent {
+  color: var(--red-hi);
+  text-shadow: 0 0 40px rgba(255, 56, 56, .35);
+}
+
+/* Description gold strong */
+.athlete-shell .role-desc strong {
+  color: var(--gold);
+}
+
+/* Perks with red border */
+.athlete-shell .role-perk {
+  background: rgba(204, 34, 34, .04);
+  border-left-color: var(--red-lo);
+}
+.athlete-shell .role-perk:hover {
+  background: rgba(204, 34, 34, .08);
+  border-left-color: var(--red);
+}
+
+/* Right panel red accent line */
+.athlete-shell .role-right::before {
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+}
+
+/* Form focus → red */
+.athlete-shell .form-group:focus-within .form-label,
+.athlete-shell .form-group:focus-within .input-icon {
+  color: var(--red);
+}
+.athlete-shell .form-input:focus,
+.athlete-shell .form-select:focus,
+.athlete-shell .form-textarea:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(204, 34, 34, .08);
+}
+.athlete-shell .input-toggle:hover {
+  color: var(--red);
+}
+
+/* Select chevron color in red */
+.athlete-shell .form-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238B1A1A' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+}
+
+/* Password strength weak in red */
+.athlete-shell .pw-bar.weak { background: var(--red); }
+
+/* Checkbox accent red */
+.athlete-shell .form-check input[type="checkbox"] {
+  accent-color: var(--red);
+}
+
+/* Submit button → red */
+.athlete-shell .btn-submit {
+  background: linear-gradient(135deg, var(--red-lo), var(--red));
+  color: #fff;
+}
+.athlete-shell .btn-submit:hover {
+  background: linear-gradient(135deg, var(--red), var(--red-hi));
+  box-shadow: 0 6px 24px rgba(204, 34, 34, .35);
+}
+.athlete-shell .btn-submit.loading::after {
+  border: 2px solid rgba(255, 255, 255, .3);
+  border-top-color: #fff;
+}
+
+/* Messages with red border */
+.athlete-shell .msg-item {
+  border-left-color: var(--red);
+  background: rgba(204, 34, 34, .06);
+}
+
+/* Switch link role → coach */
+.athlete-shell .form-footer .switch:hover {
+  background: rgba(204, 34, 34, .06);
+}

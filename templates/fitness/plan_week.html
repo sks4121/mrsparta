@@ -1,0 +1,20 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Semana {{ week_number }}</h1>
+    <div class="row">
+        {% for day in training_days %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{ day.get_day_name_display }}</h5>
+                    <p><strong>{{ day.focus }}</strong></p>
+                    <p class="text-muted">{{ day.exercises.count }} ejercicios</p>
+                    <a href="{% url 'plans:training-day' day.id %}" class="btn btn-sm btn-primary">Ver</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

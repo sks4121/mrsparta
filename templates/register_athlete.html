@@ -1,0 +1,313 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro Atleta — MR Sparta Coach OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/athlete.css' %}">
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="ember-layer" id="embers"></div>
+
+  <div class="athlete-shell">
+
+    <!-- ══ LEFT — Branding ══ -->
+    <div class="role-left">
+      <div class="role-left-bg"
+           style="--hero-bg:url('{% static 'images/bgf4png.png' %}')">
+      </div>
+
+      <div class="role-left-content">
+        <div class="role-logo-wrap">
+          <div class="role-logo-hex">MR</div>
+          <div class="role-logo-text">
+            <span class="brand">MR Sparta</span>
+            <span class="sub">Coach OS</span>
+          </div>
+        </div>
+
+        <div class="role-badge">
+          🛡 Portal del Atleta
+        </div>
+
+        <h2 class="role-tagline">
+          <span class="white">Forja tu cuerpo.</span>
+          <span class="accent">Domina tu batalla.</span>
+        </h2>
+
+        <p class="role-desc">
+          Únete a la legión espartana. Plan personalizado con <strong>IA + mentor real</strong>
+          para transformar tu físico con datos y disciplina.
+        </p>
+
+        <div class="role-perks">
+          <div class="role-perk">
+            <span class="role-perk-icon">📋</span>
+            <span class="role-perk-text">Plan de entrenamiento y nutrición personalizado</span>
+          </div>
+          <div class="role-perk">
+            <span class="role-perk-icon">📊</span>
+            <span class="role-perk-text">Seguimiento semanal con gráficas reales</span>
+          </div>
+          <div class="role-perk">
+            <span class="role-perk-icon">🤖</span>
+            <span class="role-perk-text">Spartan AI analiza tu progreso 24/7</span>
+          </div>
+          <div class="role-perk">
+            <span class="role-perk-icon">💬</span>
+            <span class="role-perk-text">Chat directo con tu coach asignado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RIGHT — Form ══ -->
+    <div class="role-right">
+
+      {% if messages %}
+        <div class="django-messages">
+          {% for message in messages %}
+            <div class="msg-item">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="form-header">
+        <div class="form-eyebrow">Crear cuenta · Atleta</div>
+        <h1 class="form-title">Forja tu <em>perfil</em></h1>
+        <p class="form-sub">Tu transformación comienza con una decisión</p>
+      </div>
+
+      <!-- Google OAuth -->
+      <a href="{% provider_login_url 'google' %}?next=/auth/google/role/?role=athlete"
+         class="google-btn">
+        <svg class="google-icon" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Registrarse con Google
+      </a>
+
+      <div class="auth-divider"><span>o completa tus datos</span></div>
+
+      <form id="athlete-form"
+            class="role-form"
+            method="POST"
+            action="{% url 'users:register_athlete' %}"
+            data-check-email-url="{% url 'users:api_check_email' %}"
+            novalidate>
+        {% csrf_token %}
+
+        <!-- ══ INFO BÁSICA ══ -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="id_first_name">Nombre</label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text"
+                     id="id_first_name" name="first_name"
+                     class="form-input {% if form.first_name.errors %}error{% endif %}"
+                     value="{{ form.first_name.value|default:'' }}"
+                     placeholder="Juan"
+                     autocomplete="given-name" required>
+            </div>
+            {% if form.first_name.errors %}
+              <div class="field-error">{{ form.first_name.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="id_last_name">Apellido</label>
+            <div class="input-wrap">
+              <span class="input-icon">👤</span>
+              <input type="text"
+                     id="id_last_name" name="last_name"
+                     class="form-input {% if form.last_name.errors %}error{% endif %}"
+                     value="{{ form.last_name.value|default:'' }}"
+                     placeholder="Martínez"
+                     autocomplete="family-name" required>
+            </div>
+            {% if form.last_name.errors %}
+              <div class="field-error">{{ form.last_name.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- ══ EMAIL ══ -->
+        <div class="form-group">
+          <label class="form-label" for="id_email">Email</label>
+          <div class="input-wrap">
+            <span class="input-icon">✉</span>
+            <input type="email"
+                   id="id_email" name="email"
+                   class="form-input {% if form.email.errors %}error{% endif %}"
+                   value="{{ form.email.value|default:'' }}"
+                   placeholder="tu@email.com"
+                   autocomplete="email" required>
+          </div>
+          {% if form.email.errors %}
+            <div class="field-error">{{ form.email.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+
+        <!-- ══ DATOS FÍSICOS ══ -->
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="id_age">Edad</label>
+            <div class="input-wrap">
+              <span class="input-icon">🎂</span>
+              <input type="number"
+                     id="id_age" name="age"
+                     class="form-input {% if form.age.errors %}error{% endif %}"
+                     value="{{ form.age.value|default:'' }}"
+                     placeholder="25"
+                     min="13" max="100" required>
+            </div>
+            <div class="field-hint">Entre 13 y 100 años</div>
+            {% if form.age.errors %}
+              <div class="field-error">{{ form.age.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="id_weight_kg">Peso (kg)</label>
+            <div class="input-wrap">
+              <span class="input-icon">⚖</span>
+              <input type="number" step="0.1"
+                     id="id_weight_kg" name="weight_kg"
+                     class="form-input {% if form.weight_kg.errors %}error{% endif %}"
+                     value="{{ form.weight_kg.value|default:'' }}"
+                     placeholder="75.5" required>
+            </div>
+            {% if form.weight_kg.errors %}
+              <div class="field-error">{{ form.weight_kg.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label" for="id_height_cm">Altura (cm)</label>
+            <div class="input-wrap">
+              <span class="input-icon">📏</span>
+              <input type="number"
+                     id="id_height_cm" name="height_cm"
+                     class="form-input {% if form.height_cm.errors %}error{% endif %}"
+                     value="{{ form.height_cm.value|default:'' }}"
+                     placeholder="178" required>
+            </div>
+            {% if form.height_cm.errors %}
+              <div class="field-error">{{ form.height_cm.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="id_level">Nivel</label>
+            <div class="input-wrap">
+              <span class="input-icon">⚡</span>
+              <select id="id_level" name="level" class="form-select" required>
+                <option value="beginner" {% if form.level.value == 'beginner' %}selected{% endif %}>Principiante</option>
+                <option value="intermediate" {% if form.level.value == 'intermediate' %}selected{% endif %}>Intermedio</option>
+                <option value="advanced" {% if form.level.value == 'advanced' %}selected{% endif %}>Avanzado</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ OBJETIVO ══ -->
+        <div class="form-group">
+          <label class="form-label" for="id_goal">Objetivo fitness</label>
+          <div class="input-wrap">
+            <span class="input-icon">🎯</span>
+            <select id="id_goal" name="goal"
+                    class="form-select {% if form.goal.errors %}error{% endif %}"
+                    required>
+              <option value="">— Selecciona tu objetivo —</option>
+              <option value="muscle_gain"   {% if form.goal.value == 'muscle_gain' %}selected{% endif %}>Ganar músculo</option>
+              <option value="fat_loss"      {% if form.goal.value == 'fat_loss' %}selected{% endif %}>Perder grasa</option>
+              <option value="recomposition" {% if form.goal.value == 'recomposition' %}selected{% endif %}>Recomposición corporal</option>
+              <option value="performance"   {% if form.goal.value == 'performance' %}selected{% endif %}>Rendimiento deportivo</option>
+              <option value="maintenance"   {% if form.goal.value == 'maintenance' %}selected{% endif %}>Mantenimiento</option>
+            </select>
+          </div>
+          {% if form.goal.errors %}
+            <div class="field-error">{{ form.goal.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+
+        <!-- ══ PASSWORDS ══ -->
+        <div class="form-group">
+          <label class="form-label" for="id_password1">Contraseña</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔒</span>
+            <input type="password"
+                   id="id_password1" name="password1"
+                   class="form-input {% if form.password1.errors %}error{% endif %}"
+                   placeholder="Mínimo 8 caracteres"
+                   autocomplete="new-password" required>
+            <button type="button" class="input-toggle" data-target="id_password1" aria-label="Ver">👁</button>
+          </div>
+          <div class="pw-strength">
+            <div class="pw-bar"></div>
+            <div class="pw-bar"></div>
+            <div class="pw-bar"></div>
+          </div>
+          <div class="pw-label"></div>
+          {% if form.password1.errors %}
+            <div class="field-error">{{ form.password1.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="id_password2">Confirmar contraseña</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔐</span>
+            <input type="password"
+                   id="id_password2" name="password2"
+                   class="form-input {% if form.password2.errors %}error{% endif %}"
+                   placeholder="Repite la contraseña"
+                   autocomplete="new-password" required>
+            <button type="button" class="input-toggle" data-target="id_password2" aria-label="Ver">👁</button>
+          </div>
+          {% if form.password2.errors %}
+            <div class="field-error">{{ form.password2.errors|join:", " }}</div>
+          {% endif %}
+        </div>
+
+        <!-- ══ TERMS ══ -->
+        <label class="form-check">
+          <input type="checkbox" id="id_terms" name="terms" required>
+          Acepto los <a href="/terms/" target="_blank">Términos</a> y la <a href="/privacy/" target="_blank">Política de privacidad</a>
+        </label>
+
+        {% if form.non_field_errors %}
+          <div class="msg-item">{{ form.non_field_errors|join:" " }}</div>
+        {% endif %}
+
+        <button type="submit" class="btn-submit">
+          ⚔ Unirme a la Legión
+        </button>
+      </form>
+
+      <div class="form-footer">
+        ¿Ya tienes cuenta?
+        <a href="{% url 'users:login' %}">Inicia sesión →</a>
+        <br><br>
+        ¿Eres entrenador?
+        <a href="{% url 'users:register_coach' %}" class="switch">⚔ Registrarme como Coach</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{% static 'js/athlete.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,301 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Cuenta — MR Sparta Coach OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+  <style>
+    /* Compact for register (more fields) */
+    .auth-right { padding:36px 48px; }
+    .form-body   { gap:13px; }
+    .form-header { margin-bottom:22px; }
+    .auth-form   { overflow-y:auto; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="scan-line"></div>
+  <div class="ember-layer" id="embers"></div>
+
+  <div class="auth-shell">
+
+    <!-- ══ LEFT ══ -->
+    <div class="auth-left">
+      <div class="auth-left-bg"
+           style="--bg-image:url('{% static 'images/bgf3.jpeg' %}')">
+      </div>
+
+      <div class="auth-left-content">
+        <div class="auth-logo-wrap">
+          <div class="auth-logo-hex">MR</div>
+          <div class="auth-logo-text">
+            <span class="brand">MR Sparta</span>
+            <span class="sub">Coach OS</span>
+          </div>
+        </div>
+
+        <div class="auth-gold-line"></div>
+
+        <h2 class="auth-tagline">
+          <span class="white">Únete a la</span>
+          <span class="gold">Legión Espartana.</span>
+        </h2>
+
+        <p class="auth-desc">
+          Elige tu camino. Coach o Atleta — el sistema se adapta a ti
+          desde el primer día con <strong>IA personalizada</strong>.
+        </p>
+
+        <div class="auth-features">
+          <div class="auth-feature">
+            <div class="feature-icon">🛡</div>
+            <div class="feature-text">
+              <strong>Atleta</strong>
+              <span>Plan personalizado + seguimiento + chat con coach</span>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <div class="feature-icon">⚔</div>
+            <div class="feature-text">
+              <strong>Coach</strong>
+              <span>Panel de clientes + IA + facturación centralizada</span>
+            </div>
+          </div>
+          <div class="auth-feature">
+            <div class="feature-icon">🔥</div>
+            <div class="feature-text">
+              <strong>14 días gratis</strong>
+              <span>Sin tarjeta de crédito para comenzar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ RIGHT — Register Form ══ -->
+    <div class="auth-right">
+
+      {% if messages %}
+        <div class="django-messages">
+          {% for message in messages %}
+            <div class="msg-item {% if message.tags == 'error' %}error{% endif %}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+
+      <div class="form-header">
+        <div class="form-eyebrow">Crear cuenta</div>
+        <h1 class="form-title">Forja tu <em>perfil</em></h1>
+        <p class="form-sub">Elige quién eres en el sistema</p>
+      </div>
+
+      <!-- Google OAuth -->
+      <a href="{% provider_login_url 'google' %}"
+         class="google-btn">
+        <svg class="google-icon" viewBox="0 0 24 24">
+          <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+          <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+          <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+          <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+        </svg>
+        Registrarse con Google
+      </a>
+
+      <div class="auth-divider"><span>o crea una cuenta</span></div>
+
+      <form method="POST"
+            action="{% url 'account_signup' %}"
+            class="auth-form"
+            novalidate>
+        {% csrf_token %}
+
+        <div class="form-body">
+
+          <!-- ── ROLE SELECTOR ── -->
+          <div class="form-group">
+            <label class="form-label">Soy un...</label>
+            <div class="role-grid">
+
+              <label class="role-card {% if form.role.value == 'athlete' or not form.role.value %}selected{% endif %}"
+                     for="role_athlete">
+                <input type="radio"
+                       id="role_athlete"
+                       name="role"
+                       value="athlete"
+                       {% if form.role.value == 'athlete' or not form.role.value %}checked{% endif %}>
+                <span class="role-icon">🛡</span>
+                <span class="role-label">Atleta</span>
+                <span class="role-sub">Quiero transformarme</span>
+              </label>
+
+              <label class="role-card {% if form.role.value == 'coach' %}selected{% endif %}"
+                     for="role_coach">
+                <input type="radio"
+                       id="role_coach"
+                       name="role"
+                       value="coach"
+                       {% if form.role.value == 'coach' %}checked{% endif %}>
+                <span class="role-icon">⚔</span>
+                <span class="role-label">Coach</span>
+                <span class="role-sub">Gestiono clientes</span>
+              </label>
+
+            </div>
+            {% if form.role.errors %}
+              <div class="field-error">{{ form.role.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- ── NAME ROW ── -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+
+            <div class="form-group">
+              <label class="form-label" for="id_first_name">Nombre</label>
+              <div class="input-wrap">
+                <span class="input-icon">👤</span>
+                <input type="text"
+                       id="id_first_name"
+                       name="first_name"
+                       class="form-input {% if form.first_name.errors %}error{% endif %}"
+                       placeholder="Juan"
+                       value="{{ form.first_name.value|default:'' }}"
+                       autocomplete="given-name"
+                       required>
+              </div>
+              {% if form.first_name.errors %}
+                <div class="field-error">{{ form.first_name.errors|join:", " }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="id_last_name">Apellido</label>
+              <div class="input-wrap">
+                <span class="input-icon">👤</span>
+                <input type="text"
+                       id="id_last_name"
+                       name="last_name"
+                       class="form-input {% if form.last_name.errors %}error{% endif %}"
+                       placeholder="Martínez"
+                       value="{{ form.last_name.value|default:'' }}"
+                       autocomplete="family-name"
+                       required>
+              </div>
+              {% if form.last_name.errors %}
+                <div class="field-error">{{ form.last_name.errors|join:", " }}</div>
+              {% endif %}
+            </div>
+
+          </div>
+
+          <!-- ── EMAIL ── -->
+          <div class="form-group">
+            <label class="form-label" for="id_email">Email</label>
+            <div class="input-wrap">
+              <span class="input-icon">✉</span>
+              <input type="email"
+                     id="id_email"
+                     name="email"
+                     class="form-input {% if form.email.errors %}error{% endif %}"
+                     placeholder="tu@email.com"
+                     value="{{ form.email.value|default:'' }}"
+                     autocomplete="email"
+                     required>
+            </div>
+            {% if form.email.errors %}
+              <div class="field-error">{{ form.email.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- ── PASSWORD ── -->
+          <div class="form-group">
+            <label class="form-label" for="id_password1">Contraseña</label>
+            <div class="input-wrap">
+              <span class="input-icon">🔒</span>
+              <input type="password"
+                     id="id_password1"
+                     name="password1"
+                     class="form-input {% if form.password1.errors %}error{% endif %}"
+                     placeholder="Mínimo 8 caracteres"
+                     autocomplete="new-password"
+                     required>
+              <button type="button"
+                      class="input-toggle"
+                      data-target="id_password1"
+                      aria-label="Ver contraseña">👁</button>
+            </div>
+            <!-- Password strength indicator -->
+            <div class="pw-strength">
+              <div class="pw-bar"></div>
+              <div class="pw-bar"></div>
+              <div class="pw-bar"></div>
+            </div>
+            <div class="pw-label"></div>
+            {% if form.password1.errors %}
+              <div class="field-error">{{ form.password1.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- ── PASSWORD CONFIRM ── -->
+          <div class="form-group">
+            <label class="form-label" for="id_password2">Confirmar contraseña</label>
+            <div class="input-wrap">
+              <span class="input-icon">🔐</span>
+              <input type="password"
+                     id="id_password2"
+                     name="password2"
+                     class="form-input {% if form.password2.errors %}error{% endif %}"
+                     placeholder="Repite la contraseña"
+                     autocomplete="new-password"
+                     required>
+              <button type="button"
+                      class="input-toggle"
+                      data-target="id_password2"
+                      aria-label="Ver contraseña">👁</button>
+            </div>
+            {% if form.password2.errors %}
+              <div class="field-error">{{ form.password2.errors|join:", " }}</div>
+            {% endif %}
+          </div>
+
+          <!-- ── TERMS ── -->
+          <label class="form-check">
+            <input type="checkbox" id="id_terms" name="terms" required>
+            Acepto los
+            <a href="/terms/" target="_blank">Términos de uso</a>
+            y la
+            <a href="/privacy/" target="_blank">Política de privacidad</a>
+          </label>
+
+          <!-- Non-field errors -->
+          {% if form.non_field_errors %}
+            <div class="msg-item error">
+              {{ form.non_field_errors|join:" " }}
+            </div>
+          {% endif %}
+
+          <button type="submit" class="btn-submit">
+            ⚔ Crear mi cuenta
+          </button>
+
+        </div>
+      </form>
+
+      <div class="form-footer">
+        ¿Ya tienes cuenta?&nbsp;
+        <a href="{% url 'account_login' %}">Inicia sesión →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{% static 'js/auth.js' %}"></script>
+</body>
+</html>

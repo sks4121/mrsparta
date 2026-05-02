@@ -1,0 +1,63 @@
+{% load static %}
+<section class="hero" id="inicio">
+
+  <div class="hero-bg" style="background-image:url('{% static 'images/bgf4png.png' %}')"></div>
+  <div class="hero-overlay"></div>
+
+  <div class="hero-content">  
+
+    <p class="hero-eyebrow">Plataforma de Transformación Física</p>
+
+    <h1 class="hero-title">
+      <span class="white">Construye Músculo.</span>
+      <span class="gold">Domina tu Disciplina.</span>
+    </h1>
+
+    <p class="hero-sub">
+      IA + mentor real para una <strong>transformación sin igual</strong>.
+      Elige tu camino espartano.
+    </p>
+
+    <!-- Dual path cards -->
+    <div class="dual-paths">
+
+      <a href="{% url 'coach_dashboard:coach_dashboard' %}" class="path-card coach">
+        <span class="path-role">Portal</span>
+        <span class="path-emoji">⚔</span>
+        <h2 class="path-title">Soy Coach</h2>
+        <p class="path-desc">Gestiona tu negocio fitness. Administra clientes, planes y progreso desde un solo panel.</p>
+        <ul class="path-features">
+          <li>Panel de clientes en tiempo real</li>
+          <li>Planes generados con IA</li>
+          <li>Alertas automáticas de progreso</li>
+        </ul>
+        <span class="path-cta">Acceder al panel →</span>
+      </a>
+
+      
+      
+        <a href="{% url 'athlete_dashboard:athlete_dashboard' %}" class="path-card athlete">
+      
+                
+
+        <span class="path-role">Portal</span>
+        <span class="path-emoji">🛡</span>
+        <h2 class="path-title">Soy Atleta</h2>
+        <p class="path-desc">Recibe tu plan personalizado, registra tu progreso y transforma tu cuerpo con disciplina espartana.</p>
+        <ul class="path-features">
+          <li>Plan de entrenamiento + nutrición</li>
+          <li>Seguimiento de peso y fotos</li>
+          <li>Chat con tu coach asignado</li>
+        </ul>
+        <span class="path-cta">Comenzar ahora →</span>
+      </a>
+
+    </div>
+  </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scroll-needle"></div>
+  </div>
+
+</section>

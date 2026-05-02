@@ -1,0 +1,30 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                {% if user.profile.avatar %}
+                <img src="{{ user.profile.avatar.url }}" class="card-img-top" alt="{{ user.full_name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h3>{{ user.full_name }}</h3>
+                    <p class="text-muted">Atleta</p>
+                    <a href="{% url 'profile-edit' %}" class="btn btn-primary btn-block">Editar</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Datos Físicos</h4>
+                    <p>Peso: {{ profile.weight_kg }} kg</p>
+                    <p>Altura: {{ profile.height_cm }} cm</p>
+                    <p>Grasa: {{ profile.body_fat_pct }}%</p>
+                    <p>Objetivo: {{ profile.get_goal_display }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

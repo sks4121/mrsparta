@@ -1,0 +1,17 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-success text-center">
+        <h1 class="display-4">✓ Pago Exitoso</h1>
+        <p class="lead">Tu suscripción ha sido activada correctamente.</p>
+        {% if transaction_id %}
+        <p>Transacción: {{ transaction_id }}</p>
+        {% endif %}
+        {% if amount %}
+        <p>Monto: ${{ amount }}</p>
+        {% endif %}
+        <a href="{% url 'home' %}" class="btn btn-primary btn-lg mt-3">Ir a Dashboard</a>
+        <a href="{% url 'billing:invoice-list' %}" class="btn btn-secondary btn-lg mt-3">Ver Facturas</a>
+    </div>
+</div>
+{% endblock %}

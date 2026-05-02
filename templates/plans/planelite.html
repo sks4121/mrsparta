@@ -1,0 +1,82 @@
+{% extends "plans/_base.html" %}
+{% load static %}
+
+{% block title %}Plan Espartano — MR SPARTA{% endblock %}
+{% block tier_class %}elite{% endblock %}
+
+{% block content %}
+<section class="pf-hero pf-hero--elite">
+    <div class="pf-container">
+        <span class="pf-badge pf-badge--elite">Espartano</span>
+        <h1 class="pf-hero-title">La experiencia <span class="pf-accent">exclusiva del campeón</span></h1>
+        <p class="pf-hero-sub">
+            Coach humano certificado. Ajustes semanales. Videollamadas mensuales.
+            Análisis biométrico avanzado. Para quienes no aceptan menos que lo mejor.
+        </p>
+        <div class="pf-price">
+            <span class="pf-price-symbol">$</span>
+            <span class="pf-price-amount">{{ price_monthly }}</span>
+            <span class="pf-price-period">/mes</span>
+        </div>
+        <div class="pf-cta-row">
+            <button class="pf-btn pf-btn--elite" data-action="generate-plan">Solicitar Acceso</button>
+            <button class="pf-btn pf-btn--ghost" data-action="schedule-call">Agendar Llamada</button>
+        </div>
+    </div>
+</section>
+
+<section class="pf-section">
+    <div class="pf-container">
+        <h2 class="pf-section-title"><small>Sin Compromisos</small>Experiencia Espartana</h2>
+        <p class="pf-section-sub">Acceso total a recursos élite y atención prioritaria</p>
+        <div class="pf-grid pf-grid--elite">
+            {% for feature in features %}
+                <article class="pf-feature-card pf-feature-card--elite">
+                    <span class="pf-feature-icon pf-feature-icon--elite">★</span>
+                    <p>{{ feature }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="pf-section pf-section--alt">
+    <div class="pf-container">
+        <h2 class="pf-section-title"><small>Tu Aliado Estratégico</small>Coach Asignado</h2>
+        <article class="pf-coach-card">
+            <div class="pf-coach-avatar">
+                <span>⚔️</span>
+            </div>
+            <div class="pf-coach-info">
+                <h3>Coach Certificado Asignado</h3>
+                <p>Cada cliente Espartano es emparejado con un entrenador certificado que revisa tu plan cada semana, ajusta cargas, macros y resuelve dudas en tiempo real. Sin filtros, solo resultados.</p>
+                <ul class="pf-coach-perks">
+                    <li>✓ Plan revisado semanalmente por tu coach</li>
+                    <li>✓ WhatsApp directo disponible 24/7</li>
+                    <li>✓ Videollamada mensual de 45 minutos</li>
+                </ul>
+            </div>
+        </article>
+
+        {% if current_plan %}
+        <article class="pf-plan-card pf-plan-card--elite">
+            <header class="pf-plan-card-head">
+                <h3>{{ current_plan.name }}</h3>
+                <span class="pf-tag pf-tag--elite">Espartano</span>
+            </header>
+            <p>{{ current_plan.description|default:"Tu coach está afinando los detalles de tu plan." }}</p>
+            <a href="{% url 'plans:detail' current_plan.id %}" class="pf-btn pf-btn--elite">Ver Plan Completo</a>
+        </article>
+        {% endif %}
+    </div>
+</section>
+
+<section class="pf-section pf-section--testimonial">
+    <div class="pf-container">
+        <blockquote class="pf-quote">
+            <p>"En 4 meses bajé 11 kg y gané 6 kg de músculo. Tener un coach revisando mi plan cada semana hizo toda la diferencia en mis resultados."</p>
+            <footer>— María L., cliente Espartana desde 2024</footer>
+        </blockquote>
+    </div>
+</section>
+{% endblock %}

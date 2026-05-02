@@ -1,0 +1,25 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Configuración de Cuenta</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <ul class="nav flex-column">
+                <li class="nav-item"><a class="nav-link" href="#privacy">Privacidad</a></li>
+                <li class="nav-item"><a class="nav-link" href="#notifications">Notificaciones</a></li>
+                <li class="nav-item"><a class="nav-link" href="#billing">Facturación</a></li>
+                <li class="nav-item"><a class="nav-link" href="#security">Seguridad</a></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <div id="privacy" class="settings-section">
+                <h3>Privacidad</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-primary">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

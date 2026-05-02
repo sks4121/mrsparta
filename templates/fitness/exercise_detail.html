@@ -1,0 +1,28 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ exercise.name }}</h1>
+    <div class="row">
+        <div class="col-md-8">
+            {% if exercise.video_url %}
+            <div class="embed-responsive embed-responsive-16by9 mb-3">
+                <iframe src="{{ exercise.video_url }}" class="embed-responsive-item"></iframe>
+            </div>
+            {% endif %}
+            <h4>Instrucciones</h4>
+            <p>{{ exercise.notes }}</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <p>Sets: <strong>{{ exercise.sets }}</strong></p>
+                    <p>Reps: <strong>{{ exercise.reps }}</strong></p>
+                    <p>Peso: <strong>{{ exercise.weight_kg }}kg</strong></p>
+                    <p>Descanso: <strong>{{ exercise.rest_seconds }}s</strong></p>
+                    <p>RPE: <strong>{{ exercise.rpe }}/10</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

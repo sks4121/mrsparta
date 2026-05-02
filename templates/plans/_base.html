@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>{% block title %}MR SPARTA — Planes de Transformación{% endblock %}</title>
+
+{% comment %}
+    <link rel="stylesheet" href="{% static 'css/mr-sparta.css' %}">
+    
+{% endcomment %}
+    
+        <link rel="stylesheet" href="{% static 'plans/css/planfitness.css' %}">
+    
+    </head>
+<body class="tier-{% block tier_class %}{% endblock %}">
+
+    <header class="pf-header">
+        <div class="pf-container">
+            <a href="{% url 'plans:list' %}" class="pf-logo">
+                <span class="pf-logo-mark">⚔</span>
+                <span>MR<strong>SPARTA</strong></span>
+            </a>
+            <nav class="pf-nav">
+                <a href="{% url 'plans:basic' %}"   class="pf-nav-link {% if tier == 'basic' %}is-active{% endif %}">Recluta</a>
+                <a href="{% url 'plans:premium' %}" class="pf-nav-link {% if tier == 'premium' %}is-active{% endif %}">Guerrero</a>
+                <a href="{% url 'plans:elite' %}"   class="pf-nav-link {% if tier == 'elite' %}is-active{% endif %}">Espartano</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="pf-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="pf-footer">
+        <div class="pf-container">
+            <div class="pf-footer-brand">
+                <h3>MR SPARTA</h3>
+                <p>Construye músculo, domina disciplina.</p>
+            </div>
+            <div class="pf-footer-col">
+                <h5>Planes</h5>
+                <ul>
+                    <li><a href="{% url 'plans:basic' %}">Plan Recluta</a></li>
+                    <li><a href="{% url 'plans:premium' %}">Plan Guerrero</a></li>
+                    <li><a href="{% url 'plans:elite' %}">Plan Espartano</a></li>
+                </ul>
+            </div>
+            <div class="pf-footer-col">
+                <h5>Legal</h5>
+                <ul>
+                    <li><a href="#">Términos</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="pf-footer-bottom">
+            <p>© {% now "Y" %} <span>MR SPARTA</span> — All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'plans/js/planfitness.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

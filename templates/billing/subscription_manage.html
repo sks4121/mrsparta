@@ -1,0 +1,21 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Gestionar Suscripción</h1>
+    <div class="card">
+        <div class="card-body">
+            <h4>Plan Actual</h4>
+            <p><strong>{{ subscription.plan.name }}</strong></p>
+            <p>Estado: <span class="badge badge-{{ subscription.status|lower }}">{{ subscription.get_status_display }}</span></p>
+            {% if subscription.current_period_end %}
+            <p>Próxima Renovación: {{ subscription.current_period_end }}</p>
+            {% endif %}
+            {% if subscription.trial_end %}
+            <p>Fin de Prueba: {{ subscription.trial_end }}</p>
+            {% endif %}
+            <button class="btn btn-warning" data-toggle="modal" data-target="#changeplan">Cambiar Plan</button>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#cancel">Cancelar Suscripción</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,125 @@
+/* ═══════════════════════════════════════════════════════════
+   LOGIN — Page-specific styles
+   login.css  |  Inherits auth_base.css
+═══════════════════════════════════════════════════════════ */
+
+/* Login is gold-themed by default (admin/general) */
+.login-shell {
+  --role-primary:    var(--gold);
+  --role-primary-hi: var(--gold-hi);
+  --role-primary-lo: var(--gold-lo);
+}
+
+/* Login form is more compact than register */
+.login-shell .role-form {
+  gap: 16px;
+}
+
+/* Forgot password link inline */
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -4px;
+  margin-bottom: 4px;
+}
+
+.forgot-link {
+  font-family: var(--font-h);
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--gold-lo);
+  text-transform: uppercase;
+  transition: color .2s;
+}
+.forgot-link:hover {
+  color: var(--gold);
+}
+
+/* Welcome animation for the title */
+.welcome-emoji {
+  display: inline-block;
+  animation: waveHand 2s ease infinite;
+  transform-origin: 70% 70%;
+}
+@keyframes waveHand {
+  0%, 100% { transform: rotate(0deg); }
+  10%, 30% { transform: rotate(-12deg); }
+  20%      { transform: rotate(14deg); }
+  40%      { transform: rotate(-4deg); }
+  50%      { transform: rotate(10deg); }
+  60%      { transform: rotate(0deg); }
+}
+
+/* Trust badges */
+.trust-badges {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  animation: fadeUp .6s ease 1s both;
+}
+.trust-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-h);
+  font-size: 8px;
+  letter-spacing: 1px;
+  color: var(--txt3);
+  text-transform: uppercase;
+}
+.trust-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 5px var(--green);
+}
+
+/* Quick access role buttons (for the left panel) */
+.quick-roles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.quick-role-card {
+  padding: 16px;
+  background: rgba(255, 255, 255, .02);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all .25s;
+  text-align: center;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.quick-role-card:hover {
+  background: rgba(201, 168, 76, .05);
+  border-color: var(--border2);
+  transform: translateY(-3px);
+}
+.quick-role-card.athlete:hover {
+  border-color: rgba(204, 34, 34, .35);
+  background: rgba(204, 34, 34, .04);
+}
+.quick-role-icon { font-size: 22px; }
+.quick-role-label {
+  font-family: var(--font-h);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--txt2);
+  text-transform: uppercase;
+}
+.quick-role-sub {
+  font-size: 10px;
+  color: var(--txt3);
+}

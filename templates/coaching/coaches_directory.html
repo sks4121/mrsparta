@@ -1,0 +1,32 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Directorio de Coaches</h1>
+    <div class="row mb-3">
+        <div class="col-md-3">
+            <select class="form-control" id="specialty-filter">
+                <option value="">Todas las especialidades</option>
+                <option value="strength">Fuerza</option>
+                <option value="hypertrophy">Hipertrofia</option>
+                <option value="fat_loss">Pérdida de grasa</option>
+                <option value="nutrition">Nutrición</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        {% for coach in coaches %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{ coach.user.full_name }}</h5>
+                    <p><span class="badge">{{ coach.get_specialty_display }}</span></p>
+                    <p>⭐ {{ coach.rating }}/5</p>
+                    <p class="text-muted">{{ coach.years_experience }} años experiencia</p>
+                    <a href="{% url 'coach-detail' coach.id %}" class="btn btn-primary">Ver Perfil</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

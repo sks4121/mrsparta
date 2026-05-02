@@ -1,0 +1,64 @@
+{% extends "plans/_base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Preguntas Frecuentes</h1>
+    <div class="accordion" id="faqAccordion">
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne">
+                        ¿Cómo funciona MR SPARTA?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne" class="collapse" data-parent="#faqAccordion">
+                <div class="card-body">
+                    Selecciona un plan, conecta con un coach y comienza tu transformación. Recibirás planes personalizados con IA y sesiones privadas.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseTwo">
+                        ¿Puedo cambiar de plan?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseTwo" class="collapse" data-parent="#faqAccordion">
+                <div class="card-body">
+                    Sí, puedes cambiar o cancelar tu suscripción en cualquier momento desde tu dashboard.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseThree">
+                        ¿Hay período de prueba?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseThree" class="collapse" data-parent="#faqAccordion">
+                <div class="card-body">
+                    Sí, obtén 7 días gratis sin necesidad de tarjeta de crédito.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingFour">
+                <h2 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseFour">
+                        ¿Qué métodos de pago aceptan?
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseFour" class="collapse" data-parent="#faqAccordion">
+                <div class="card-body">
+                    Aceptamos tarjetas de crédito, débito y transferencias bancarias a través de Stripe.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

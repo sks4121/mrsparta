@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Cuenta — MR Sparta Coach OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/auth/auth_base.css' %}">
+  <style>
+    .selector-shell {
+      position: relative; z-index: 10;
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 40px 20px;
+    }
+    .selector-card {
+      width: 100%; max-width: 720px;
+      animation: fadeUp .7s var(--ease) both;
+    }
+    .selector-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .selector-header .role-logo-wrap {
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+    .selector-header h1 {
+      font-family: var(--font-d);
+      font-size: clamp(28px, 4vw, 42px);
+      color: var(--txt);
+      margin-bottom: 8px;
+    }
+    .selector-header h1 em { color: var(--gold-hi); font-style: normal; }
+    .selector-header p {
+      font-size: 14px; color: var(--txt2);
+      letter-spacing: .3px;
+    }
+    .selector-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+    .selector-card-item {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 32px 28px;
+      cursor: pointer;
+      transition: all .3s var(--ease);
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+    .selector-card-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, .4);
+    }
+    .selector-card-item::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      transform: scaleX(0);
+      transition: transform .3s;
+      transform-origin: left;
+    }
+    .selector-card-item:hover::before { transform: scaleX(1); }
+
+    .selector-athlete:hover {
+      border-color: rgba(204, 34, 34, .35);
+      background: rgba(204, 34, 34, .03);
+    }
+    .selector-athlete::before {
+      background: linear-gradient(90deg, var(--red-lo), var(--red-hi));
+    }
+    .selector-coach:hover {
+      border-color: var(--border3);
+      background: var(--gold-a08);
+    }
+    .selector-coach::before {
+      background: linear-gradient(90deg, var(--gold-lo), var(--gold-hi));
+    }
+
+    .sel-icon {
+      width: 76px; height: 76px;
+      clip-path: var(--clip-hex);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .selector-athlete .sel-icon {
+      background: linear-gradient(135deg, var(--red-lo), var(--red));
+    }
+    .selector-coach .sel-icon {
+      background: linear-gradient(135deg, var(--gold-lo), var(--gold-hi));
+    }
+
+    .sel-title {
+      font-family: var(--font-d);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--txt);
+    }
+    .sel-sub {
+      font-family: var(--font-h);
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .selector-athlete .sel-sub { color: var(--red); }
+    .selector-coach .sel-sub   { color: var(--gold); }
+
+    .sel-desc {
+      font-size: 13px;
+      color: var(--txt2);
+      line-height: 1.6;
+      margin-top: 8px;
+    }
+    .sel-features {
+      list-style: none; padding: 0;
+      display: flex; flex-direction: column; gap: 6px;
+      margin-top: 12px; width: 100%;
+    }
+    .sel-features li {
+      font-size: 12px;
+      color: var(--txt2);
+      display: flex; align-items: center; gap: 8px;
+      text-align: left;
+    }
+    .sel-features li::before {
+      content: '✓';
+      color: var(--gold);
+      font-weight: 700;
+    }
+    .selector-athlete .sel-features li::before { color: var(--red); }
+
+    .sel-cta {
+      margin-top: 16px;
+      font-family: var(--font-h);
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .selector-athlete .sel-cta { color: var(--red); }
+
+    .selector-footer {
+      text-align: center;
+      margin-top: 36px;
+      font-size: 13px;
+      color: var(--txt2);
+    }
+    .selector-footer a {
+      color: var(--gold);
+      font-family: var(--font-h);
+      font-size: 11px;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 640px) {
+      .selector-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-layer"></div>
+  <div class="scan-line"></div>
+  <div class="ember-layer" id="embers"></div>
+
+  <div class="selector-shell">
+    <div class="selector-card">
+
+      <div class="selector-header">
+        <div class="role-logo-wrap">
+          <div class="role-logo-hex">MR</div>
+          <div class="role-logo-text">
+            <span class="brand">MR Sparta</span>
+            <span class="sub">Coach OS</span>
+          </div>
+        </div>
+        <h1>Únete a la <em>Legión</em></h1>
+        <p>Elige tu camino. El sistema se adapta a tu identidad desde el primer día.</p>
+      </div>
+
+      <div class="selector-grid">
+
+        <a href="{% url 'users:register_athlete' %}" class="selector-card-item selector-athlete">
+          <div class="sel-icon">🛡</div>
+          <div>
+            <div class="sel-title">Soy Atleta</div>
+            <div class="sel-sub">Quiero transformarme</div>
+          </div>
+          <p class="sel-desc">Plan personalizado con IA y mentor real para alcanzar tu mejor versión física.</p>
+          <ul class="sel-features">
+            <li>Plan de entrenamiento + nutrición</li>
+            <li>Spartan AI 24/7</li>
+            <li>Coach asignado vía chat</li>
+            <li>14 días gratis</li>
+          </ul>
+          <div class="sel-cta">Continuar →</div>
+        </a>
+
+        <a href="{% url 'users:register_coach' %}" class="selector-card-item selector-coach">
+          <div class="sel-icon">⚔</div>
+          <div>
+            <div class="sel-title">Soy Coach</div>
+            <div class="sel-sub">Gestiono atletas</div>
+          </div>
+          <p class="sel-desc">Panel central + IA + facturación para escalar tu negocio fitness sin perder calidad.</p>
+          <ul class="sel-features">
+            <li>Hasta 100 clientes en un panel</li>
+            <li>IA genera y ajusta planes</li>
+            <li>Stripe + facturación automática</li>
+            <li>14 días gratis</li>
+          </ul>
+          <div class="sel-cta">Continuar →</div>
+        </a>
+
+      </div>
+
+      <div class="selector-footer">
+        ¿Ya tienes cuenta? <a href="{% url 'users:login' %}">Inicia sesión →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="{% static 'js/auth/auth_base.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      AuthBase.initEmbers(20);
+    });
+  </script>
+</body>
+</html>

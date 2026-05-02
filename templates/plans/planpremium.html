@@ -1,0 +1,86 @@
+{% extends "plans/_base.html" %}
+{% load static %}
+
+{% block title %}Plan Guerrero — MR SPARTA{% endblock %}
+{% block tier_class %}premium{% endblock %}
+
+{% block content %}
+<section class="pf-hero pf-hero--premium">
+    <div class="pf-container">
+        <span class="pf-badge pf-badge--premium">Guerrero</span>
+        <h1 class="pf-hero-title">Lleva tu entrenamiento <span class="pf-accent">al siguiente nivel</span></h1>
+        <p class="pf-hero-sub">
+            Planes ilimitados generados por IA, macros personalizados y un sistema de tracking
+            avanzado. Ve tus resultados cada semana con datos reales.
+        </p>
+        <div class="pf-price">
+            <span class="pf-price-symbol">$</span>
+            <span class="pf-price-amount">{{ price_monthly }}</span>
+            <span class="pf-price-period">/mes</span>
+        </div>
+        <div class="pf-cta-row">
+            <button class="pf-btn pf-btn--primary" data-action="generate-plan">Empezar Ahora</button>
+            <button class="pf-btn pf-btn--ghost" data-action="show-demo">Ver Demo</button>
+        </div>
+    </div>
+</section>
+
+<section class="pf-section">
+    <div class="pf-container">
+        <h2 class="pf-section-title"><small>Beneficios Incluidos</small>Plan Guerrero</h2>
+        <p class="pf-section-sub">Domina el arte de la transformación corporal</p>
+        <div class="pf-grid">
+            {% for feature in features %}
+                <article class="pf-feature-card">
+                    <span class="pf-feature-icon pf-feature-icon--premium">✓</span>
+                    <p>{{ feature }}</p>
+                </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="pf-section pf-section--alt">
+    <div class="pf-container">
+        <h2 class="pf-section-title"><small>Datos Personalizados</small>Macros y Nutrición</h2>
+        <div class="pf-stats">
+            <div class="pf-stat">
+                <span class="pf-stat-value" data-counter="0" data-target="2400">0</span>
+                <span class="pf-stat-label">kcal diarias</span>
+            </div>
+            <div class="pf-stat">
+                <span class="pf-stat-value" data-counter="0" data-target="180">0</span>
+                <span class="pf-stat-label">g proteína</span>
+            </div>
+            <div class="pf-stat">
+                <span class="pf-stat-value" data-counter="0" data-target="12">0</span>
+                <span class="pf-stat-label">semanas</span>
+            </div>
+        </div>
+
+        {% if current_plan %}
+        <article class="pf-plan-card">
+            <header class="pf-plan-card-head">
+                <h3>{{ current_plan.name }}</h3>
+                <span class="pf-tag pf-tag--gold">Activo</span>
+            </header>
+            <div class="pf-macros">
+                <div><strong>{{ current_plan.daily_calories|default:"–" }}</strong><small>kcal</small></div>
+                <div><strong>{{ current_plan.protein_g|default:"–" }}g</strong><small>proteína</small></div>
+                <div><strong>{{ current_plan.carbs_g|default:"–" }}g</strong><small>carbos</small></div>
+                <div><strong>{{ current_plan.fat_g|default:"–" }}g</strong><small>grasa</small></div>
+            </div>
+            <a href="{% url 'plans:detail' current_plan.id %}" class="pf-btn pf-btn--primary">Ver Mi Plan</a>
+        </article>
+        {% endif %}
+    </div>
+</section>
+
+<section class="pf-section pf-section--upgrade">
+    <div class="pf-container pf-upgrade-box pf-upgrade-box--elite">
+        <h2>¿Necesitas un coach humano?</h2>
+        <p>Pasa a Espartano. Un entrenador certificado revisará tu progreso cada semana.</p>
+        <a href="{% url 'plans:elite' %}" class="pf-btn pf-btn--elite">Ser Espartano →</a>
+    </div>
+</section>
+{% endblock %}

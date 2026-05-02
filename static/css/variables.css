@@ -1,0 +1,71 @@
+/* ═══════════════════════════════════════════════
+   MR SPARTA COACH — CSS VARIABLES
+   variables.css
+═══════════════════════════════════════════════ */
+
+:root {
+  /* ── Colors ── */
+  --gold:           #C9A84C;
+  --gold-bright:    #F0C040;
+  --gold-dark:      #8B6914;
+  --gold-glow:      rgba(240, 192, 64, 0.18);
+  --gold-glow-lg:   rgba(240, 192, 64, 0.35);
+
+  --red:            #8B1A1A;
+  --red-bright:     #CC2222;
+  --red-glow:       rgba(204, 34, 34, 0.15);
+
+  --green:          #2A6644;
+  --green-bright:   #3DBB77;
+
+  --dark:           #080808;
+  --dark2:          #0D0D0D;
+  --dark3:          #141414;
+  --panel:          #111111;
+  --panel2:         #171717;
+
+  --border:         rgba(201, 168, 76, 0.12);
+  --border2:        rgba(201, 168, 76, 0.30);
+
+  --text:           #EDE5D5;
+  --text-dim:       #9A8E7E;
+  --text-muted:     #4A4440;
+
+  /* ── Fonts ── */
+  --font-display:   'Cinzel Decorative', serif;
+  --font-heading:   'Cinzel', serif;
+  --font-body:      'Rajdhani', sans-serif;
+
+  /* ── Spacing ── */
+  --section-pad:    100px 56px;
+  --section-pad-sm: 70px 24px;
+
+  /* ── Layout ── */
+  --max-width:      1100px;
+  --navbar-h:       70px;
+  --sidebar-w:      240px;
+
+  /* ── Transitions ── */
+  --trans-fast:     all 0.2s ease;
+  --trans-base:     all 0.3s ease;
+  --trans-slow:     all 0.4s ease;
+
+  /* ── Clip paths ── */
+  --clip-sm:   polygon(6px 0%,  100% 0%, calc(100% - 6px)  100%, 0% 100%);
+  --clip-md:   polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+  --clip-card: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  --clip-hex:  polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+
+
+/* animación */
+@keyframes eyebrowFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+

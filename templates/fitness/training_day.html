@@ -1,0 +1,16 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>{{ training_day.get_day_name_display }} - {{ training_day.focus }}</h1>
+    <div class="list-group">
+        {% for exercise in training_day.exercises.all %}
+        <div class="list-group-item">
+            <h5>{{ exercise.name }}</h5>
+            <p>{{ exercise.sets }}×{{ exercise.reps }} | {{ exercise.weight_kg }}kg | Descanso: {{ exercise.rest_seconds }}s</p>
+            <a href="{% url 'plans:exercise-detail' exercise.id %}" class="btn btn-sm btn-info">Detalles</a>
+            <button class="btn btn-sm btn-success" data-toggle="exercise" data-id="{{ exercise.id }}">Completar</button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

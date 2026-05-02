@@ -1,0 +1,25 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Seguimiento de Progreso</h1>
+    <div class="row">
+        <div class="col-md-8">
+            <div id="chart" style="height: 400px;"></div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5>Última Medición</h5>
+                    {% if latest_log %}
+                    <p>Peso: {{ latest_log.weight_kg }}kg</p>
+                    <p>Grasa: {{ latest_log.body_fat_pct }}%</p>
+                    <p>Cumplimiento: {{ latest_log.overall_compliance }}%</p>
+                    {% else %}
+                    <p class="text-muted">Sin datos</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

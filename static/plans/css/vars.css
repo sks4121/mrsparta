@@ -1,0 +1,91 @@
+/* ═══════════════════════════════════════════════════════════════
+   FITNESS PRO — DESIGN TOKENS
+   vars.css  |  Paleta épica, animaciones, espaciado
+═══════════════════════════════════════════════════════════════ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* ── Color Palette (Épica) ────────────────────────── */
+    --dark:           #0a0804;
+    --dark2:          #1a1410;
+    --dark3:          #252018;
+    --surface:        #2d2620;
+    --border:         #3a342a;
+    --text:           #f5f1ea;
+    --text-dim:       #b8b0a0;
+    --text-mute:      #8a8270;
+
+    /* Gold Theme (Basic) */
+    --gold:           #d4af37;
+    --gold-dark:      #b8942e;
+    --gold-bright:    #e6c547;
+    --gold-glow:      rgba(212, 175, 55, 0.25);
+
+    /* Premium (Dorado oscuro) */
+    --premium:        #e6a82e;
+    --premium-hi:     #f5c542;
+    --premium-lo:     #d19a1f;
+    --premium-glow:   rgba(230, 168, 46, 0.2);
+
+    /* Elite (Rojo escarlata) */
+    --elite:          #c73e1d;
+    --elite-hi:       #ff6b35;
+    --elite-lo:       #8b1a1a;
+    --elite-glow:     rgba(199, 62, 29, 0.25);
+
+    /* Accent */
+    --accent:         #d4af37;
+    --accent-glow:    rgba(212, 175, 55, 0.15);
+
+    /* ── Typography ──────────────────────────────────── */
+    --font-body:      "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-heading:   "Inter", sans-serif;
+    --font-display:   "Playfair Display", "Georgia", serif;
+
+    /* ── Layout ──────────────────────────────────────── */
+    --navbar-h:       70px;
+    --container-max:  1200px;
+    --radius:         12px;
+    --radius-sm:      8px;
+    --radius-lg:      16px;
+
+    /* ── Spacing ─────────────────────────────────────── */
+    --gap-xs:         8px;
+    --gap-sm:         12px;
+    --gap-base:       16px;
+    --gap-md:         24px;
+    --gap-lg:         32px;
+    --gap-xl:         48px;
+    --gap-2xl:        64px;
+    --gap-3xl:        80px;
+
+    /* ── Transitions ─────────────────────────────────── */
+    --trans-fast:     all 0.15s ease;
+    --trans-base:     all 0.25s ease;
+    --trans-slow:     all 0.35s ease;
+
+    /* ── Shadows ─────────────────────────────────────── */
+    --shadow-sm:      0 2px 8px rgba(0, 0, 0, 0.4);
+    --shadow-base:    0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-lg:      0 12px 40px rgba(0, 0, 0, 0.7);
+    --shadow-xl:      0 20px 60px rgba(0, 0, 0, 0.8);
+
+    /* ── Clip Paths ──────────────────────────────────── */
+    --clip-sm:        polygon(0 0, calc(100% - 4px) 0, 100% 4px, 100% 100%, 4px 100%, 0 calc(100% - 4px));
+    --clip-md:        polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+    --clip-lg:        polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+/* Light/Dark mode support (futuro) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --dark: #0a0804;
+        --dark2: #1a1410;
+    }
+}
+
+/* Plan-specific accent override */
+.plan-basic   { --accent: var(--gold);    --accent-glow: var(--gold-glow); }
+.plan-premium { --accent: var(--premium); --accent-glow: var(--premium-glow); }
+.plan-elite   { --accent: var(--elite);   --accent-glow: var(--elite-glow); }

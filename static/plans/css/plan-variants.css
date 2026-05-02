@@ -1,0 +1,315 @@
+/* ═══════════════════════════════════════════════════════════════
+   FITNESS PRO — PLAN VARIANTS
+   plan-variants.css  |  Color overrides for Basic / Premium / Elite
+═══════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   BASIC PLAN (Gold)
+═══════════════════════════════════════════════════════════════ */
+
+.tier-basic {
+    --accent: var(--gold);
+    --accent-soft: var(--gold-glow);
+}
+
+.tier-basic .pf-hero {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 100%, rgba(212, 175, 55, 0.05) 0%, transparent 60%),
+        linear-gradient(180deg, var(--dark) 0%, var(--dark2) 100%);
+}
+
+.tier-basic .pf-badge {
+    background: var(--gold-glow);
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
+.tier-basic .pf-btn--primary {
+    background: linear-gradient(135deg, var(--gold) 0%, var(--premium) 100%);
+    box-shadow: 0 8px 24px var(--gold-glow);
+}
+
+.tier-basic .pf-btn--primary:hover {
+    box-shadow: 0 12px 40px var(--gold-glow);
+}
+
+.tier-basic .pf-plan-card {
+    border-color: var(--gold-dark);
+}
+
+.tier-basic .pf-plan-card::before {
+    background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+}
+
+.tier-basic .pf-plan-card:hover {
+    border-color: var(--gold);
+    box-shadow: 0 12px 48px var(--gold-glow);
+}
+
+.tier-basic .pf-feature-icon {
+    background: var(--gold-glow);
+    color: var(--gold);
+}
+
+.tier-basic .pf-feature:hover {
+    border-left-color: var(--gold);
+}
+
+.tier-basic .pf-stat {
+    border-top-color: var(--gold);
+}
+
+.tier-basic .pf-stat-value {
+    color: var(--gold);
+    text-shadow: 0 0 24px var(--gold-glow);
+}
+
+.tier-basic .pf-accent {
+    color: var(--gold);
+    text-shadow: 0 0 20px var(--gold-glow);
+}
+
+.tier-basic .pf-tag {
+    background: var(--gold-glow);
+    color: var(--gold);
+    border-color: var(--gold);
+}
+
+.tier-basic .gold-divider {
+    background: linear-gradient(90deg,
+        transparent 0%,
+        var(--gold-dark) 20%,
+        var(--gold) 50%,
+        var(--gold-dark) 80%,
+        transparent 100%
+    );
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   PREMIUM PLAN (Dark Gold)
+═══════════════════════════════════════════════════════════════ */
+
+.tier-premium {
+    --accent: var(--premium);
+    --accent-soft: var(--premium-glow);
+}
+
+.tier-premium .pf-hero {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(230, 168, 46, 0.12) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(26, 20, 16, 0.4) 0%, var(--dark) 100%);
+}
+
+.tier-premium .pf-badge {
+    background: var(--premium-glow);
+    color: var(--premium);
+    border-color: var(--premium);
+}
+
+.tier-premium .pf-btn--primary {
+    background: linear-gradient(135deg, var(--premium) 0%, var(--premium-hi) 100%);
+    box-shadow: 0 8px 24px var(--premium-glow);
+}
+
+.tier-premium .pf-btn--primary:hover {
+    background: linear-gradient(135deg, var(--premium-hi) 0%, var(--gold-bright) 100%);
+    box-shadow: 0 12px 40px var(--premium-glow);
+}
+
+.tier-premium .pf-btn--gold {
+    background: linear-gradient(135deg, var(--premium) 0%, var(--gold) 100%);
+    box-shadow: 0 8px 28px var(--premium-glow);
+}
+
+.tier-premium .pf-plan-card {
+    border-color: var(--premium-lo);
+}
+
+.tier-premium .pf-plan-card::before {
+    background: linear-gradient(90deg, transparent 0%, var(--premium) 50%, transparent 100%);
+}
+
+.tier-premium .pf-plan-card:hover {
+    border-color: var(--premium);
+    box-shadow: 0 12px 48px var(--premium-glow);
+}
+
+.tier-premium .pf-feature-icon {
+    background: var(--premium-glow);
+    color: var(--premium);
+}
+
+.tier-premium .pf-feature:hover {
+    border-left-color: var(--premium);
+}
+
+.tier-premium .pf-feature-card:hover {
+    border-color: var(--premium);
+    box-shadow: 0 8px 24px var(--premium-glow);
+}
+
+.tier-premium .pf-stat {
+    border-top-color: var(--premium);
+}
+
+.tier-premium .pf-stat-value {
+    color: var(--premium);
+    text-shadow: 0 0 24px var(--premium-glow);
+}
+
+.tier-premium .pf-accent {
+    color: var(--premium-hi);
+    text-shadow: 0 0 20px var(--premium-glow);
+}
+
+.tier-premium .pf-tag--gold {
+    background: var(--premium-glow);
+    color: var(--premium);
+    border-color: var(--premium);
+}
+
+.tier-premium .section-eyebrow {
+    color: var(--premium);
+}
+
+.tier-premium .section-eyebrow::before,
+.tier-premium .section-eyebrow::after {
+    background: linear-gradient(90deg, transparent, var(--premium)) !important;
+}
+
+.tier-premium .section-eyebrow::before {
+    background: linear-gradient(90deg, transparent, var(--premium)) !important;
+}
+
+.tier-premium .section-eyebrow::after {
+    background: linear-gradient(90deg, var(--premium), transparent) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   ELITE PLAN (Red Scarlet)
+═══════════════════════════════════════════════════════════════ */
+
+.tier-elite {
+    --accent: var(--elite);
+    --accent-soft: var(--elite-glow);
+}
+
+.tier-elite .pf-hero {
+    background:
+        radial-gradient(ellipse at 50% 0%, rgba(199, 62, 29, 0.15) 0%, transparent 50%),
+        linear-gradient(180deg, rgba(42, 26, 16, 0.6) 0%, var(--dark) 100%);
+}
+
+.tier-elite .pf-badge {
+    background: var(--elite-glow);
+    color: var(--elite);
+    border-color: var(--elite);
+}
+
+.tier-elite .pf-btn--primary {
+    background: linear-gradient(135deg, var(--elite) 0%, var(--elite-hi) 100%);
+    color: #fff;
+    box-shadow: 0 8px 24px var(--elite-glow);
+}
+
+.tier-elite .pf-btn--primary:hover {
+    background: linear-gradient(135deg, var(--elite-hi) 0%, #ff8555 100%);
+    box-shadow: 0 12px 40px var(--elite-glow);
+}
+
+.tier-elite .pf-btn--elite {
+    background: linear-gradient(135deg, var(--elite) 0%, var(--elite-hi) 100%);
+    color: #fff;
+    box-shadow: 0 8px 28px var(--elite-glow);
+}
+
+.tier-elite .pf-btn--elite:hover {
+    background: linear-gradient(135deg, var(--elite-hi) 0%, #ff9966 100%);
+    box-shadow: 0 12px 48px var(--elite-glow);
+}
+
+.tier-elite .pf-plan-card {
+    border-color: var(--elite);
+}
+
+.tier-elite .pf-plan-card::before {
+    background: linear-gradient(90deg, transparent 0%, var(--elite) 50%, transparent 100%);
+}
+
+.tier-elite .pf-plan-card:hover {
+    border-color: var(--elite-hi);
+    box-shadow: 0 12px 48px var(--elite-glow);
+}
+
+.tier-elite .pf-plan-card--elite {
+    border-color: var(--elite);
+}
+
+.tier-elite .pf-feature-icon--elite {
+    background: var(--elite-glow);
+    color: var(--elite);
+}
+
+.tier-elite .pf-feature-card--elite:hover {
+    border-color: var(--elite);
+    box-shadow: 0 8px 24px var(--elite-glow);
+}
+
+.tier-elite .pf-stat {
+    border-top-color: var(--elite);
+}
+
+.tier-elite .pf-stat-value {
+    color: var(--elite);
+    text-shadow: 0 0 24px var(--elite-glow);
+}
+
+.tier-elite .pf-accent {
+    color: var(--elite-hi);
+    text-shadow: 0 0 20px var(--elite-glow);
+}
+
+.tier-elite .pf-tag--elite {
+    background: var(--elite-glow);
+    color: var(--elite);
+    border-color: var(--elite);
+}
+
+.tier-elite .pf-coach-card {
+    border-color: var(--elite);
+}
+
+.tier-elite .pf-coach-avatar {
+    background: linear-gradient(135deg, var(--elite) 0%, var(--elite-hi) 100%);
+    box-shadow: 0 6px 20px var(--elite-glow);
+}
+
+.tier-elite .pf-upgrade-box {
+    border-color: var(--elite);
+}
+
+.tier-elite .pf-upgrade-box--elite {
+    border-color: var(--elite);
+}
+
+.tier-elite .pf-quote {
+    border-left-color: var(--elite);
+}
+
+.tier-elite .section-eyebrow {
+    color: var(--elite);
+}
+
+.tier-elite .section-eyebrow::before,
+.tier-elite .section-eyebrow::after {
+    background: linear-gradient(90deg, transparent, var(--elite)) !important;
+}
+
+.tier-elite .section-eyebrow::before {
+    background: linear-gradient(90deg, transparent, var(--elite)) !important;
+}
+
+.tier-elite .section-eyebrow::after {
+    background: linear-gradient(90deg, var(--elite), transparent) !important;
+}

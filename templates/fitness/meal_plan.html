@@ -1,0 +1,20 @@
+{% extends "plans/base.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1>Plan de Comidas</h1>
+    <div class="row">
+        {% for meal in meals %}
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5>{{ meal.get_meal_type_display }}</h5>
+                    <p><strong>{{ meal.name }}</strong></p>
+                    <p>{{ meal.calories }} kcal | P: {{ meal.protein_g }}g C: {{ meal.carbs_g }}g G: {{ meal.fat_g }}g</p>
+                    <small class="text-muted">{{ meal.description }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
